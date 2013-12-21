@@ -2,16 +2,17 @@
 
 <html>
   <head>
-	<title>Hello :: Spring Application</title>
+	<title>Event Planner</title>
 	<link type="text/css" href="${path}/resources/css/bootstrap.min.css" rel="stylesheet"/>
+	<link type="text/css" href="${path}/resources/css/pageCss.css" rel="stylesheet"/>
 	<%@ include file="/WEB-INF/jsp/js/pageJS.jsp" %>
   </head>
   <body>
-    <%@ include file="/WEB-INF/jsp/NavigationBar/navbar.jsp" %>
-	
-    <h1>Hello - Spring Application</h1>
-    <p>Greetings, it is now <c:out value="${now}"/></p>
-	
+    <div class="container">
+        <%@ include file="/WEB-INF/jsp/NavigationBar/navbar.jsp" %>
+	</div>
+	<%@ include file="/WEB-INF/jsp/body/orderData.jsp" %>
+    
 	<%@ include file="/WEB-INF/jsp/js/loadJS.jsp" %>
   </body>
 </html>
