@@ -60,7 +60,11 @@
 
     /* Carousel base class */
     .carousel {
-      margin-bottom: 60px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom:0;
     }
 
     .carousel .container {
@@ -79,7 +83,7 @@
     }
 
     .carousel .item {
-      height: 500px;
+      height: 100%;
     }
     .carousel img {
       position: absolute;
@@ -128,7 +132,7 @@
       }
       .carousel img {
         width: auto;
-        height: 500px;
+        height: 100%;
       }
 
       .featurette {
@@ -159,7 +163,7 @@
 
       }
       .carousel .item {
-        height: 300px;
+        height: 100%;
       }
       .carousel img {
         height: 300px;
