@@ -8,8 +8,10 @@
 	<%@ include file="/WEB-INF/jsp/js/pageJS.jsp" %>
   </head>
   <body>
-    <div class="container">
+    <div class="navbar-wrapper">
+      <div class="container">
         <%@ include file="/WEB-INF/jsp/NavigationBar/navbar.jsp" %>
+	  </div>
 	</div>
 	<%@ include file="/WEB-INF/jsp/body/orderData.jsp" %>
     
