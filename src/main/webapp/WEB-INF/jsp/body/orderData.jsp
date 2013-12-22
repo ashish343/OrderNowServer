@@ -8,5 +8,29 @@
 				</div>
 			</div>
 		</div>
+		<div class="item">
+            <img src="${path}/resources/img/app.jpg" alt="">
+            <div class="container">
+                <div class="carousel-caption">
+                    <h1>About the App.</h1>
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <img src="${path}/resources/img/blog.jpg" alt="">
+            <div class="container">
+                <div class="carousel-caption">
+                    <h1>Blog</h1>
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <img src="${path}/resources/img/sign-in.jpg" alt="">
+            <div class="container">
+                <div class="carousel-caption">
+                    <h1>Sign In Page</h1>
+                </div>
+            </div>
+        </div>
 	</div>
 </div>

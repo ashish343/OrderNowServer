@@ -15,6 +15,8 @@
 	</div>
 	<%@ include file="/WEB-INF/jsp/body/orderData.jsp" %>
     
+    <!-- Load JS -->
 	<%@ include file="/WEB-INF/jsp/js/loadJS.jsp" %>
+	<script type="text/javascript" src="${path}/resources/js/bodyJS.js"></script>
   </body>
 </html>

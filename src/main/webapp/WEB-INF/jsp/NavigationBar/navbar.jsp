@@ -15,12 +15,12 @@
   <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="collapse navbar-collapse navbar-ex1-collapse">
     <ul class="nav navbar-nav">
-      <li class="active"><a href="#">Home</a></li>
-      <li><a href="#">App</a></li>
-      <li><a href="#">Blog</a></li>
+      <li><a href="#" id="action-home">Home</a></li>
+      <li><a href="#" id="action-app">App</a></li>
+      <li><a href="#" id="action-blog">Blog</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
-      <li><a href="#">Sign In</a></li>
+      <li><a href="#" id="action-sign-in">Sign In</a></li>
     </ul>
   </div><!-- /.navbar-collapse -->
 </nav>
