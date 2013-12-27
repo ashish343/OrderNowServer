@@ -45,9 +45,6 @@ public class DefaultController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-    	ServletOutputStream out = resp.getOutputStream();
-        out.write("heroku".getBytes());
-        out.flush();
     	handleRequest(req, resp);
     }
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
