@@ -1,11 +1,19 @@
 package data.menu;
 
 public class Dish {
+	private String dishId;
 	private String name;
 	private String description;
 	private String img;
 	private float price;
 	private FoodType type; //Veg or non-veg
+	
+	public String getDishId() {
+		return dishId;
+	}
+	public void setDishId(String dishId) {
+		this.dishId = dishId;
+	}
 	
 	public String getName() {
 		return name;

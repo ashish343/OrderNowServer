@@ -2,13 +2,25 @@ package handlers.table;
 
 import java.io.IOException;
 
+import data.menu.Menu;
 import data.menu.Restaurant;
 import database.DataConnection;
 
 public class TableHandler {
 
 	public static Restaurant server(String restuarantId) {
-		return null;
+		Restaurant restaurant = null;
+		Menu menu = null;
+		try {
+			restaurant = DataConnection.getRestaurantData(restuarantId);
+			if(restaurant != null) {
+				menu = DataConnection.getRestaurantMenu(restaurant.getMenuId());
+				restaurant.setMenu(menu);
+			}
+		} catch (IOException e) {
+			
+		}
+		return restaurant;
 	}
 
 	public static String isValidRestuarant(String tableId) {
