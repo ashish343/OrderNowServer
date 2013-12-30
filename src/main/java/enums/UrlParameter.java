@@ -1,11 +1,12 @@
-package utility;
+package enums;
 
 public enum UrlParameter {
 	RESTUARANT_NAME("restName"),
 	RESTUARANT_ADDRESS("restAdd"),
 	RESTUARANT_CONTACT_INFO("restConatctInfo"),
 	RESTUARANT_TABLES("restTables"),
-	DEBUG("debug");
+	DEBUG("debug"),
+	EVENTID("eventId");
 	
 	private String data;
 	

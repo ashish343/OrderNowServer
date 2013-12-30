@@ -1,4 +1,4 @@
-package utility;
+package enums;
 
 public enum RestApi {
 	QR_GENERATOR("https://chart.googleapis.com/chart?cht=qr&choe=UTF-8&chs=300x300&chl=");

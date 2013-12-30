@@ -1,5 +1,7 @@
 package utility;
 
+import enums.RestApi;
+
 
 public class QRCodeGenerator {
 	

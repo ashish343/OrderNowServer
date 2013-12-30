@@ -1,0 +1,5 @@
+uri mongodb://localhost:27017/OrderNow
+db OrderNow
+table_collection table_collection
+restaurant_data_table restaurant_table
+menu_table menu_table

@@ -1,6 +1,6 @@
 package servlet;
 
-import handlers.restaurant.RestaurantEventsHandler;
+import handlers.table.TableHandler;
 
 import java.io.IOException;
 
@@ -13,19 +13,35 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import data.menu.Restaurant;
+import enums.UrlParameter;
+
 @SuppressWarnings("serial")
 @WebServlet(
         name = "Servlet", 
-        urlPatterns = {"/registerRestaurant"}
+        urlPatterns = {"/serveTable"}
     )
-public class RegisterRestaurant  extends HttpServlet {
+public class ServeTable  extends HttpServlet {
 
 	protected final Log logger = LogFactory.getLog(getClass());
 	 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	int status = RestaurantEventsHandler.createRestaurant(request);
+    	String eventId = request.getParameter(UrlParameter.EVENTID.toString());
+    	Restaurant data = null;
+    	String restuarantId = TableHandler.isValidRestuarant(eventId);
+    	if(restuarantId != null) {
+    		data = TableHandler.server(restuarantId);
+    	} else {
+    		//Return a response to try scan the QR code again.
+    	}
+    	
     	// If SUCCESS then return the success page.
+    	if(data != null) {
+    		// Return the JSON Response.
+    	} else {
+    		//Tray again, if that fails return false.
+    	}
     }
     
     @Override

@@ -1,16 +1,15 @@
-package restaurant;
+package handlers.restaurant;
 
 import javax.servlet.http.HttpServletRequest;
 
-import utility.UrlParameter;
 import data.RestaurantData;
+import enums.EventState;
+import enums.UrlParameter;
 
 public class RestaurantEventsHandler {
-	private static final int SUCCESS = 1;
-	private static final int FAILURE = 0;
 
 	public static int createRestaurant(HttpServletRequest request) {
-		int status = FAILURE;
+		int status = EventState.FAILURE.ordinal();
 		RestaurantData restaurantData = generateRestaurantData(request);
 		if(restaurantData != null) {
 			status = addRestuarantToDB(restaurantData);
@@ -19,7 +18,7 @@ public class RestaurantEventsHandler {
 	}
 	
 	public static int modifyRestaurant(HttpServletRequest request) {
-		return SUCCESS;
+		return EventState.SUCCESS.ordinal();
 	}
 	
 	private static RestaurantData generateRestaurantData(HttpServletRequest request) {
@@ -38,6 +37,6 @@ public class RestaurantEventsHandler {
 	}
 	
 	private static int addRestuarantToDB(RestaurantData restaurantData) {
-		return 1;
+		return EventState.SUCCESS.ordinal();
 	}
 }
