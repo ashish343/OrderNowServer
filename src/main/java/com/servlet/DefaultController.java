@@ -1,13 +1,10 @@
 package com.servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -17,12 +14,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.servlet.ModelAndView;
-
-import com.data.menu.Category;
-import com.data.menu.Dish;
-import com.data.menu.Menu;
-import com.data.menu.Restaurant;
-import com.google.gson.Gson;
 
 @SuppressWarnings("serial")
 @WebServlet(

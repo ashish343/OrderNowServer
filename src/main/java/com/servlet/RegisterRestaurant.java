@@ -15,7 +15,7 @@ import com.handlers.restaurant.RestaurantEventsHandler;
 
 @SuppressWarnings("serial")
 @WebServlet(
-        name = "Servlet", 
+        name = "RegisterRestaurantServlet", 
         urlPatterns = {"/registerRestaurant"}
     )
 public class RegisterRestaurant  extends HttpServlet {

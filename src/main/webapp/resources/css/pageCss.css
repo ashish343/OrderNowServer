@@ -1,4 +1,18 @@
-
+.car_item {
+    color: #666;
+    background: #333;
+    height: 300px;
+    line-height: 300px; /* Align the text vertically center. */
+    font-size: 52px;
+    text-align: center;    
+    font-family: "trebuchet ms", sans-serif;    
+}
+.my-carousel{
+    margin-top: 20px;
+}
+.bs-example{
+    margin: 20px;
+}
     /* GLOBAL STYLES
     -------------------------------------------------- */
     /* Padding below the footer and lighter body text */

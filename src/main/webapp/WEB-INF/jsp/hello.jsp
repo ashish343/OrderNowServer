@@ -2,7 +2,7 @@
 
 <html>
   <head>
-	<title>Event Planner</title>
+	<title>Order Now</title>
 	<link type="text/css" href="${path}/resources/css/bootstrap.min.css" rel="stylesheet"/>
 	<link type="text/css" href="${path}/resources/css/pageCss.css" rel="stylesheet"/>
 	<%@ include file="/WEB-INF/jsp/js/pageJS.jsp" %>
