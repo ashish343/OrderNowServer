@@ -11,6 +11,9 @@
 
 
 <style type="text/css">
+body {
+    background:url("/resources/img/bg_img.jpg");
+}
 .page-layout {
     margin:0 auto;
     margin-top:20px;
@@ -37,6 +40,9 @@
     margin-right:5%;
     margin-left:5%;
 }
+.dish-container a {
+    cursor:default;
+}
 .dish-col {
     height:inherit;
 }
@@ -44,8 +50,22 @@
     height:150px;
     margin-bottom:10px;
 }
+.dish-item-img {
+    padding:0px;
+}
+.dish-item-img img {
+    height:100%;
+    width:100%;
+} 
+a.list-group-item.active.dish-item {
+    background-color:gainsboro;
+}
 .maintain-height {
     height:100%;
+}
+.maintain-height-width {
+    height:100%;
+    width:100%;
 }
 .custom-margin-left {
     margin-left:10px;
@@ -64,12 +84,26 @@
 }
 .dish-desc-row {
     height:40%;
+    display:table;
+    color:black;
+}
+.dish-desc {
+    display:table-cell;
+    vertical-align:middle;
 }
 .dish-price-row {
     height:30%;
+    white-space: nowrap; 
 }
 .dish-name-col {
     padding-left:0px;
+    display:table;
+}
+.dish-name {
+    display:table-cell;
+    vertical-align:middle;
+    font-size:24px;
+    color:chocolate;
 }
 .dish-review-col {
     padding-left:0px;
@@ -79,12 +113,12 @@
     padding-left:0px;
 }
 .dish-add-col {
-    padding-left:0px;
-     background-color: blue; 
+    padding:0px;
+    text-align:center;
 }
 .dish-price-col {
-    padding-left:0px;
-     background-color: aqua; 
+    padding:0px;
+    display:table;
 }
 /*************************************
  * generic styling for ALS elements
@@ -156,6 +190,21 @@
     width:220px;
     height:100px;
 }
+.price {
+      font-family: cursive; 
+      font-style: oblique; 
+      color: lightsalmon; 
+      display: table-cell; 
+      vertical-align: middle; 
+      font-size:24px;
+}
+.parentDiv{
+    display:table;
+}
+.childDiv {
+    vertical-align:middle;
+    display:table-cell;
+}
 </style>
 
 
@@ -177,10 +226,10 @@
                     <span class="als-prev"><img src="${path}/resources/img/left_arrow.png" alt="prev" title="previous" /></span>
                     <div class="als-viewport">
                         <ul class="als-wrapper">
-                            <li class="als-item"><div class="well carousal-item">Appetizers</div></li>
-                            <li class="als-item"><div class="well carousal-item">Beverages</div></li>
-                            <li class="als-item"><div class="well carousal-item">Entries</div></li>
-                            <li class="als-item"><div class="well carousal-item">Desserts</div></li>
+                            <li class="als-item"><div class="well carousal-item parentDiv"><div class="childDiv">Appetizers</div></div></li>
+                            <li class="als-item"><div class="well carousal-item parentDiv"><div class="childDiv">Beverages</div></div></li>
+                            <li class="als-item"><div class="well carousal-item parentDiv"><div class="childDiv">Entries</div></div></li>
+                            <li class="als-item"><div class="well carousal-item parentDiv"><div class="childDiv">Desserts</div></div></li>
                         </ul>
                     </div>
                     <span class="als-next"><img src="${path}/resources/img/right_arrow.png" alt="next" title="next" /></span>
@@ -195,38 +244,42 @@
                         <a href="#" class="list-group-item active dish-item">
                             <div class="row maintain-height">
                                 <div class="col-xs-3 col-lg-3 dish-item-img maintain-height">
+                                    <img src="${path}/resources/img/dish.jpg" alt="dish"/>
                                 </div>
                                 <div class="col-xs-9 col-lg-9 dish-item-content maintain-height">
                                         <!-- Right Column for Dish Start-->
                                         <div class="row dish-name-row">
-                                            <div class="col-xs-7 col-lg-7 dish-name-col maintain-height">
-                                                <b> Name </b>
+                                            <div class="col-xs-12 col-lg-12 col-md-12 dish-name-col maintain-height">
+                                                <div class="dish-name">
+                                                    <i> Chocolate Cake </i>
+                                                </div>
                                             </div>
+                                            <!-- 
                                             <div class="col-xs-5 col-lg-5 dish-review-col maintain-height">
                                                 <p> Reviews </p>
-                                            </div>
+                                            </div> -->
                                         </div>
                                         <div class="row dish-desc-row">
-                                            <p>
-                                            About the dish.
-                                            </p>
+                                            <div class="dish-desc">
+                                                <p>Made of chocolate, what did you think.</p>
+                                            </div>
                                         </div>
                                         <div class="row dish-price-row">
                                             <div class="col-xs-6 col-lg-6 dish-price-col maintain-height">
-                                            Price
+                                                <div class="price">100 Rs.</div>
                                             </div>
                                             <div class="col-xs-6 col-lg-6 dish-add-col maintain-height">
-                                            Add
+                                                <button type="button" class="btn btn-default btn-lg maintain-height-width">Add</button>
                                             </div>
                                         </div>
                                         <!-- Right Column for Dish Ends-->
                                 </div>
                             </div>
                         </a>    
-                        <div class="list-group-item dish-item">Dapibus ac facilisis in</div>
-                        <div class="list-group-item dish-item">Morbi leo risus</div>
-                        <div class="list-group-item dish-item">Porta ac consectetur ac</div>
-                        <div class="list-group-item dish-item">Vestibulum at eros</div>
+                        <a href="#"  class="list-group-item dish-item">Dapibus ac facilisis in</a>
+                        <a href="#"  class="list-group-item dish-item">Morbi leo risus</a>
+                        <a href="#"  class="list-group-item dish-item">Porta ac consectetur ac</a>
+                        <a href="#"  class="list-group-item dish-item">Vestibulum at eros</a>
                     </div>
                 </div>
                 <div class="col-xs-12 col-lg-6 dish-col">
