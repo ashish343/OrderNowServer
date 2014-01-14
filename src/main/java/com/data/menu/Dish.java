@@ -1,6 +1,17 @@
 package com.data.menu;
 
 public class Dish {
+	public Dish(String dishId, String name, String description, String img, float price, FoodType type) {
+		this.dishId = dishId;
+		this.name = name;
+		this.description = description;
+		this.img = img;
+		this.price = price;
+		this.type = type;
+	};
+	
+	public Dish() {};
+	
 	private String dishId;
 	private String name;
 	private String description;

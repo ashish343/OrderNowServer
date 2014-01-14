@@ -1,0 +1,7 @@
+_id,name,address,contactInfo,image,menu
+R1,Name1,ABC Street,"123,412,321",,"{""categories"":[{""dishes"":[{""dishId"":""D1"",""name"":""Cream of Veg/Mushroom/Asparagus/Tomato"",""description"":""Vegetable broth served in selection of veggies topped with fresh cream."",""price"":95.0,""type"":""VEG""},{""dishId"":""D2"",""name"":""Roasted Bell Pepper Soup."",""description"":""Vegetable stock added with tings of mexican souce"",""price"":115.0,""type"":""VEG""}],""name"":""Soups""},{""dishes"":[{""dishId"":""D3"",""name"":""Nachos with cheese souce"",""description"":""An all time favourite of mexican chips topped with mezza cheese and served with salsa."",""price"":165.0,""type"":""VEG""},{""dishId"":""D2"",""name"":""Roasted Bell Pepper Soup."",""description"":""Vegetable stock added with tings of mexican souce"",""price"":115.0,""type"":""VEG""}],""name"":""Starters""}],""name"":""Continental""}
+"
+"
+R2""",Name2,DEF Street,232131,,"{categories"":[{""dishes"":[{""dishId"":""D1"""
+"
+R3""",Name3,XYZ Street,21321,,"{categories"":[{""dishes"":[{""dishId"":""D1"""

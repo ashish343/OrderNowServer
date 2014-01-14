@@ -6,7 +6,6 @@ public class Restaurant {
 	private String address;
 	private String contactInfo;
 	private String img;
-	private String menuId;
 	private Menu menu;
 	
 	public String getContactInfo() {
@@ -16,12 +15,6 @@ public class Restaurant {
 		this.contactInfo = contactInfo;
 	}
 	
-	public String getMenuId() {
-		return menuId;
-	}
-	public void setMenuId(String menuId) {
-		this.menuId = menuId;
-	}
 	public String getrId() {
 		return rId;
 	}

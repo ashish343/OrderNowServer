@@ -1,0 +1,8 @@
+tableId,restaurantId,customerId,order
+"T1","R1","C1","blah blab"
+"T2","R1","C2","blah blab"
+"T3","R2","C3","blah blab"
+"T4","R2","C4","blah blab"
+"T5","R2","C1","blah blab"
+"T6","R2","C2","blah blab"
+"T7","R2","C4","blah blab"
