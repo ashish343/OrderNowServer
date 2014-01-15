@@ -10,6 +10,7 @@
   <body>
     <div class="navbar-wrapper">
       <div class="container">
+        <c:set var="options">Home,App,Blog</c:set>
         <%@ include file="/WEB-INF/jsp/NavigationBar/navbar.jsp" %>
 	  </div>
 	</div>

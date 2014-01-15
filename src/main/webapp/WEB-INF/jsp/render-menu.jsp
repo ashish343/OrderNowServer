@@ -11,9 +11,6 @@
 
 
 <style type="text/css">
-body {
-    background:url("/resources/img/bg_img.jpg");
-}
 .page-layout {
     margin:0 auto;
     margin-top:20px;
@@ -22,12 +19,6 @@ body {
     border-style: solid; 
     border-width: 1px; 
     border-color: dimgrey; 
-}
-.row {
-    margin-right:0px;
-    margin-left:0px;
-    margin-top:0px;
-    margin-bottom:0px;
 }
 .shovler-basic {
     width:90%;
@@ -185,25 +176,6 @@ a.list-group-item.active.dish-item {
 
 #demo1 .als-next {
     right: 0px;
-}
-.carousal-item {
-    width:220px;
-    height:100px;
-}
-.price {
-      font-family: cursive; 
-      font-style: oblique; 
-      color: lightsalmon; 
-      display: table-cell; 
-      vertical-align: middle; 
-      font-size:24px;
-}
-.parentDiv{
-    display:table;
-}
-.childDiv {
-    vertical-align:middle;
-    display:table-cell;
 }
 </style>
 

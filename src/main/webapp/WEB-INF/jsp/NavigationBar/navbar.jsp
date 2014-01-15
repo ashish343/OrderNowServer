@@ -15,9 +15,13 @@
   <!-- Collect the nav links, forms, and other content for toggling -->
   <div class="collapse navbar-collapse navbar-ex1-collapse">
     <ul class="nav navbar-nav">
-      <li><a href="#" id="action-home">Home</a></li>
-      <li><a href="#" id="action-app">App</a></li>
-      <li><a href="#" id="action-blog">Blog</a></li>
+      <c:forTokens items="${options}" delims="," var="category">
+        <c:forTokens items="${category}" delims=" " var="event" varStatus="status">
+          <c:if test="${status.first }">
+            <li><a href="#" id="action-${event}">${category}</a></li>
+          </c:if>
+        </c:forTokens>
+      </c:forTokens>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li><a href="#" id="action-sign-in">Sign In</a></li>

@@ -1,3 +1,35 @@
+body {
+    background:url("/resources/img/bg_img.jpg");
+}
+.row {
+    margin-right:0px;
+    margin-left:0px;
+    margin-top:0px;
+    margin-bottom:0px;
+}
+.parentDiv{
+    display:table;
+}
+.childDiv {
+    vertical-align:middle;
+    display:table-cell;
+}
+.carousal-item {
+    width:220px;
+    height:100px;
+}
+.price {
+      font-family: cursive; 
+      font-style: oblique; 
+      color: lightsalmon; 
+      display: table-cell; 
+      vertical-align: middle; 
+      font-size:24px;
+}
+.login-button {
+	text-align: center;
+	margin-bottom:20px;
+}
 .car_item {
     color: #666;
     background: #333;
@@ -195,4 +227,17 @@
         font-size: 18px;
       }
     }
+    
+    #rest-sign-in {
+    min-heght:300px;
+    min-wdth: 200px;
+}
+.user-pass-input , .user-login-input {
+    margin:20px;
+}
+.sign-in-col {
+    border-style: solid; 
+    border-width: 1px; 
+    border-color: black; 
+}
     

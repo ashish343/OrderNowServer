@@ -4,19 +4,19 @@ P.when('jQuery').execute(function($) {
 });
 
 var myFunc = function($) {
-	$("#action-home").click(function(e) {
+	$("#action-Home").click(function(e) {
 		$('.carousel').carousel(0);
 		$('.carousel').carousel('pause');
 		e.preventDefault();
 	});
 
-	$("#action-app").click(function(e) {
+	$("#action-App").click(function(e) {
 		$('.carousel').carousel(1);
 		$('.carousel').carousel('pause');
 		e.preventDefault();
 	});
 
-	$("#action-blog").click(function(e) {
+	$("#action-Blog").click(function(e) {
 		$('.carousel').carousel(2);
 		$('.carousel').carousel('pause');
 		e.preventDefault();
