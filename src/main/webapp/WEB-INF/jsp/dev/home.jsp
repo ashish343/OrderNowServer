@@ -13,6 +13,9 @@
     margin:150px auto 20px;
     max-width:996px;
     min-height:500px;
+    border-style: solid; 
+    border-width: 1px; 
+    border-color: dimgrey;
 }
 </style>
   </head>

@@ -8,7 +8,7 @@
     
     <http auto-config="true">
         <intercept-url pattern="/login*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-        <intercept-url pattern="/dev*" access="ROLE_USER" />
+        <intercept-url pattern="/dev*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <form-login login-page='/login' default-target-url="/dev" authentication-failure-url="/loginFailed"/>
     </http>
 
