@@ -240,4 +240,11 @@ body {
     border-width: 1px; 
     border-color: black; 
 }
-    
+.login-button {
+	height:40px;
+	width:80px;
+}
+.login-failed-p {
+	color:red;
+	font-size:30px;
+}

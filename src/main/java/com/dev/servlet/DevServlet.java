@@ -1,4 +1,4 @@
-package com.servlet;
+package com.dev.servlet;
 
 import java.io.IOException;
 
@@ -15,19 +15,16 @@ import com.handlers.restaurant.RestaurantEventsHandler;
 
 @SuppressWarnings("serial")
 @WebServlet(
-        name = "RegisterRestaurantServlet", 
-        urlPatterns = {"/registerRestaurant"}
+        name = "DevServlet", 
+        urlPatterns = {"/dev"}
     )
-public class RegisterRestaurant  extends HttpServlet {
+public class DevServlet  extends HttpServlet {
 
 	protected final Log logger = LogFactory.getLog(getClass());
 	 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	int status = RestaurantEventsHandler.createRestaurant(request);
-    	// If SUCCESS then return the success page.
-    	
-    	request.getRequestDispatcher("/WEB-INF/jsp/addRest.jsp").forward(request, response);
+    	request.getRequestDispatcher("/WEB-INF/jsp/dev/home.jsp").forward(request, response);
     }
     
     @Override

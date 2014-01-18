@@ -23,8 +23,10 @@
         </c:forTokens>
       </c:forTokens>
     </ul>
-    <ul class="nav navbar-nav navbar-right">
-      <li><a href="#" id="action-sign-in">Sign In</a></li>
-    </ul>
+    <c:if test="${not showOption}">
+        <ul class="nav navbar-nav navbar-right">
+        <li><a href="/dev/analytics" id="action-sign-in">Analytics</a></li>
+        </ul>
+    </c:if>
   </div><!-- /.navbar-collapse -->
 </nav>

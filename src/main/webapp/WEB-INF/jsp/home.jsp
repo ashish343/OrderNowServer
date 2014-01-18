@@ -11,6 +11,7 @@
     <div class="navbar-wrapper">
       <div class="container">
         <c:set var="options">Home,App,Blog</c:set>
+        <c:set var="showOption" value="true"/>
         <%@ include file="/WEB-INF/jsp/NavigationBar/navbar.jsp" %>
 	  </div>
 	</div>

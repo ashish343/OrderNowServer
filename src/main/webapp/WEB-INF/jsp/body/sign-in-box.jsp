@@ -3,15 +3,17 @@
         <div id="rest-sign-in">
             <div class="input-group user-login-input input-group-lg">
                 <span class="input-group-addon user-logn">Username</span>
-                <input type="text" class="form-control" placeholder="Username">
+                <input name="j_username" type="text" class="form-control" placeholder="Username">
             </div>
             <div class="input-group user-pass-input input-group-lg">
                 <span class="input-group-addon user-pass">Password</span>
-                <input type="text" class="form-control" placeholder="Password">
+                <input name="j_password" type="password" class="form-control" placeholder="Password">
             </div>
         </div>
-        <div class="login-button">
-            <button class="btn btn-lg" type="button">Sign In</button>
+        <div class="row">
+            <div class="col col-xs-offset-5 col-md-offset-5 col-lg-offset-5">
+                <input name="submit" type="submit" class="login-button" value="Sign In" />
+            </div>
         </div>
     </div>
 </div>
