@@ -322,14 +322,32 @@ function addDish(){
 	n1["food_type"] = $('#addDishForm select[name=foodType]').val();			
 	x = findNode(root, $('#addDishForm input[name=parent_categ]').val());
 	if(x.children != undefined){
-		x.children.push(n1);
+	x.children.push(n1);
 	}
 	else if(x._children != undefined){
-		x._children.push(n1);
-	}		
-	update(root);	
+	x._children.push(n1);
+	}
+		
+	update(root);
+	
 }
 
+
+function convertCircularJSONToString(obj){
+	var cache=[]
+	var txt = JSON.stringify(obj, function(key, value) {
+	    if (typeof value === 'object' && value !== null) {
+	        if (cache.indexOf(value) !== -1) {
+	            // Circular reference found, discard key
+	            return;
+	        }
+	        // Store value in our collection
+	        cache.push(value);
+	    }
+	    return value;
+	});
+	return txt;
+}
 
 
 function edit(e){
