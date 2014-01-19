@@ -22,6 +22,7 @@ public class ConnectionUtilility {
 		}
 		return con;
 	}
+	
 	public static void getResponseData(HttpURLConnection con) throws IOException {
 		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 		

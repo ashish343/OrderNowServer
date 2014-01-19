@@ -10,4 +10,15 @@ d.join("linear-gradient(left top,#9f9, white);background-image:")).slice(0,-17);
 a}}}(),l={audio:!!document.createElement("audio").canPlayType,video:!!document.createElement("video").canPlayType,canvas:!!document.createElement("canvas").getContext,offline:navigator.hasOwnProperty&&navigator.hasOwnProperty("onLine")&&navigator.onLine,dragDrop:"draggable"in document.createElement("span"),geolocation:!!navigator.geolocation,history:!(!window.history||!window.history.pushState),autofocus:"autofocus"in document.createElement("input"),inputPlaceholder:"placeholder"in document.createElement("input"),
 textareaPlaceholder:"placeholder"in document.createElement("textarea"),localStorage:"localStorage"in window&&window.localStorage!==null,orientation:"orientation"in window,touch:"ontouchend"in document,touchScrolling:f.testTouchScrolling(),gradients:f.testGradients(),hires:window.devicePixelRatio&&window.devicePixelRatio>=1.5,transform3d:f.testTransform3d(),ios:!!k.match(/OS [1-9](_\d)+ like Mac OS X/i),android:!!k.match(/android [1-9]/i)},n="textShadow textStroke boxShadow borderRadius borderImage opacity transform transition".split(" "),
 e=0;for(;e<n.length;e++)l[n[e]]=f.test(n[e]);m();typeof window.addEventListener==="function"?window.addEventListener("resize",m,!1):window.attachEvent("onresize",m);g(j,"a-no-js");h(j,"a-js");for(var o in l)l.hasOwnProperty(o)&&l[o]&&h(j,"a-"+o.replace(/([A-Z])/g,function(d){return"-"+d.toLowerCase()}));j.setAttribute("data-aui-build-date",P.BUILD_DATE);return{capabilities:l}})})();
+function loadJS(src, callback) {var s = document.createElement('script');s.src = src;s.async = true;s.onreadystatechange = s.onload = function() {var state = s.readyState;if (!callback.done && (!state || /loaded|complete/.test(state))) {callback.done = true;callback();}};document.getElementsByTagName('head')[0].appendChild(s);}
+loadJS('http://code.jquery.com/jquery-2.0.3.min.js', function() {P.register('jQuery');});
+P.when('jQuery').execute(function($){
+    P.load.js("${path}/resources/js/bootstrap.min.js");
+});
+function HeaderController($scope, $location) 
+{ 
+    $scope.isActive = function (viewLocation) { 
+        return viewLocation === $location.path();
+    };
+}
 </script>
