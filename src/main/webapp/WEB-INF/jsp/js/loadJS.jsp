@@ -1,30 +1,14 @@
-	<script>
-    function loadJS(src, callback) {
-    var s = document.createElement('script');
-    s.src = src;
-    s.async = true;
-    s.onreadystatechange = s.onload = function() {
-        var state = s.readyState;
-        if (!callback.done && (!state || /loaded|complete/.test(state))) {
-            callback.done = true;
-            callback();
-        }
-    };
-    document.getElementsByTagName('head')[0].appendChild(s);
-}
-
-    loadJS('http://code.jquery.com/jquery-2.0.3.min.js', function() { 
-        P.register('jQuery');
-    });
-
+<script>
 	P.when('jQuery').execute(function($){
-	    P.load.js("${path}/resources/js/bootstrap.min.js");	
  	    loadJS("${path}/resources/js/jquery.als-1.2.min.js", function() {
  	        P.register('als');
  		}); 	   
  	  	loadJS("${path}/resources/js/d3.v3.min.js", function() {
 	        P.register('d3');
 		}); 		
+ 	  	loadJS('https://d3dy5gmtp8yhk7.cloudfront.net/2.1/pusher.min.js', function() { 
+            myPusherFunc();
+        });
  		
 	});
 	P.when('jQuery', 'als').execute(function($,a) {
@@ -36,5 +20,17 @@
         autoscroll: "no"
     });
 	});
-	
+	var myPusherFunc = function() {
+        Pusher.log = function(message) {
+              if (window.console && window.console.log) {
+                window.console.log(message);
+              }
+            };
+
+            var pusher = new Pusher('1f7298f8e64c81a0d7de');
+            var channel = pusher.subscribe('test_channel');
+            channel.bind('my_event', function(data) {
+              alert(data.message);
+            });
+    } 
 	</script>

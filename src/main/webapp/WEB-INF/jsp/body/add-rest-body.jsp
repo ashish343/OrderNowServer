@@ -293,7 +293,7 @@ function color(d) {
 	
 	<div class="col-xs-4 col-md-5 col-lg-6" id="dish" style="display: none;">
 	
-		<%@ include file="/WEB-INF/jsp/util/item_detail.jsp" %>		
+		<%@ include file="/WEB-INF/jsp/common/item_detail.jsp" %>		
 		<div class="row">
 			<div class="col-xs-4">
 			<button name ="edit" class="btn btn-lg btn-primary btn-block"  style="padding: 5px" id="edit">Edit</button>				
