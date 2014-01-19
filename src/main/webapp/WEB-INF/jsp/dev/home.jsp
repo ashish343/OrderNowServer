@@ -15,7 +15,8 @@
     min-height:500px;
     border-style: solid; 
     border-width: 1px; 
-    border-color: dimgrey;
+    border-color: dimgrey;	
+    background-color: white;
 }
 </style>
   </head>
