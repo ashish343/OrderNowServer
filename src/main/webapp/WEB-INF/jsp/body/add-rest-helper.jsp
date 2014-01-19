@@ -230,12 +230,12 @@ function color(d) {
 	    	<tr><td>
 	    		<div class="input-group ">
 	                <span class="input-group-addon">Category Name</span>
-	                <input name="cat" type="text" class="form-control" placeholder="Category Name"  autocomplete="on">
+	                <input name="categ" type="text" class="form-control" placeholder="Category Name"  autocomplete="on">
 	            </div>
 	    	</td></tr>
 	    	<tr><td>
 				<div class="input-group">
-				<button name ="commit" class="btn btn-lg btn-primary btn-block" type="submit" style="padding: 5px">Add</button>
+				<button name ="commit" class="btn btn-lg btn-primary btn-block" onclick="addCateg(this); return false;" style="padding: 5px">Add</button>
 				</div>
 			</td></tr>
 	    	</table>
@@ -331,6 +331,29 @@ function addDish(){
 	update(root);
 	
 }
+
+function addCateg(){
+	
+	var n1={};
+	n1["name"] = $('#addCategForm input[name=categ]').val();
+	window.maxID += 1;
+	n1["id"] = window.maxID;
+	window.maxID += 1;
+	n1["children"] = [{"id":9999}];
+	
+		 				
+	x = findNode(root, $('#addDishForm input[name=parent_categ]').val());
+	if(x.children != undefined){
+		x.children.push(n1);
+	}
+	else if(x._children != undefined){
+		x._children.push(n1);
+	}
+	console.log(convertCircularJSONToString(root));
+	update(root);
+	
+}
+
 
 
 function convertCircularJSONToString(obj){
