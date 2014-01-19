@@ -10,6 +10,7 @@ tr {
   stroke: #3182bd;
   stroke-width: 1.5px;
   width: 30px;
+  
 }
 
 .node text {
@@ -33,7 +34,7 @@ P.when("d3","jQuery").execute(function(d3,$){
 	window.margin = {top: 30, right: 20, bottom: 30, left: 20};	
 
     /* var width = 960 - margin.left - margin.right; */
-    var width = $('#chart').width();
+    var width = $('#chart').width() *0.9;
     
     window.barWidth = width * .8;
     
@@ -65,12 +66,9 @@ function update(source) {
 
   // Compute the flattened node list. TODO use d3.layout.hierarchy.
   var nodes = tree.nodes(root);
-
   var height = Math.max(500, nodes.length * barHeight + margin.top + margin.bottom);
-
   d3.select("svg")
       .attr("height", height);
-
   d3.select(self.frameElement)
       .style("height", height + "px");
 
@@ -78,7 +76,6 @@ function update(source) {
   nodes.forEach(function(n, i) {
     n.x = i * barHeight;
   });
-
   // Update the nodes
   var node = svg.selectAll("g.node")
       .data(nodes, function(d) { return d.id || (d.id = ++i); });
@@ -99,6 +96,7 @@ function update(source) {
   nodeEnter.append("text")
       .attr("dy", 3.5)
       .attr("dx", 5.5)
+      .attr("id", function(d){return d.id})
       .text(function(d) { return d.name; });
 
   // Transition nodes to their new position.
@@ -166,7 +164,43 @@ function click(d) {
     d.children = d._children;
     d._children = null;
   }
-  update(d);
+  
+  console.log(d);
+  
+  if(d._children == null && d.children == null){
+	  /* 
+	  $("#addType option[value='category']").remove();
+	  $('#dynamic_category').html(" in "+d.parent.name);
+	  $('#addCategory').hide();
+	  $('#addDish').show();
+	   */
+	   $('#form').hide();
+	   $('#dish').show();
+	   $('#img').attr("src","")
+	   
+	   $('.price').html(d.price);
+	   $('.dish-name').html(d.name);
+	   $('.dish_desc').html(d.desc);
+	   $('#edit').attr('did', d.id);
+	   $('#delete').attr('did', d.id);
+	   
+	   
+	   
+	   
+	}else{
+		if($("#addType option[value='category']").length == 0){
+		$("#addType").append("<option value='category'>Add Category</option>")}
+		$('#dynamic_category').html("/Categories in "+d.name);
+		$('#form').show();
+	   	$('#dish').hide();
+	}	   
+ 
+  update(d);  
+    
+}
+
+function color_highlight(d){
+	return "#fd8d3c";
 }
 
 function color(d) {
@@ -179,6 +213,8 @@ function color(d) {
 <div class="row dish-container">
 	<div class="col-xs-4 col-md-5 col-lg-6" id="chart"></div>
 	<div class="col-xs-4 col-md-5 col-lg-6" id="form">
+		<span >Add Dishes<span id='dynamic_category' ></span>
+		</span>
 		<select class="form-control" id="addType">
 	    	<option onSelect="" value="category">Add Category</option>
 	    	<option onSelect="" value="dish">Add Dish</option>
@@ -250,8 +286,63 @@ function color(d) {
 	    </div>
 	</div>
 	
+	<div class="col-xs-4 col-md-5 col-lg-6" id="dish" style="display: none;">
+	
+		<%@ include file="/WEB-INF/jsp/util/item_detail.jsp" %>		
+		<div class="row">
+			<div class="col-xs-4">
+			<button name ="edit" class="btn btn-lg btn-primary btn-block"  style="padding: 5px" id="edit">Edit</button>				
+			</div>			
+			<div class="col-xs-4">
+			<button name ="delete" class="btn btn-lg btn-danger	 btn-block" style="padding: 5px" id="delete" onclick="edit(this)">Delete</button>				
+			</div>		
+		</div>
+	</div>		
 </div>
 
+<script>
+
+function edit(e){
+	var  id = parseInt(e.getAttribute("did"));
+	var temp = root;
+	if (temp.id == id){
+		delete temp;	
+	}	
+	else{
+		if(temp.children!=null){
+			
+			for ( jx=0;jx< temp.children.length;jx++){			
+				ix = recursivefind(temp.children[jx], id)
+				console.log(ix);
+				if (ix){		
+					debugger;							
+					temp.children.splice(jx,1);
+					break;
+				}
+			}		
+		}	
+	}
+	update(root);	
+}
+
+function recursivefind(node, id){
+	console.log(1)
+	if (node.id == id)
+		return true;
+	else if (node.children != null){
+		for(ix=0;ix< node.children.length;ix++){
+			var x=recursivefind(node.children[ix], id)
+			if(x){
+				debugger;
+				delete node.children.splice(ix,1);
+				return false;
+				}				
+		}			
+	}else return false;
+}
+
+
+</script>
 
     
     
