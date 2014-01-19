@@ -21,7 +21,11 @@
 	    P.load.js("${path}/resources/js/bootstrap.min.js");	
  	    loadJS("${path}/resources/js/jquery.als-1.2.min.js", function() {
  	        P.register('als');
- 		});
+ 		}); 	   
+ 	  	loadJS("${path}/resources/js/d3.v3.min.js", function() {
+	        P.register('d3');
+		}); 		
+ 		
 	});
 	P.when('jQuery', 'als').execute(function($,a) {
     this.$("#demo1").als({
@@ -32,4 +36,5 @@
         autoscroll: "no"
     });
 	});
+	
 	</script>

@@ -1,6 +1,7 @@
 
 P.when('jQuery').execute(function($) {
 	addRest(this.$);
+	displayDiv(this.$)
 });
 
 var addRest = function($) {
@@ -20,5 +21,19 @@ var addRest = function($) {
 		jQuery(".page-layout").children("div").each(function(){$(this).hide()});
 		jQuery("#rest-sign-in").show();
 		e.preventDefault();
+	});
+}
+
+var displayDiv = function($){
+	$('#addType').change(function(){ 
+	    if($(this).val() == "category"){	    	
+	    	$('#addCategory').show();
+	    	$('#addDish').hide();	    	
+	    }
+	    if($(this).val() == "dish"){
+	    	$('#addCategory').hide();
+	    	$('#addDish').show();
+	    	
+	    }
 	});
 }
