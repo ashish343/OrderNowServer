@@ -32,7 +32,7 @@ P.when("d3","jQuery").execute(function(d3,$){
 });
  function abc(d3,$){
 	window.margin = {top: 30, right: 20, bottom: 30, left: 20};	
-
+window.maxID=-1;
     /* var width = 960 - margin.left - margin.right; */
     var width = $('#chart').width() *0.9;
     
@@ -96,7 +96,7 @@ function update(source) {
   nodeEnter.append("text")
       .attr("dy", 3.5)
       .attr("dx", 5.5)
-      .attr("id", function(d){return d.id})
+      .attr("id", function(d){if (window.maxID<d.id)window.maxID=d.id;return d.id})
       .text(function(d) { return d.name; });
 
   // Transition nodes to their new position.
@@ -164,8 +164,7 @@ function click(d) {
     d.children = d._children;
     d._children = null;
   }
-  
-  console.log(d);
+    
   
   if(d._children == null && d.children == null){
 	  /* 
@@ -174,6 +173,7 @@ function click(d) {
 	  $('#addCategory').hide();
 	  $('#addDish').show();
 	   */
+	   $('#start').hide();
 	   $('#form').hide();
 	   $('#dish').show();
 	   $('#img').attr("src","")
@@ -191,8 +191,11 @@ function click(d) {
 		if($("#addType option[value='category']").length == 0){
 		$("#addType").append("<option value='category'>Add Category</option>")}
 		$('#dynamic_category').html("/Categories in "+d.name);
-		$('#form').show();
+		$('#start').hide();
+		$('#form').show();		
 	   	$('#dish').hide();
+	   	$('#addDishForm input[name=parent_categ]').val(d.id);
+	   	$('#addCategForm input[name=parent_categ]').val(d.id);
 	}	   
  
   update(d);  
@@ -212,7 +215,7 @@ function color(d) {
 
 <div class="row dish-container">
 	<div class="col-xs-4 col-md-5 col-lg-6" id="chart"></div>
-	<div class="col-xs-4 col-md-5 col-lg-6" id="form">
+	<div class="col-xs-4 col-md-5 col-lg-6" id="form" style="display: none;">
 		<span >Add Dishes<span id='dynamic_category' ></span>
 		</span>
 		<select class="form-control" id="addType">
@@ -220,7 +223,8 @@ function color(d) {
 	    	<option onSelect="" value="dish">Add Dish</option>
 	    </select>
 	    <div id='addCategory' >
-	    	<form>
+	    	<form id='addCategForm'>
+	    	<input type='hidden' name='parent_categ' value=''>
 	    	<table>
 	    	<input type='hidden' name='form_type' value='category'>
 	    	<tr><td>
@@ -239,13 +243,14 @@ function color(d) {
 	    </div>
 	    
 	    <div id='addDish' style="display: none;" >
-	    	<form >
+	    	<form id='addDishForm'>
+	    	<input type='hidden' name='parent_categ' value=''>
 	    	<table>
 	    		<input type='hidden' name='form_type' value='dish'>
 	   		<tr><td>
 	    			<div class="input-group">
 	                <span class="input-group-addon">Food Type</span>
-	                <select class="form-control">
+	                <select class="form-control" name='foodType'>
 	                <option value="Veg"> Veg</option>
 	                <option value="NonVeg"> Non-Veg</option>                
 	                </select>
@@ -272,13 +277,13 @@ function color(d) {
 			<tr><td>
 	    			<div class="input-group">
 	                <span class="input-group-addon">Description</span>
-	                <textarea rows="3" cols="30" placeholder="Description of the Dish"></textarea>
+	                <textarea rows="3" cols="30" name='desc' placeholder="Description of the Dish"></textarea>
 	                </div>
 			</td></tr>
 			
 			<tr><td>
 				<div class="input-group">
-				<button name ="commit" class="btn btn-lg btn-primary btn-block" type="submit" style="padding: 5px">Add</button>
+				<button name ="commit" class="btn btn-lg btn-primary btn-block"  style="padding: 5px" onclick="addDish(this); return false;">Add</button>
 				</div>
 			</td></tr>
 	    	</table>
@@ -298,9 +303,34 @@ function color(d) {
 			</div>		
 		</div>
 	</div>		
+	<div class="col-xs-4 col-md-5 col-lg-6" id="start" style="display: block;">
+	
+		Select a Category or a Dish
+	</div>		
+	
 </div>
 
 <script>
+
+function addDish(){
+	var n1={};
+	n1["name"] = $('#addDishForm input[name=dish]').val();
+	window.maxID += 1;
+	n1["id"] = window.maxID;	 
+	n1["price"] = $('#addDishForm input[name=price]').val(); 
+	n1["desc"] =$('#addDishForm textarea').val(); 
+	n1["food_type"] = $('#addDishForm select[name=foodType]').val();			
+	x = findNode(root, $('#addDishForm input[name=parent_categ]').val());
+	if(x.children != undefined){
+		x.children.push(n1);
+	}
+	else if(x._children != undefined){
+		x._children.push(n1);
+	}		
+	update(root);	
+}
+
+
 
 function edit(e){
 	var  id = parseInt(e.getAttribute("did"));
@@ -313,9 +343,8 @@ function edit(e){
 			
 			for ( jx=0;jx< temp.children.length;jx++){			
 				ix = recursivefind(temp.children[jx], id)
-				console.log(ix);
-				if (ix){		
-					debugger;							
+				
+				if (ix){													
 					temp.children.splice(jx,1);
 					break;
 				}
@@ -326,14 +355,13 @@ function edit(e){
 }
 
 function recursivefind(node, id){
-	console.log(1)
+	
 	if (node.id == id)
 		return true;
 	else if (node.children != null){
 		for(ix=0;ix< node.children.length;ix++){
 			var x=recursivefind(node.children[ix], id)
-			if(x){
-				debugger;
+			if(x){				
 				delete node.children.splice(ix,1);
 				return false;
 				}				
@@ -341,6 +369,20 @@ function recursivefind(node, id){
 	}else return false;
 }
 
+
+function findNode(node, id){	
+	if (node.id == id)
+		return node;
+	
+	else if (node.children != null){
+		for(ix=0;ix< node.children.length;ix++){
+			var x=findNode(node.children[ix], id)
+			if(x != null){							
+				return x;				
+			}				
+		}				
+	}
+}	
 
 </script>
 
