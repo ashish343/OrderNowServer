@@ -35,10 +35,10 @@ public class DefaultController extends HttpServlet {
         //ServletOutputStream out = response.getOutputStream();
         //out.write(host.getBytes());
         //out.flush();
-        
+         
         request.setAttribute("path", host);
         request.setAttribute("now", now);
-        request.getRequestDispatcher("/WEB-INF/jsp/home.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/jsp/hello.jsp").forward(request, response);
     }
     
     @Override
