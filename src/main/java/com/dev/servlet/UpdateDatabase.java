@@ -74,23 +74,17 @@ public class UpdateDatabase extends HttpServlet {
 		Iterator<String> iter = obj.keys();
 		while (iter.hasNext()) {
 			String key = iter.next().toString();
-			switch (key) {
-			case "desc":
+			if ("desc".equals(key)) {
 				ret.put("description", obj.get(key));
-				break;
-			case "name":
+			} else if ("name".equals(key)) {
 				ret.put(key, obj.get(key));
-				break;
-			case "price":
+			} else if ("price".equals(key)) {
 				ret.put(key, obj.get(key));
-				break;
-			case "img":
+			} else if ("img".equals(key)) {
 				ret.put(key, obj.get(key));
-				break;
-			case "type":
+			} else if ("type".equals(key)) {
 				ret.put(key, obj.get(key));
-				break;
-			case "dishId":
+			} else if ("dishId".equals(key)) {
 				if (obj.get(key) == "-1")
 					ret.put(key, DishIdGenerator.generateUniqueDishId());
 				else
