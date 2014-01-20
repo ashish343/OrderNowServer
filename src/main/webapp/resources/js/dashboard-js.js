@@ -1,5 +1,8 @@
 
 P.when('jQuery').execute(function($) {
+	loadJS("/resources/js/d3.v3.min.js", function() {
+        P.register('d3');
+	});
 	addRest(this.$);
 	displayDiv(this.$)
 });

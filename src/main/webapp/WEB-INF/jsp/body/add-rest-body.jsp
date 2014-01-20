@@ -214,7 +214,8 @@ function color(d) {
 
 
 <div class="row dish-container">
-	<div class="col-xs-4 col-md-5 col-lg-6" id="chart"></div>
+	<div class="col-xs-4 col-md-5 col-lg-6" id="chart">	 
+  </div>
 	<div class="col-xs-4 col-md-5 col-lg-6" id="form" style="display: none;">
 		<span >Add Dishes<span id='dynamic_category' ></span>
 		</span>
@@ -293,7 +294,7 @@ function color(d) {
 	
 	<div class="col-xs-4 col-md-5 col-lg-6" id="dish" style="display: none;">
 	
-		<%@ include file="/WEB-INF/jsp/util/item_detail.jsp" %>		
+		<%@ include file="/WEB-INF/jsp/common/item_detail.jsp" %>		
 		<div class="row">
 			<div class="col-xs-4">
 			<button name ="edit" class="btn btn-lg btn-primary btn-block"  style="padding: 5px" id="edit">Edit</button>				
@@ -319,7 +320,8 @@ function addDish(){
 	n1["id"] = window.maxID;	 
 	n1["price"] = $('#addDishForm input[name=price]').val(); 
 	n1["desc"] =$('#addDishForm textarea').val(); 
-	n1["food_type"] = $('#addDishForm select[name=foodType]').val();			
+	n1["food_type"] = $('#addDishForm select[name=foodType]').val();
+	n1["dishId"] ="-1";			
 	x = findNode(root, $('#addDishForm input[name=parent_categ]').val());
 	if(x.children != undefined){
 	x.children.push(n1);
@@ -329,7 +331,17 @@ function addDish(){
 	}
 		
 	update(root);
-	
+	tmp = convertCircularJSONToString(root);	
+	var request = $.ajax({
+		  url: "/updateDatabase",
+		  type: "POST",
+		  data: { json : tmp }		  
+		});
+		 
+	request.fail(function( jqXHR, textStatus ) {
+	  alert( "Request failed: " + textStatus );
+	});
+		
 }
 
 function addCateg(){
@@ -357,14 +369,15 @@ function addCateg(){
 
 
 function convertCircularJSONToString(obj){
+	allowed= ["name", "children","desc","price","image"]
 	var cache=[]
-	var txt = JSON.stringify(obj, function(key, value) {
+	var txt = JSON.stringify(obj, function(key, value) {		
 	    if (typeof value === 'object' && value !== null) {
 	        if (cache.indexOf(value) !== -1) {
 	            // Circular reference found, discard key
 	            return;
 	        }
-	        // Store value in our collection
+	        // Store value in our collection	        
 	        cache.push(value);
 	    }
 	    return value;

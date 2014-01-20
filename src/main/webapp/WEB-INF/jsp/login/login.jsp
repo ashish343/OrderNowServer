@@ -4,9 +4,7 @@
 <html>
   <head>
     <title>Order Now</title>
-    <link type="text/css" href="${path}/resources/css/bootstrap.min.css" rel="stylesheet"/>
-    <link type="text/css" href="${path}/resources/css/pageCss.css" rel="stylesheet"/>
-    <%@ include file="/WEB-INF/jsp/js/pageJS.jsp" %>
+    <%@ include file="/WEB-INF/jsp/common/head-resources.jsp" %>
     
 <style type="text/css">
 .page-layout {
@@ -20,7 +18,7 @@
     <div class="navbar-wrapper">
       <div class="container">
         <c:set var="options">Add Restaurant,Modify Restaurant</c:set>
-        <%@ include file="/WEB-INF/jsp/NavigationBar/navbar.jsp" %>
+        <%@ include file="/WEB-INF/jsp/common/navbar.jsp" %>
       </div>
     </div>
     
@@ -35,8 +33,5 @@
         </div>
         </form>
     </div>
-    
-    <!-- Load JS -->
-    <%@ include file="/WEB-INF/jsp/js/loadJS.jsp" %>
   </body>
 </html>

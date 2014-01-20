@@ -4,12 +4,9 @@
 <html>
   <head>
     <title>Menu</title>
-    <link type="text/css" href="${path}/resources/css/bootstrap.min.css" rel="stylesheet"/>
-    <link type="text/css" href="${path}/resources/css/pageCss.css" rel="stylesheet"/>
+    <%@ include file="/WEB-INF/jsp/common/head-resources.jsp" %>
     <link type="text/css" href="${path}/resources/css/CSSreset.min.css" rel="stylesheet"/>
-    <%@ include file="/WEB-INF/jsp/js/pageJS.jsp" %>
-
-
+    
 <style type="text/css">
 .page-layout {
     margin:0 auto;
@@ -267,20 +264,22 @@ a.list-group-item.active.dish-item {
         </div>
     <div>
     <!-- Page Container Ends-->
-    
-    
-    
-    
-<script>
-P.when('jQuery').execute(function($)  {
-	funct(this.$);
-	});
-
-var funct = function($) {};
+     <!-- Load JS -->
+<script type="text/javascript">
+    P.when('jQuery').execute(function($){
+        loadJS("${path}/resources/js/jquery.als-1.2.min.js", function() {
+            P.register('als');
+        }); 
+    });
+    P.when('jQuery', 'als').execute(function($,a) {
+    this.$("#demo1").als({
+        visible_items: 1,
+        scrolling_items: 1,
+        orientation: "horizontal",
+        circular: "no",
+        autoscroll: "no"
+    });
+    });
 </script>
-    
-    <!-- Load JS -->
-    <%@ include file="/WEB-INF/jsp/js/loadJS.jsp" %>
-    <script type="text/javascript" src="${path}/resources/js/bodyJS.js"></script>
   </body>
 </html>

@@ -1,4 +1,4 @@
-package com.servlet;
+package com.test;
 
 import java.io.IOException;
 
@@ -11,22 +11,23 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+
 @SuppressWarnings("serial")
 @WebServlet(
-        name = "MenuServlet", 
-        urlPatterns = {"/menu"}
+        name = "TestServlet", 
+        urlPatterns = {"/test"}
     )
-public class RenderMenu extends HttpServlet {
+public class PusherTesting  extends HttpServlet {
+
 	protected final Log logger = LogFactory.getLog(getClass());
 	 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	request.getRequestDispatcher("/WEB-INF/jsp/menu.jsp").forward(request, response);
+    	request.getRequestDispatcher("/WEB-INF/jsp/test.jsp").forward(request, response);
     }
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	doGet(request, response);
     }
-
 }
