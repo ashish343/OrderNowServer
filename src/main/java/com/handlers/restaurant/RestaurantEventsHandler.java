@@ -1,6 +1,8 @@
 package com.handlers.restaurant;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.data.RestaurantData;
 import com.enums.EventState;
@@ -38,5 +40,35 @@ public class RestaurantEventsHandler {
 	
 	private static int addRestuarantToDB(RestaurantData restaurantData) {
 		return EventState.SUCCESS.ordinal();
+	}
+
+	public static void handleOrderReceived(HttpServletResponse response,
+			HttpServletRequest request, ServletOutputStream outputStream) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static void handleOrderAccepted(HttpServletResponse response,
+			HttpServletRequest request, ServletOutputStream outputStream) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static void handleOrderCompleted(HttpServletResponse response,
+			HttpServletRequest request, ServletOutputStream outputStream) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static void handleBill(HttpServletResponse response,
+			HttpServletRequest request, ServletOutputStream outputStream) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public static void handleModifyOrder(HttpServletResponse response,
+			HttpServletRequest request, ServletOutputStream outputStream) {
+		// TODO Auto-generated method stub
+		
 	}
 }
