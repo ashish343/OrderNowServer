@@ -36,26 +36,53 @@ public class CustomerOrderServlet  extends HttpServlet {
 	 */
 	@Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ServletOutputStream outputStream = null;
+		ServletOutputStream outputStream = response.getOutputStream();
     	boolean isDebug = RequestContext.isDebugEnabled();
     	/*
     	 * Get the Customer Order.
     	 */
-		String customerOrderJson = request.getParameter(UrlParameter.CUSTOMER_ORDER.toString());
-		Gson gson = new Gson();
-		CustomerOrder customerOrder = gson.fromJson(customerOrderJson, CustomerOrder.class);
-		
-		if(isDebug) {
-			outputStream = response.getOutputStream();
-			outputStream.write(("\nCustomer Json Order :: ").getBytes());
-			outputStream.write(("\n" + customerOrderJson).getBytes());
-		}
+    	CustomerOrder customerOrder = getCustomerOrder(request, outputStream, isDebug);
 		
 		/*
 		 * Fetch the Menu From DB to create Restaurant Order.
 		 */
-		Menu menu = null;
+		
 		String restuarantId = customerOrder.getRestaurantId();
+		Menu menu = getMenu(restuarantId, outputStream, isDebug);
+    	
+		/*
+		 * Populate the Restaurant Order from Customer Order.
+		 */
+    	/*
+    	 * TODO: Check if the order already exist, if yes then get the order id else create a new one.
+    	 */
+    	String orderId = OrderIdGenerator.generateUniqueOrderId();
+    	String customerId = customerOrder.getCustomerId();
+    	CustomerRestaurantHandshake customerRest = new CustomerRestaurantHandshake();
+    	RestaurantOrder restaurantOrder = customerRest.getRestaurantOrder(menu, customerOrder, orderId, customerId);
+    	
+    	/*
+    	 * TODO: Update DB with the order.
+    	 */
+    	DataConnection.setOrderDetailsToDB();
+		
+    	
+    	/*
+    	 * Send Notification to Restaurant about the order.
+    	 */
+    	Gson gson = new Gson();
+    	String restaurantOrderJson = gson.toJson(restaurantOrder);
+    	PusherHelper.triggerPush(restuarantId, RestaurantClientSideEvents.NOTIFY_NEW_ORDER.toString(), restaurantOrderJson);
+		
+		/*
+		 * Return a success message to the User.
+		 */
+    	outputStream.flush();
+    }
+    
+    private Menu getMenu(String restuarantId, ServletOutputStream outputStream, boolean isDebug) throws IOException {
+    	Menu menu = null;
+    	Gson gson = new Gson();
     	if(restuarantId != null) {
     		Restaurant restaurantData = TableHandler.getRestaurantInformation(restuarantId, outputStream);
     		menu = restaurantData.getMenu();
@@ -67,34 +94,23 @@ public class CustomerOrderServlet  extends HttpServlet {
     	if(isDebug) {
     		outputStream.write(("\nMenu Data from DB::" + gson.toJson(menu)).getBytes());
     	}
-		/*
-		 * Populate the Restaurant Order from Customer Order.
-		 */
-    	
-    	String orderId = OrderIdGenerator.generateUniqueOrderId();
-    	String customerId = customerOrder.getCustomerId();
-    	CustomerRestaurantHandshake customerRest = new CustomerRestaurantHandshake();
-    	RestaurantOrder restaurantOrder = customerRest.getRestaurantOrder(menu, customerOrder, orderId, customerId);
-    	
-    	/*
-    	 * Update DB with the order.
-    	 */
-    	DataConnection.setOrderDetailsToDB();
+    	return menu;
+	}
+
+	private CustomerOrder getCustomerOrder(HttpServletRequest request, ServletOutputStream outputStream, boolean isDebug) throws IOException {
+    	String customerOrderJson = request.getParameter(UrlParameter.CUSTOMER_ORDER.toString());
+		Gson gson = new Gson();
+		CustomerOrder customerOrder = gson.fromJson(customerOrderJson, CustomerOrder.class);
 		
-    	
-    	/*
-    	 * Send Notification to Restaurant about the order.
-    	 */
-    	String restaurantOrderJson = gson.toJson(restaurantOrder);
-    	PusherHelper.triggerPush(restuarantId, RestaurantClientSideEvents.NOTIFY_NEW_ORDER.toString(), restaurantOrderJson);
-		
-		/*
-		 * Return a success message to the User.
-		 */
-    	outputStream.flush();
-    }
+		if(isDebug) {
+			outputStream.write(("\nCustomer Json Order :: ").getBytes());
+			outputStream.write(("\n" + customerOrderJson).getBytes());
+		}
+		return customerOrder;
+	}
     
-    @Override
+
+	@Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	doGet(request, response);
     }
