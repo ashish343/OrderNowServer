@@ -7,8 +7,11 @@ public enum UrlParameter {
 	RESTUARANT_TABLES("restTables"),
 	DEBUG("debug"),
 	TABLE_ID("tableId"),
+	CUSTOMER_ID("customerId"),
+	ORDER_ID("orderId"),
+	RESTAURNAT_ID("restaurantId"),
 	CUSTOMER_ORDER("order"),
-	USER_ACTION("actio");
+	USER_ACTION("action");
 	
 	private String data;
 	
