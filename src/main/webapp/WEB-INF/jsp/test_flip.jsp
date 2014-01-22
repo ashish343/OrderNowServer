@@ -104,7 +104,7 @@
     <!-- Load JS -->
     <script type="text/javascript">
         P.when('jQuery').execute(function($){
-            loadJS('http://guilhemmarty.com/flippy/jquery.flippy.min.js', function() { 
+            loadJS('/resources/js/flippy.min.js', function() { 
             	//flipy();
             });
             loadJS('/resources/js/masonry.js', function() { 
@@ -155,4 +155,4 @@
         }
     </script>
   </body>
-</html>
+</html> 
