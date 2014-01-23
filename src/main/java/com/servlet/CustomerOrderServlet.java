@@ -84,7 +84,7 @@ public class CustomerOrderServlet  extends HttpServlet {
     	 */
     	Gson gson = new Gson();
     	String restaurantOrderJson = gson.toJson(restaurantOrder);
-    	String json = "{\"data\":\"{\\\"message\\\":\\\"" + restaurantOrderJson + "\\\"}\",\"name\":\"notify_order\",\"channel\":\"R1\"}";
+    	String json = "{\"data\":\"{\\\"message\\\":\\\"hello world\\\"}\",\"name\":\"notify_order\",\"channel\":\"R1\"}";
     	//PusherHelper.triggerPush(restuarantId, RestaurantClientSideEvents.NOTIFY_NEW_ORDER.toString(), json);
     	PusherTest.triggerPush("R1", "notify_order", json, "");
 		/*
