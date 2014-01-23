@@ -1,6 +1,9 @@
 package com.servlet;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -19,7 +22,9 @@ import com.enums.EventState;
 import com.enums.UrlParameter;
 import com.google.gson.Gson;
 import com.handlers.table.TableHandler;
+import com.parse.ParseNotificationHelper;
 import com.pusher.PusherHelper;
+import com.test.PusherTest;
 import com.utility.CustomerRestaurantHandshake;
 import com.utility.OrderIdGenerator;
 import com.utility.RequestContext;
@@ -46,9 +51,12 @@ public class CustomerOrderServlet  extends HttpServlet {
 		/*
 		 * Fetch the Menu From DB to create Restaurant Order.
 		 */
-		
+		/*
+		 * TODO: Remove the below hack.
+		 */
 		String restuarantId = customerOrder.getRestaurantId();
-		Menu menu = getMenu(restuarantId, outputStream, isDebug);
+		//Menu menu = getMenu(restuarantId, outputStream, isDebug);
+		Menu menu = getMenu();
     	
 		/*
 		 * Populate the Restaurant Order from Customer Order.
@@ -56,7 +64,7 @@ public class CustomerOrderServlet  extends HttpServlet {
     	/*
     	 * TODO: Check if the order already exist, if yes then get the order id else create a new one.
     	 */
-    	String orderId = OrderIdGenerator.generateUniqueOrderId();
+    	String orderId = "Temp";//OrderIdGenerator.generateUniqueOrderId();
     	String customerId = customerOrder.getCustomerId();
     	CustomerRestaurantHandshake customerRest = new CustomerRestaurantHandshake();
     	RestaurantOrder restaurantOrder = customerRest.getRestaurantOrder(menu, customerOrder, orderId, customerId);
@@ -66,14 +74,19 @@ public class CustomerOrderServlet  extends HttpServlet {
     	 */
     	DataConnection.setOrderDetailsToDB();
 		
+    	/*
+    	 * Subscribe Customer to The Channel.
+    	 */
+    	ParseNotificationHelper.registerChannel(customerId, orderId, outputStream);
     	
     	/*
     	 * Send Notification to Restaurant about the order.
     	 */
     	Gson gson = new Gson();
     	String restaurantOrderJson = gson.toJson(restaurantOrder);
-    	PusherHelper.triggerPush(restuarantId, RestaurantClientSideEvents.NOTIFY_NEW_ORDER.toString(), restaurantOrderJson);
-		
+    	String json = "{\"data\":\"{\\\"message\\\":\\\"" + restaurantOrderJson + "\\\"}\",\"name\":\"notify_order\",\"channel\":\"R1\"}";
+    	//PusherHelper.triggerPush(restuarantId, RestaurantClientSideEvents.NOTIFY_NEW_ORDER.toString(), json);
+    	PusherTest.triggerPush("R1", "notify_order", json, "");
 		/*
 		 * Return a success message to the User.
 		 */
@@ -96,6 +109,24 @@ public class CustomerOrderServlet  extends HttpServlet {
     	}
     	return menu;
 	}
+    
+    private static Menu getMenu() {
+    	Menu menu = null;
+    	try {
+    		BufferedReader br = new BufferedReader(new FileReader("flare.json"));
+    		System.out.println("In get Menu::");
+    		String menuJson = br.readLine();
+    		while ((br.readLine()) != null) {
+				menuJson += br.readLine();
+			}
+    		System.out.println("Menu is:::" + menuJson);
+    		Gson gson = new Gson();
+    		menu = gson.fromJson(menuJson, Menu.class);
+    	} catch(Exception e) {
+    		System.out.println("Exception::" + e.toString());
+    	}
+    	return menu;
+    }
 
 	private CustomerOrder getCustomerOrder(HttpServletRequest request, ServletOutputStream outputStream, boolean isDebug) throws IOException {
     	String customerOrderJson = request.getParameter(UrlParameter.CUSTOMER_ORDER.toString());

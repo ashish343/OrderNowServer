@@ -42,6 +42,7 @@ public class CustomerRestaurantHandshake {
 	}
 
 	private void getAllDishes(List<Category> categories) {
+		if(categories != null && !categories.isEmpty()){
 		for(Category category:categories) {
 			List<Category> subCategories = category.getCategories();
 			List<Dish> dishes = category.getDishes();
@@ -50,7 +51,7 @@ public class CustomerRestaurantHandshake {
 				allDishes.addAll(dishes);
 			}
 			getAllDishes(subCategories);
-		}
+		}}
 	}
 
 }

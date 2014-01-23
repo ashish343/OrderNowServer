@@ -23,7 +23,7 @@
 }
 .flipbox-container .flipbox {
     height:100%;
-    background-color:red;
+    background-color: red;
 }
 </style>
   </head>
@@ -39,7 +39,11 @@
         <div class="item">
             <div class="flipbox-container">
                 <div class="flipbox">
-                    <span>Hello !</span>
+                    <svg class="pie" width="148" height="148">
+                    <g transform="translate(74,74)">
+                        <text dy=".35em" style="text-anchor: middle;">AK</text>
+                    </g>
+                    </svg>
                 </div>
             </div>
         </div>
@@ -123,26 +127,14 @@
             myFlipEffect(this.$);
         });
         var myFlipEffect = function($) {
-        	$('.flipbox').hover(
-        		    function () {
-        		    	jQuery(this).flippy({
-        		    		color_target: "white",
-        		    		duration: "500",
-        		    		direction:"LEFT",
-        		    		verso: "woohoo"           
-        		    	});
-        		    },
-        		    function () {
-        		    }
-        		);
-//            $(".flipbox").mouseenter(function() {
-//         	    jQuery(this).flippy({
-//         	    	color_target: "white",
-//                     duration: "500",
-//                     direction:"LEFT",
-//                     verso: "woohoo"
-//                 });
-//            }); 
+            $(".flipbox-container").mouseenter(function() {
+         	    jQuery(this).flippy({
+         	    	color_target: "white",
+                     duration: "500",
+                     direction:"LEFT",
+                     verso: "woohoo"
+                 });
+            }); 
         }
         
         var masonry = function() {
