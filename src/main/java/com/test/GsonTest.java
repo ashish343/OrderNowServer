@@ -36,7 +36,7 @@ public class GsonTest {
 		dish1.setImg(null);
 		dish1.setName("Cream of Veg/Mushroom/Asparagus/Tomato");
 		dish1.setPrice(95);
-		dish1.setType(FoodType.VEG);
+		dish1.setType(FoodType.Veg);
 
 		/*
 		 * D2
@@ -48,7 +48,7 @@ public class GsonTest {
 		dish2.setImg(null);
 		dish2.setName("Roasted Bell Pepper Soup.");
 		dish2.setPrice(115);
-		dish2.setType(FoodType.VEG);
+		dish2.setType(FoodType.Veg);
 
 		List<Dish> dishes1 = new ArrayList<Dish>();
 		dishes1.add(dish1);
@@ -75,7 +75,7 @@ public class GsonTest {
 		dish3.setImg(null);
 		dish3.setName("Nachos with cheese souce");
 		dish3.setPrice(165);
-		dish3.setType(FoodType.VEG);
+		dish3.setType(FoodType.Veg);
 
 		/*
 		 * D2
@@ -87,7 +87,7 @@ public class GsonTest {
 		dish4.setImg(null);
 		dish4.setName("Roasted Bell Pepper Soup.");
 		dish4.setPrice(115);
-		dish4.setType(FoodType.VEG);
+		dish4.setType(FoodType.Veg);
 
 		List<Dish> dishes2 = new ArrayList<Dish>();
 		dishes2.add(dish3);
