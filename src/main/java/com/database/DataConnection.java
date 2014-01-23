@@ -33,7 +33,7 @@ public class DataConnection {
 		db = "OrderNow";
 		TABLE_DATA = "table_rest";
 		RESTUARANT_DATA = "rest";
-		ORDER_DATA = "menu_table";
+		ORDER_DATA = "order_data";
 			
 		if (mongoURI == null || db == null) {
 			System.err.println("Connection Information or DB information not present.. Exiting");
@@ -176,5 +176,12 @@ public class DataConnection {
 	private static Menu getMenuData(BasicDBObject obj) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public static boolean setOrderDetailsToDB() {
+		/*
+		 * We need to store Cust_id, Order_id, Rest_id, Customer_Order, Time, Duration.
+		 */
+		return true;
 	}
 }

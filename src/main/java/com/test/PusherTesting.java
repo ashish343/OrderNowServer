@@ -23,7 +23,7 @@ public class PusherTesting  extends HttpServlet {
 	 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	request.getRequestDispatcher("/WEB-INF/jsp/test.jsp").forward(request, response);
+    	request.getRequestDispatcher("/WEB-INF/jsp/test_flip.jsp").forward(request, response);
     }
     
     @Override

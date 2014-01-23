@@ -25,6 +25,7 @@ public class ConnectionUtilility {
 	
 	public static void getResponseData(HttpURLConnection con) throws IOException {
 		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		boolean isDebug = RequestContext.isDebugEnabled();
 		
 		String temp = null;
 		
@@ -33,7 +34,9 @@ public class ConnectionUtilility {
 			sb.append(temp).append(" ");
 		}
 		String result = sb.toString();
-		System.out.println("Result is:" + result);
+		if(isDebug) {
+			System.out.println("\n Parse Result is:" + result);
+		}
 		in.close();
 	}
 }
