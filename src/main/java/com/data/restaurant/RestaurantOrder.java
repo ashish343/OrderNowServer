@@ -4,14 +4,14 @@ import java.util.Map;
 import com.data.menu.Dish;
 
 public class RestaurantOrder {
-	private Map<Dish, Float> dishes;
+	private Map<String, Float> dishes;
 	private String orderId;
 	private String customerId;
 
-	public Map<Dish, Float> getDishes() {
+	public Map<String, Float> getDishes() {
 		return dishes;
 	}
-	public void setDishes(Map<Dish, Float> dishes) {
+	public void setDishes(Map<String, Float> dishes) {
 		this.dishes = dishes;
 	}
 	

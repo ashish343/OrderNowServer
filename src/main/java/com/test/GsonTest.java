@@ -108,12 +108,15 @@ public class GsonTest {
 		Gson gson = new Gson();
 		String json = gson.toJson(cat);
 		System.out.println(json);
+		String jsonString = json.replace("\"", "\\\"");
+		
+		System.out.println(jsonString);
 		JSONObject o1 = new JSONObject(json);
 		o1.put("tt", "tt");
 
 		Category x = gson.fromJson(o1.toString(), Category.class);
 
-		System.out.println(gson.toJson(x));
+		//System.out.println(gson.toJson(x));
 
 		// Restaurant obj = gson.fromJson(json, Restaurant.class);
 		// System.out.println(obj.getMenu().getCategories().get(0).getDishes()

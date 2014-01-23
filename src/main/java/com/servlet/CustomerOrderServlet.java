@@ -21,6 +21,7 @@ import com.database.DataConnection;
 import com.enums.EventState;
 import com.enums.UrlParameter;
 import com.google.gson.Gson;
+import com.handlers.restaurant.RestaurantEvents;
 import com.handlers.table.TableHandler;
 import com.parse.ParseNotificationHelper;
 import com.pusher.PusherHelper;
@@ -84,9 +85,9 @@ public class CustomerOrderServlet  extends HttpServlet {
     	 */
     	Gson gson = new Gson();
     	String restaurantOrderJson = gson.toJson(restaurantOrder);
-    	String json = "{\"data\":\"{\\\"message\\\":\\\"hello world\\\"}\",\"name\":\"notify_order\",\"channel\":\"R1\"}";
-    	//PusherHelper.triggerPush(restuarantId, RestaurantClientSideEvents.NOTIFY_NEW_ORDER.toString(), json);
-    	PusherTest.triggerPush("R1", "notify_order", json, "");
+    	
+    	String json = "{\"data\":\""+restaurantOrderJson.replace("\\\"", "\"").replace("\"", "\\\"")+"\",\"name\":\"" + RestaurantClientSideEvents.NOTIFY_NEW_ORDER.toString() + "\",\"channel\":\""+restuarantId+"\"}";
+    	PusherTest.triggerPush(restuarantId,  RestaurantClientSideEvents.NOTIFY_NEW_ORDER.toString(), json, "");
 		/*
 		 * Return a success message to the User.
 		 */
@@ -114,12 +115,10 @@ public class CustomerOrderServlet  extends HttpServlet {
     	Menu menu = null;
     	try {
     		BufferedReader br = new BufferedReader(new FileReader("flare.json"));
-    		System.out.println("In get Menu::");
     		String menuJson = br.readLine();
     		while ((br.readLine()) != null) {
 				menuJson += br.readLine();
 			}
-    		System.out.println("Menu is:::" + menuJson);
     		Gson gson = new Gson();
     		menu = gson.fromJson(menuJson, Menu.class);
     	} catch(Exception e) {

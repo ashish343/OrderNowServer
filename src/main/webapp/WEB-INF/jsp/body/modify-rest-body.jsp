@@ -1,7 +1,5 @@
-<div class="container page-layout">
-    </div>
-    
-    <!-- Load JS -->
+
+<!-- Load JS -->
 <script type="text/javascript">
         P.when('jQuery').execute(function($){
             loadJS('/resources/js/pusher.min.js', function() { 
@@ -18,7 +16,8 @@
                 var pusher = new Pusher('1f7298f8e64c81a0d7de');
                 var channel = pusher.subscribe('R1');
                 channel.bind('notify_order', function(data) {
-                  alert(data.message);
+                    console.log(data);
+                    alert(data);
                 });
                 channel.bind('update_order', function(data) {
                     alert(data.message);
