@@ -53,7 +53,9 @@ public class RestaurantEventsHandler {
 		if(isDebug) {
 			outputStream.write(("\nCalling notify Channel for Channel::" + channel).getBytes());
 		}
-		ParseNotificationHelper.notifyChannel(channel , "Order Received", outputStream);
+		String message = "{\"channels\":[\"" + channel + "\"],\"data\": {\"action\":\"com.example.UPDATE_STATUS\","
+				+ "\"message\": \"" + RestauntantMessage.ORDER_RECEIVED_MESSAGE.toString() +"\"}}";
+		ParseNotificationHelper.notifyChannel(channel , message, outputStream);
 		
 	}
 
@@ -61,7 +63,10 @@ public class RestaurantEventsHandler {
 			HttpServletRequest request, ServletOutputStream outputStream) {
 		// TODO Auto-generated method stub
 		String channel = getOrderId(request);
-		ParseNotificationHelper.notifyChannel(channel , "Order Accepted", outputStream);
+		
+		String message = "{\"channels\":[\"" + channel + "\"],\"data\": {\"action\":\"com.example.UPDATE_STATUS\","
+				+ "\"message\": \"" + RestauntantMessage.ORDER_ACCEPTED_MESSAGE.toString() +"\"}}";
+		ParseNotificationHelper.notifyChannel(channel , message, outputStream);
 		
 	}
 
@@ -70,20 +75,36 @@ public class RestaurantEventsHandler {
 		String channel = getOrderId(request);
 		String customerId = getCustomerId(request);
 		
-		ParseNotificationHelper.notifyChannel(channel , "Order Completed", outputStream);
+		String message = "{\"channels\":[\"" + channel + "\"],\"data\": {\"action\":\"com.example.UPDATE_STATUS\","
+				+ "\"message\": \"" + RestauntantMessage.ORDER_COMPLETED_MESSAGE.toString() +"\"}}";
+		ParseNotificationHelper.notifyChannel(channel , message, outputStream);
+		
+		ParseNotificationHelper.notifyChannel(channel , message, outputStream);
+		/*
+		 * De-register Customer from the Channel.
+		 */
 		ParseNotificationHelper.registerChannel(customerId, "", outputStream);
 	}
 
 	public static void handleBill(HttpServletResponse response,
 			HttpServletRequest request, ServletOutputStream outputStream) {
 		String channel = getOrderId(request);
-		ParseNotificationHelper.notifyChannel(channel , "Bill Generated", outputStream);		
+		
+		String message = "{\"channels\":[\"" + channel + "\"],\"data\": {\"action\":\"com.example.UPDATE_STATUS\","
+				+ "\"message\": \"" + RestauntantMessage.BILL_GENERATED_MESSAGE.toString() +"\"}}";
+		ParseNotificationHelper.notifyChannel(channel , message, outputStream);
 	}
 
 	public static void handleModifyOrder(HttpServletResponse response,
 			HttpServletRequest request, ServletOutputStream outputStream) {
-		String channel = getOrderId(request);
-		ParseNotificationHelper.notifyChannel(channel , "Order Need Modificatio", outputStream);		
+		String dishIds = request.getParameter(UrlParameter.DISH_IDS.toString());
+		if(dishIds != null && !dishIds.isEmpty()) {
+			String channel = getOrderId(request);
+			String message = "{\"channels\":[\"" + channel + "\"],\"data\": {\"action\":\"com.example.UPDATE_STATUS\","
+					+ "\"message\": \"" + RestauntantMessage.ORDER_COMPLETED_MESSAGE.toString() +
+					"\",\"dishIds\": \""+ dishIds +"\"}}";
+			ParseNotificationHelper.notifyChannel(channel , message, outputStream);
+		}
 	}
 	
 	private static String getCustomerId(HttpServletRequest request) {

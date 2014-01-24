@@ -11,7 +11,8 @@ public enum UrlParameter {
 	ORDER_ID("orderId"),
 	RESTAURNAT_ID("restaurantId"),
 	CUSTOMER_ORDER("order"),
-	USER_ACTION("action");
+	USER_ACTION("action"),
+	DISH_IDS("dishIds");
 	
 	private String data;
 	

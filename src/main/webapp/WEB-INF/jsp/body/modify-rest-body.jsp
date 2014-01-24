@@ -32,7 +32,14 @@ var d;
             loadJS('/resources/js/pusher.min.js', function() { 
                 myPusherFunc();
             });
+            attachEvent(this.$);
         });
+
+        var attachEvent = function() {
+        	jQuery(".orderItemRow").click(function() {
+                alert("here");
+            });
+        }
         var myPusherFunc = function() {
             Pusher.log = function(message) {
                   if (window.console && window.console.log) {
@@ -45,7 +52,7 @@ var d;
                 channel.bind('notify_order', function(data) {
                     d = data;
                     createOrderPage(data);
-                    console.log(data);
+                    attachEvent();
                     alert(data);
                 });
                 channel.bind('update_order', function(data) {
@@ -56,10 +63,13 @@ var d;
                   });
     } 
     var createOrderPage = function(data) {
-        var orderHtml =  '<tr><th>S.No:</th><th>Item</th><th>Quantity</th><th>Price</th></tr>';
+        var orderHtml =  '<tr><th>S.No:</th><th>Item</th><th>Quantity</th><th>Price</th><th>Availability</th></tr>';
         if(data !== null && typeof data !== undefined){
             jQuery(data.dishes).each(function(index, value) {
-            	orderHtml +='<tr><td>' + (index+1) + '</td><td>' + value.name + '</td><td>' + value.quatity + '</td><td>' + value.price + '</td></tr>'; 
+            	orderHtml +='<tr id='+ value.dishId +' class="orderItemRow"><td>' + (index+1) + '</td><td>' + value.name 
+            	+ '</td><td>' + value.quatity + '</td><td>' + value.price 
+            	+ '</td><td><button type="button" class="btn btn-default">Not Available</button></td></tr>'; 
+            	
                 jQuery("#sample").html(orderHtml);
             });
         }
