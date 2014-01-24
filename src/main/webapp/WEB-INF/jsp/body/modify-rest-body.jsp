@@ -59,7 +59,7 @@ var d;
         var orderHtml =  '<tr><th>S.No:</th><th>Item</th><th>Quantity</th><th>Price</th></tr>';
         if(data !== null && typeof data !== undefined){
             jQuery(data.dishes).each(function(index, value) {
-            	orderHtml +='<tr><td>' + (index+1) + '</td><td>' + value.name + '</td><td>' + value.price + '</td><td>' + value.quatity + '</td></tr>'; 
+            	orderHtml +='<tr><td>' + (index+1) + '</td><td>' + value.name + '</td><td>' + value.quatity + '</td><td>' + value.price + '</td></tr>'; 
                 jQuery("#sample").html(orderHtml);
             });
         }

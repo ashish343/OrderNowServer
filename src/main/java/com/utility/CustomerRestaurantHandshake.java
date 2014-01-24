@@ -30,7 +30,6 @@ public class CustomerRestaurantHandshake {
 		List<OrderedDish> restaurantDishes = new ArrayList<OrderedDish>();
 		
 		Map<String, Float> customerDishes = customerOrder.getDishes();
-		Gson gson = new Gson();
 		
 		for (String key: customerDishes.keySet()) {
 			for(Dish dish: allDishes) {
