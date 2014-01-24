@@ -18,7 +18,16 @@ public class Dish {
 	private String img;
 	private float price;
 	private FoodType type; //Veg or non-veg
+	private boolean isAvailable = true;
 	
+	public boolean isAvailable() {
+		return isAvailable;
+	}
+
+	public void setAvailable(boolean isAvailable) {
+		this.isAvailable = isAvailable;
+	}
+
 	public String getDishId() {
 		return dishId;
 	}

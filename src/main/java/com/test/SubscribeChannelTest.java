@@ -11,15 +11,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import com.enums.UrlParameter;
 import com.parse.ParseNotificationHelper;
 
 
 @SuppressWarnings("serial")
 @WebServlet(
         name = "SubscribeChannelTestServlet", 
-        urlPatterns = {"/test/push/"}
+        urlPatterns = {"/test/subscribe"}
     )
 public class SubscribeChannelTest  extends HttpServlet {
 
@@ -29,7 +27,7 @@ public class SubscribeChannelTest  extends HttpServlet {
 	 * 2) orderId as the channel.
 	 * 
 	 * Eg:
-	 * 	test/push?orderId=Oid1&custId=ABC
+	 * 	test/subscribe?orderId=GVMXrkTAFf&custId=LWKHMTCiM3
 	 */
 	
 	protected final Log logger = LogFactory.getLog(getClass());

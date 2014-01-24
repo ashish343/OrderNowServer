@@ -27,9 +27,9 @@ public class SendPush  extends HttpServlet {
     	ServletOutputStream out = response.getOutputStream();
         out.write("Send servlet".getBytes());
         
-    	String json = "{\"data\":\"{\\\"message\\\":\\\"hello world\\\"}\",\"name\":\"my_event\",\"channel\":\"test_channel\"}";
+    	String json = "{\"data\":\"{\\\"message\\\":\\\"hello world\\\"}\",\"name\":\"notify_order\",\"channel\":\"R1\"}";
     	
-		PusherTest.triggerPush("test_channel", "my_event", json, "");
+		PusherTest.triggerPush("R1", "notify_order", json, "");
 		out.flush();
     }
     

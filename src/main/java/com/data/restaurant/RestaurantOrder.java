@@ -1,32 +1,42 @@
 package com.data.restaurant;
 
-import java.util.Map;
-import com.data.menu.Dish;
+import java.util.List;
 
 public class RestaurantOrder {
-	private Map<Dish, Float> dishes;
+	private List<OrderedDish> dishes;
 	private String orderId;
 	private String customerId;
+	private String restaurantId;
 
-	public Map<Dish, Float> getDishes() {
-		return dishes;
-	}
-	public void setDishes(Map<Dish, Float> dishes) {
-		this.dishes = dishes;
-	}
-	
 	public String getCustomerId() {
 		return customerId;
 	}
+
 	public void setCustomerId(String customerId) {
 		this.customerId = customerId;
 	}
-	
+
 	public String getOrderId() {
 		return orderId;
 	}
+
 	public void setOrderId(String orderId) {
 		this.orderId = orderId;
 	}
 
+	public List<OrderedDish> getDishes() {
+		return dishes;
+	}
+
+	public void setDishes(List<OrderedDish> dishes) {
+		this.dishes = dishes;
+	}
+
+	public String getRestaurantId() {
+		return restaurantId;
+	}
+
+	public void setRestaurantId(String restaurantId) {
+		this.restaurantId = restaurantId;
+	}
 }

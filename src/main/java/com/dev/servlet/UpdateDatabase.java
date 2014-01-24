@@ -35,6 +35,7 @@ public class UpdateDatabase extends HttpServlet {
 		Gson gson = new Gson();
 		try {
 			obj = new JSONObject(request.getParameter("json"));
+			System.out.println(obj);
 			String json = createCleanJSON(obj).toString();
 			Menu m = gson.fromJson(json, Menu.class);
 		} catch (JSONException e) {

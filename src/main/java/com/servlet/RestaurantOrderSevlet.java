@@ -38,7 +38,7 @@ public class RestaurantOrderSevlet  extends HttpServlet {
 	 * 
 	 * Eg URL:
 	 * ORDER_RECEIVED
-	 *		restOrder?action=orderReceived&orderId=Oid
+	 *		restOrder?action=orderReceived&orderId=jjoJuiPitd
 	 * ORDER_ACCEPTED
 	 * 		restOrder?action=orderAccepted&orderId=Oid
 	 * BILL_GENERATED

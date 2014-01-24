@@ -39,15 +39,16 @@ public class ParseNotificationHelper {
 
 	public static void notifyChannel(String channel, String data, ServletOutputStream outputSteam) {
 		HttpURLConnection con = null;
-		String msg = "{\"channels\":[\"" + channel + "\"],\"data\": {\"action\":\"com.example.UPDATE_STATUS\","
-				+ "\"name\": \"Vaughn\", \"newsItem\": \"Man bites dog\"}}";
-	
+		/*
+		 * String msg = "{\"channels\":[\"" + channel + "\"],\"data\": {\"action\":\"com.example.UPDATE_STATUS\","
+		 *		+ "\"name\": \"Vaughn\", \"newsItem\": \"Man bites dog\"}}";
+		 */
 		try {
 			con = ConnectionUtilility.getHttpConnection(ParseRestApi.PARSE_HOST.toString() + ParseRestApi.PUSH.toString(), "POST");
 			initializeConnection(con);
 			
 			DataOutputStream out = new DataOutputStream(con.getOutputStream());
-			out.writeBytes(msg);
+			out.writeBytes(data);
 			out.flush();
 			out.close();
 			con.connect();

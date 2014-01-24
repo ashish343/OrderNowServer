@@ -1,105 +1,82 @@
-<style>
-svg {
-  padding: 10px 0 0 10px;
-	cursor: pointer;
-}
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Orders</div>
+  
+  <!-- Table -->
+  <table id="sample" class="table" border="1">
+    <tr>
+        <th>S.No:</th>
+        <th>Item</th>
+        <th>Quantity</th>
+        <th>Price</th>
+    </tr>
+    <tr>
+        <td>row 1, cell 1</td>
+        <td>row 1, cell 2</td>
+        <td>row 1, cell 1</td>
+        <td>row 1, cell 2</td>
+    </tr>
+    <tr>
+        <td>row 1, cell 1</td>
+        <td>row 1, cell 2</td>
+        <td>row 1, cell 1</td>
+        <td>row 1, cell 2</td>
+    </tr>
+  </table>
+</div>
 
-.arc {
-  stroke: #fff;
-}
-#tables{
-background-color : aliceblue;
-width: 100%;
-}
-#order{
-	background-color : cadetblue;
-	width:auto;
-}
-</style>
-<body>
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+<!-- Load JS -->
+<script type="text/javascript">
+var d;
+        P.when('jQuery').execute(function($){
+            loadJS('/resources/js/pusher.min.js', function() { 
+                myPusherFunc();
+            });
+            attachEvent(this.$);
+        });
 
-<script>
+        var attachEvent = function() {
+        	jQuery(".orderItemRow").click(function() {
+                alert("here");
+            });
+        }
+        var myPusherFunc = function() {
+            Pusher.log = function(message) {
+                  if (window.console && window.console.log) {
+                    window.console.log(message);
+                  }
+                };
 
-
-var radius = 74,
-    padding = 10;
-
-var color = d3.scale.ordinal()
-    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c",
-"#ff8c00"]);
-
-var arc = d3.svg.arc()
-    .outerRadius(radius)
-    .innerRadius(radius - 30);
-
-var pie = d3.layout.pie()
-    .sort(null)
-    .value(function(d) { return d.population; });
-
-d3.csv("${path}/resources/testJson/data.csv", function(error, data) {
-  color.domain(d3.keys(data[0]).filter(function(key) { return key !== "State";
-}));
-
-  data.forEach(function(d) {
-    d.ages = color.domain().map(function(name) {
-      return {name: name, population: +d[name]};
-    });
-  });
-
-  var legend = d3.select("#tables").append("svg")
-      .attr("class", "legend")
-      .attr("width", radius * 2)
-      .attr("height", radius * 2)
-    .selectAll("g")
-      .data(color.domain().slice().reverse())
-    .enter().append("g")
-      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")";
-});
-
-  legend.append("rect")
-      .attr("width", 18)
-      .attr("height", 18)
-      .style("fill", color);
-
-  legend.append("text")
-      .attr("x", 24)
-      .attr("y", 9)
-      .attr("dy", ".35em")
-      .text(function(d) { return d; });
-
-  var svg = d3.select("#tables").selectAll(".pie")
-      .data(data)
-    .enter().append("svg")
-      .attr("class", "pie")
-      .attr("width", radius * 2)
-      .attr("height", radius * 2)
-    .append("g")
-      .attr("transform", "translate(" + radius + "," + radius + ")")
-			.on("click",fn);
-
-  svg.selectAll(".arc")
-      .data(function(d) { return pie(d.ages); })
-    .enter().append("path")
-      .attr("class", "arc")
-      .attr("d", arc)
-      .style("fill", function(d) { return color(d.data.name); });
-
-  svg.append("text")
-      .attr("dy", ".35em")
-      .style("text-anchor", "middle")
-      .text(function(d) { return d.State; });
-
-});
-function fn(d){
-	$('#tables').animate({width : "40%"}, 1500);
-	$('#order').animate({width : "60%", height : "20%"}, 1500);
-	$('#order').html("cars");
-	console.log(d);
-}
+                var pusher = new Pusher('1f7298f8e64c81a0d7de');
+                var channel = pusher.subscribe('R1');
+                channel.bind('notify_order', function(data) {
+                    d = data;
+                    createOrderPage(data);
+                    attachEvent();
+                    var request = $.ajax({
+                        url: "/restOrder?action=orderReceived&orderId=" + data.orderId,
+                        type: "POST",
+                        data: { json : tmp }
+                      });
+                    alert(data);
+                });
+                channel.bind('update_order', function(data) {
+                    alert(data.message);
+                  });
+                channel.bind('get_bill', function(data) {
+                    alert(data.message);
+                  });
+    } 
+    var createOrderPage = function(data) {
+        var orderHtml =  '<tr><th>S.No:</th><th>Item</th><th>Quantity</th><th>Price</th><th>Availability</th></tr>';
+        if(data !== null && typeof data !== undefined){
+            jQuery(data.dishes).each(function(index, value) {
+            	orderHtml +='<tr id='+ value.dishId +' class="orderItemRow"><td>' + (index+1) + '</td><td>' + value.name 
+            	+ '</td><td>' + value.quatity + '</td><td>' + value.price 
+            	+ '</td><td><button type="button" class="btn btn-default">Not Available</button></td></tr>'; 
+            	
+                jQuery("#sample").html(orderHtml);
+            });
+        }
+    }
 </script>
-
-<div id='tables'></div>
-<div id="order"></div>
-

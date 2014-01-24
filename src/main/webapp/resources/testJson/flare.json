@@ -1,18 +1,35 @@
-{
- "name": "flare",
- "id" : 1,
- "children": [
-  {
-   "name": "analytics",
-   "id":2,
-   "children": [
-    {
-     "name": "cluster",
-     "id" : 3,     
-     "children": [
-      {"name": "Paneer Tikka", "id": 4,"food_type":"Veg","price":"350","desc":""},
-      {"name": "Shahi Paneer", "id": 5, "food_type":"Veg","price":"450","desc":""},
-      {"name": "Dal Makhani", "id": 6, "food_type":"Veg","price":"300","desc":""},
-      {"name": "MergeEdge", "id": 7, "food_type":"Veg","price":"279","desc":""}
-     ]
-    }]}]}
+{"name":"flare",
+    "id" : 1,   
+    "children":
+        [{
+            "name":"Soups",
+            "id":2,
+            "children":[
+                {"desc":"item desc comes here","id":3,"name":"Cream of Veg","price":"95.0","food_type":"Veg"},
+                {"desc":"item desc comes here","id":4,"name":"Roasted Bell Pepper Soup","price":"115.0","food_type":"NonVeg"},
+                {"desc":"item desc comes here","id":5,"name":"Baked French Onion","price":"115.0","food_type":"Veg"},
+                {"desc":"item desc comes here","id":6,"name":"Consomme Soup","price":"125.0","food_type":"NonVeg"},
+                {"desc":"item desc comes here","id":7,"name":"Spicy Sea Food Soup","price":"125.0","food_type":"Veg"}
+                ]},
+           {
+            "name":"Soups",
+            "id":2,
+            "children":[
+                {"desc":"item desc comes here","id":3,"name":"Cream of Veg","price":"95.0","food_type":"Veg"},
+                {"desc":"item desc comes here","id":4,"name":"Roasted Bell Pepper Soup","price":"115.0","food_type":"NonVeg"},
+                {"desc":"item desc comes here","id":5,"name":"Baked French Onion","price":"115.0","food_type":"Veg"},
+                {"desc":"item desc comes here","id":6,"name":"Consomme Soup","price":"125.0","food_type":"NonVeg"},
+                {"desc":"item desc comes here","id":7,"name":"Spicy Sea Food Soup","price":"125.0","food_type":"Veg"}
+                ]},
+            {
+            "name":"Soups",
+            "id":2,
+            "children":[
+                {"desc":"item desc comes here","id":3,"name":"Cream of Veg","price":"95.0","food_type":"Veg"},
+                {"desc":"item desc comes here","id":4,"name":"Roasted Bell Pepper Soup","price":"115.0","food_type":"NonVeg"},
+                {"desc":"item desc comes here","id":5,"name":"Baked French Onion","price":"115.0","food_type":"Veg"},
+                {"desc":"item desc comes here","id":6,"name":"Consomme Soup","price":"125.0","food_type":"NonVeg"},
+                {"desc":"item desc comes here","id":7,"name":"Spicy Sea Food Soup","price":"125.0","food_type":"Veg"}
+                ]}
+            ]
+        }
