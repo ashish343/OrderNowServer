@@ -44,8 +44,8 @@
                 };
 
                 var pusher = new Pusher('1f7298f8e64c81a0d7de');
-                var channel = pusher.subscribe('test_channel');
-                channel.bind('my_event', function(data) {
+                var channel = pusher.subscribe('R1');
+                channel.bind('notify_order', function(data) {
                   alert(data.message);
                 });
         } 

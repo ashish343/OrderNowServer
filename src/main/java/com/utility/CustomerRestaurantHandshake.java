@@ -1,11 +1,8 @@
 package com.utility;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.swing.text.GapContent;
 
 import com.data.menu.Category;
 import com.data.menu.CustomerOrder;
@@ -13,19 +10,18 @@ import com.data.menu.Menu;
 import com.data.menu.Dish;
 import com.data.restaurant.OrderedDish;
 import com.data.restaurant.RestaurantOrder;
-import com.google.gson.Gson;
 
 public class CustomerRestaurantHandshake {
 
-	private static List<Dish> allDishes = new ArrayList<Dish>();
-	
 	public RestaurantOrder getRestaurantOrder(Menu menu, CustomerOrder customerOrder, String orderId, String customerId) {
 		RestaurantOrder restaurantOrder = new RestaurantOrder();
+		List<Dish> allDishes = new ArrayList<Dish>();
+		
 		restaurantOrder.setCustomerId(customerId);
 		restaurantOrder.setOrderId(orderId);
 		
 		List<Category> categories = menu.getCategories();
-		getAllDishes(categories);
+		getAllDishes(categories, allDishes);
 		
 		List<OrderedDish> restaurantDishes = new ArrayList<OrderedDish>();
 		
@@ -52,7 +48,7 @@ public class CustomerRestaurantHandshake {
 		return restaurantOrder;
 	}
 
-	private void getAllDishes(List<Category> categories) {
+	private void getAllDishes(List<Category> categories, List<Dish> allDishes) {
 		if(categories != null && !categories.isEmpty()){
 			for(Category category:categories) {
 				List<Category> subCategories = category.getCategories();
@@ -61,7 +57,7 @@ public class CustomerRestaurantHandshake {
 				if(dishes != null && !dishes.isEmpty()) {
 					allDishes.addAll(dishes);
 				}
-				getAllDishes(subCategories);
+				getAllDishes(subCategories, allDishes);
 			}
 		}
 	}

@@ -3,7 +3,6 @@ package com.servlet;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -21,10 +20,8 @@ import com.database.DataConnection;
 import com.enums.EventState;
 import com.enums.UrlParameter;
 import com.google.gson.Gson;
-import com.handlers.restaurant.RestaurantEvents;
 import com.handlers.table.TableHandler;
 import com.parse.ParseNotificationHelper;
-import com.pusher.PusherHelper;
 import com.test.PusherTest;
 import com.utility.CustomerRestaurantHandshake;
 import com.utility.OrderIdGenerator;
@@ -85,7 +82,8 @@ public class CustomerOrderServlet  extends HttpServlet {
     	 */
     	Gson gson = new Gson();
     	String restaurantOrderJson = gson.toJson(restaurantOrder);
-    	
+    	System.out.println(restaurantOrderJson);
+    	System.out.println(restaurantOrderJson.replace("\\\"", "\"").replace("\"", "\\\""));
     	String json = "{\"data\":\""+restaurantOrderJson.replace("\\\"", "\"").replace("\"", "\\\"")+"\",\"name\":\"" + RestaurantClientSideEvents.NOTIFY_NEW_ORDER.toString() + "\",\"channel\":\""+restuarantId+"\"}";
     	PusherTest.triggerPush(restuarantId,  RestaurantClientSideEvents.NOTIFY_NEW_ORDER.toString(), json, "");
 		/*
