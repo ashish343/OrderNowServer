@@ -62,7 +62,10 @@ public class CustomerOrderServlet  extends HttpServlet {
     	/*
     	 * TODO: Check if the order already exist, if yes then get the order id else create a new one.
     	 */
-    	String orderId = OrderIdGenerator.generateUniqueOrderId();
+    	String orderId = customerOrder.getOrderId();
+    	if(orderId == null || orderId.isEmpty()) {
+    		orderId = OrderIdGenerator.generateUniqueOrderId();
+    	}
     	String customerId = customerOrder.getCustomerId();
     	CustomerRestaurantHandshake customerRest = new CustomerRestaurantHandshake();
     	RestaurantOrder restaurantOrder = customerRest.getRestaurantOrder(menu, customerOrder, orderId, customerId);
