@@ -14,7 +14,6 @@
     border-style: solid; 
     border-width: 1px; 
     border-color: dimgrey;	
-    background-color: lightslategrey;
 }
 </style>
   </head>

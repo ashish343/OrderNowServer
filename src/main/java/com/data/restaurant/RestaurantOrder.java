@@ -1,20 +1,12 @@
 package com.data.restaurant;
 
-import java.util.Map;
-import com.data.menu.Dish;
+import java.util.List;
 
 public class RestaurantOrder {
-	private Map<String, Float> dishes;
+	private List<OrderedDish> dishes;
 	private String orderId;
 	private String customerId;
 
-	public Map<String, Float> getDishes() {
-		return dishes;
-	}
-	public void setDishes(Map<String, Float> dishes) {
-		this.dishes = dishes;
-	}
-	
 	public String getCustomerId() {
 		return customerId;
 	}
@@ -28,5 +20,10 @@ public class RestaurantOrder {
 	public void setOrderId(String orderId) {
 		this.orderId = orderId;
 	}
-
+	public List<OrderedDish> getDishes() {
+		return dishes;
+	}
+	public void setDishes(List<OrderedDish> dishes) {
+		this.dishes = dishes;
+	}
 }

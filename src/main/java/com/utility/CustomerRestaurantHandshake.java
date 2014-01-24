@@ -11,6 +11,7 @@ import com.data.menu.Category;
 import com.data.menu.CustomerOrder;
 import com.data.menu.Menu;
 import com.data.menu.Dish;
+import com.data.restaurant.OrderedDish;
 import com.data.restaurant.RestaurantOrder;
 import com.google.gson.Gson;
 
@@ -26,7 +27,7 @@ public class CustomerRestaurantHandshake {
 		List<Category> categories = menu.getCategories();
 		getAllDishes(categories);
 		
-		Map<String, Float> restaurantDishes = new HashMap<String, Float>();
+		List<OrderedDish> restaurantDishes = new ArrayList<OrderedDish>();
 		
 		Map<String, Float> customerDishes = customerOrder.getDishes();
 		Gson gson = new Gson();
@@ -35,7 +36,14 @@ public class CustomerRestaurantHandshake {
 			for(Dish dish: allDishes) {
 				String dishId = dish.getDishId();
 				if(key.equals(dishId)) {
-					restaurantDishes.put(gson.toJson(dish), customerDishes.get(key));
+					OrderedDish orderedDish = new OrderedDish();
+					orderedDish.setDishId(dish.getDishId());
+					orderedDish.setName(dish.getName());
+					orderedDish.setPrice(dish.getPrice());
+					orderedDish.setQuatity(customerDishes.get(key));
+					orderedDish.setType(dish.getType());
+					
+					restaurantDishes.add(orderedDish);
 				}
 			}
 		}
