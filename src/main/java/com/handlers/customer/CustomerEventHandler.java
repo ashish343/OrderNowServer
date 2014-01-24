@@ -1,4 +1,4 @@
-package com.handler.customer;
+package com.handlers.customer;
 
 public class CustomerEventHandler {
 

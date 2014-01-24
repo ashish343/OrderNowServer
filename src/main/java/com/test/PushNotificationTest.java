@@ -17,7 +17,7 @@ import com.handlers.restaurant.RestaurantEventsHandler;
 @SuppressWarnings("serial")
 @WebServlet(
         name = "PushNotificationTestServlet", 
-        urlPatterns = {"/test/push/"}
+        urlPatterns = {"/test/push"}
     )
 public class PushNotificationTest  extends HttpServlet {
 
@@ -27,7 +27,7 @@ public class PushNotificationTest  extends HttpServlet {
 	 * 2) orderId as the channel.
 	 * 
 	 * Eg:
-	 * 	test/push?orderId=Oid1&custId=ABC
+	 * 	/test/push/?orderId=GVMXrkTAFf
 	 */
 	
 	protected final Log logger = LogFactory.getLog(getClass());
@@ -64,7 +64,7 @@ public class PushNotificationTest  extends HttpServlet {
         	testModifyOrder(request, response, outputStream);
         	//ParseNotificationHelper.registerChannel(customerId, orderId, outputStream);
         	outputStream.flush();
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
         	outputStream.write(e.toString().getBytes());
 		}
         //String data = "{\"channels\":[\"" + orderId + "\"],\"data\": {\"name\": \"Ashish\", \"newsItem\": \"Man bites dog\"}}";

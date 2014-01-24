@@ -53,6 +53,11 @@ var d;
                     d = data;
                     createOrderPage(data);
                     attachEvent();
+                    var request = $.ajax({
+                        url: "/restOrder?action=orderReceived&orderId=" + data.orderId,
+                        type: "POST",
+                        data: { json : tmp }
+                      });
                     alert(data);
                 });
                 channel.bind('update_order', function(data) {

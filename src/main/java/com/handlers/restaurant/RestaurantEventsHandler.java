@@ -101,7 +101,7 @@ public class RestaurantEventsHandler {
 		if(dishIds != null && !dishIds.isEmpty()) {
 			String channel = getOrderId(request);
 			String message = "{\"channels\":[\"" + channel + "\"],\"data\": {\"action\":\"com.example.UPDATE_STATUS\","
-					+ "\"message\": \"" + RestauntantMessage.ORDER_COMPLETED_MESSAGE.toString() +
+					+ "\"message\": \"" + RestauntantMessage.MODIFY_ORDER_MESSAGE.toString() +
 					"\",\"dishIds\": \""+ dishIds +"\"}}";
 			ParseNotificationHelper.notifyChannel(channel , message, outputStream);
 		}
