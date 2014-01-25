@@ -66,9 +66,8 @@ public class DataConnection {
 	public static int getSubOrderCount(String orderId) {
 		DBCollection collection = mongoDb.getCollection(ORDER_DATA);
 		BasicDBObject obj = new BasicDBObject();
-		obj.append("_id", orderId);
-		DBCursor cursor = collection.find(obj);
-		return cursor.length();
+		obj.append(UrlParameter.ORDER_ID.toString(), orderId);
+		return collection.find(obj).count();
 	}
 
 	public static DBCollection getCollection(String collection)
