@@ -45,12 +45,24 @@ var d;
         var attachEvent = function() {
             jQuery(".orderItemRow").click(function() {
             });
+            
             jQuery("#acceptBtn").click(function() {
-                console.log(jQuery(this).parent('table'));
+            	var unorderList = jQuery(this).parents('ul');
+            	var orderId = jQuery(unorderList).attr('id');
+            	
+            	if(orderId !== null && orderId.length > 0) {
+            	    var request = $.ajax({
+            	        url: "/restOrder?action=orderAccepted&orderId=" + orderId,
+                        type: "GET",
+                    });
+                    var identifier = 'alert-success';
+                    
+            	    jQuery(unorderList).find('.'+identifier).show();
+                    setTimeout(function(){hideAlert(unorderList,identifier)}, 3000);
+                    jQuery(unorderList).find('li').find(".order-handler-btn-group").hide();
+                }
             });
-            jQuery("#declineBtn").click(function() {
-                console.log(jQuery(this).parent('table'));
-            });
+            
             jQuery("#modifyBtn").click(function() {
                 var orderList = jQuery(this).parents('li');
                 var orderTable;
@@ -59,35 +71,74 @@ var d;
 
                     clonedOrderTable = jQuery(orderTable).clone();
                     
-                    console.log(orderTable);
                     jQuery(clonedOrderTable).find('tr').each(function(index, value){
-                        console.log(jQuery(this).attr('id'));
-                        jQuery(this).append('<td>' + getCheckBoxRow(index) + '</td>');
+                        if(index > 0) {
+                            jQuery(this).append('<td>' + getCheckBoxRow(index) + '</td>');
+                        } else {
+                        	jQuery(this).append('<th>Availability</th>');
+                        }
                     })
-                    jQuery('#modifyOrderModal .modal-body').html(clonedOrderTable);
+                    var model = jQuery('#modifyOrderModal .modal-body');
+                    var unorderList = jQuery(this).parents('ul');
+                    
+                    model.attr("data-a-orderId", jQuery(unorderList).attr('id'));
+                    model.html(clonedOrderTable);
                     jQuery('#modifyOrderModal').modal();
                 }
                 
             });
-            jQuery("#modalSaveChanges").click(function(){
+            jQuery("#modalSaveChanges").click(function(e){
+            	e.preventDefault();
+            	var dishIds=[];
             	var body = jQuery('#modifyOrderModal .modal-body');
             	var orderTable;
             	if(body !== null && typeof body !== undefined) {
             		orderTable = jQuery(body).children('.table');
             		jQuery(orderTable).find('tr').each(function(index, value){
             			if(jQuery(this).find("[type=radio]").is(':checked')) {
-            			    alert("checked");
-            			    console.log(jQuery(this).attr('id'));
+            			    dishIds.push(jQuery(this).attr('id'));
                 		}
                     })
                 }
+                var orderId = jQuery(body).attr('data-a-orderId');
+                if(dishIds.length > 0) {
+                    rmvDishFrmOrdr(orderId, dishIds);
+                    var request = $.ajax({
+                        url: "/restOrder?action=modifyOrder&orderId=" + orderId + "&dishIds=" + dishIds,
+                        type: "GET",
+                    });
+                }
+            	$('#modifyOrderModal').modal('hide');
+
+            	var identifier = 'alert-warning';
+            	jQuery('#'+orderId).find('.'+identifier).show();
+                setTimeout(function(){hideAlert(jQuery('#'+orderId), identifier)}, 3000);
+                var orderList = jQuery('#'+orderId).find('li');
+                jQuery(orderList).find(".order-handler-btn-group").hide();
             });
         }
 
+        var hideAlert = function(unorderList, identifier) {
+            jQuery(unorderList).find('.'+identifier).hide();
+        }
+        
+        var rmvDishFrmOrdr = function(orderId, dishIds) {
+            console.log("Order Id::" + orderId);
+            var orderList = jQuery('#' + orderId);
+            var i = 0;
+            orderTables = jQuery(orderList).find('.table');
+            jQuery(orderTables).each(function(index, value){
+                jQuery(this).find('tr').each(function(index, value) {
+                	for (i = 0; i < dishIds.length; i++) {
+                        if(jQuery(this).attr('id')  === dishIds[i]) {
+                            jQuery(this).remove();
+                        }
+                    }
+                });
+            });
+        }
         var getCheckBoxRow = function(index) {
         	return '<label class="btn btn-default"><input type="radio" name="availability'+ index +'" id="availability'+ index +'" value="Not Available"> Not Available </label>'
-//             var html = '<input type="radio" name="year" value="Available"> Available';
-//             return html;
         }
         var myPusherFunc = function() {
             Pusher.log = function(message) {
@@ -123,7 +174,7 @@ var d;
                 // New Customer on the table.
                 html += '<div id="'+ data.customerId +'">';
                 html += '<ul id="' + data.orderId + '" class="list-group">';
-                html += getSubOrderList(data);
+                html += getSubOrderList(data, 1);
                 html += '</ul></div>';
 
                 var table = jQuery("#" + data.tableId);
@@ -136,15 +187,24 @@ var d;
                 }
             } else {
                 var orderList = jQuery('#'+data.orderId);
-            	html = getSubOrderList(data);
+            	html = getSubOrderList(data, 0);
             	orderList.append(html);
             }
         }
     }
 
-    var getSubOrderList = function(data) {
+    var getSubOrderList = function(data, addTableTitle) {
+        
     	var html = '<li id="' + data.subOrderId + '" class="list-group-item">';
-        html += getDishList(data);
+    	//Success Alert
+    	html += '<div class="alert alert-success alert-dismissable" style="display:none;">'+
+    	        '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+
+    	        '<strong>Order Placed.</strong></div>';
+    	//Modified List Alert
+    	html += '<div class="alert alert-warning alert-dismissable" style="display:none;">'+
+                '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+
+                '<strong>Customer Is Notified About the Modification</strong></div>';
+        html += getDishList(data, addTableTitle);
         html += getNewOrderOptions();
         html+='</li>';
         return html;
@@ -152,17 +212,19 @@ var d;
 
     var getNewOrderOptions = function() {
         var html = '<div class="row"><div class="col-xs-12 col-md-12 col-lg-12">' 
-        html += '<div class="btn-group btn-group-lg">'+
-                    '<div id="acceptBtn" class="col-lg-4 col-xs-4 col-md-4"><button type="button" class="btn btn-lg">Accept</button></div>'+
-                    '<div id="declineBtn" class="col-lg-4 col-xs-4 col-md-4"><button type="button" class="btn btn-lg">Decline</button></div>'+
-        	        '<div id="modifyBtn" class="col-lg-4 col-xs-4 col-md-4"><button type="button" class="btn btn-lg">Modify</button></div>'+
+        html += '<div class="order-handler-btn-group btn-group btn-group-lg">'+
+                    '<div id="acceptBtn" class="col col-lg-6 col-xs-6 col-md-6"><button type="button" class="btn btn-lg">Accept</button></div>'+
+        	        '<div id="modifyBtn" class="col col-lg-6 col-xs-6 col-md-6"><button type="button" class="btn btn-lg">Modify</button></div>'+
         	    '</div>';
         html += '</div></div>';
         return html;
     }
     //data-toggle="modal" data-target="#modifyOrderModal"
-    var getDishList = function(data) {
+    var getDishList = function(data, addTableTitle) {
         var orderHtml = '<table class="table" border="1">';
+        if(addTableTitle == '1') {
+        	orderHtml += '<tr><th>Item</th><th>Quantity</th><th>Price</th></tr>';
+        } 
         jQuery(data.dishes).each(function(index, value) {
             orderHtml +='<tr id='+ value.dishId +'><td>' + value.name 
             + '</td><td>' + value.quatity + '</td><td>' + value.price + '</td></tr>'; 
