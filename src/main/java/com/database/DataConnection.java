@@ -9,6 +9,7 @@ import com.data.menu.Menu;
 import com.data.menu.Restaurant;
 import com.data.restaurant.OrderedDish;
 import com.data.restaurant.RestaurantOrder;
+import com.enums.UrlParameter;
 import com.google.gson.Gson;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
@@ -196,11 +197,17 @@ public class DataConnection {
 
 	public static boolean setOrderDetailsToDB(RestaurantOrder restaurantOrder) {
 		BasicDBObject doc = new BasicDBObject();
-		doc.append(Constants.customerId, restaurantOrder.getCustomerId());
-		doc.append(Constants.orderId, restaurantOrder.getOrderId());
-		doc.append(Constants.time, System.currentTimeMillis());
-		doc.append(Constants.restId, restaurantOrder.getRestaurantId());
-		doc.append(Constants.state, "INTERMEDIATE");
+		doc.append(UrlParameter.CUSTOMER_ID.toString(),
+				restaurantOrder.getCustomerId());
+		doc.append(UrlParameter.ORDER_ID.toString(),
+				restaurantOrder.getOrderId());
+		doc.append(UrlParameter.TIMESTAMP.toString(),
+				System.currentTimeMillis());
+		doc.append(UrlParameter.RESTAURNAT_ID.toString(),
+				restaurantOrder.getRestaurantId());
+		doc.append(UrlParameter.ORDERSTATE.toString(), "INTERMEDIATE");
+		doc.append(UrlParameter.TABLE_ID.toString(),
+				restaurantOrder.getTableId());
 
 		DBCollection collection = mongoDb.getCollection(ORDER_DATA);
 		List<OrderedDish> list = restaurantOrder.getDishes();
