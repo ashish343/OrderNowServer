@@ -147,8 +147,19 @@ public class CustomerOrderServlet extends HttpServlet {
 		CustomerOrder customerOrder = gson.fromJson(customerOrderJson,
 				CustomerOrder.class);
 		String orderId = customerOrder.getOrderId();
-		if (orderId == null)
+		if (orderId == null) {
+			/**
+			 * subOrderId = 0
+			 */
 			orderId = OrderIdGenerator.generateUniqueOrderId();
+			customerOrder.setSubOrderId(0);
+		} else {
+			/**
+			 * generating sub order Id as last subOrderId+1
+			 */
+			customerOrder.setSubOrderId(DataConnection
+					.getSubOrderCount(orderId) + 1);
+		}
 
 		if (isDebug) {
 			outputStream.write(("\nCustomer Json Order :: ").getBytes());
