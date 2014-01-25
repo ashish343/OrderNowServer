@@ -33,6 +33,18 @@ public class DataConnection {
 	private static DBCollection restaurant;
 	private static DBCollection order;
 
+	public static void loader(ServletOutputStream debugger) throws IOException {
+
+		if (mongoDb == null) {
+			new DataConnection();
+			if (debugger != null)
+				debugger.write(("\nNew DB connection Formed.").getBytes());
+		} else {
+			if (debugger != null)
+				debugger.write(("\nUsing old DB connection.").getBytes());
+		}
+	}
+
 	private DataConnection() throws IOException {
 		mongoURI = "mongodb://orderNow:orderNow@troup.mongohq.com:10032/app21434483";
 		db = "app21434483";
@@ -56,14 +68,22 @@ public class DataConnection {
 		order = mongoDb.getCollection(ORDER_DATA);
 	}
 
-	public static boolean checkOrderExists(String orderId) {
-		int count = getSubOrderCount(orderId);
+	public static boolean checkOrderExists(String orderId,
+			ServletOutputStream debugger) {
+		int count = getSubOrderCount(orderId, debugger);
 		if (count == 0)
 			return false;
 		return true;
 	}
 
-	public static int getSubOrderCount(String orderId) {
+	public static int getSubOrderCount(String orderId,
+			ServletOutputStream debugger) {
+		try {
+			loader(debugger);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		DBCollection collection = mongoDb.getCollection(ORDER_DATA);
 		BasicDBObject obj = new BasicDBObject();
 		obj.append(UrlParameter.ORDER_ID.toString(), orderId);

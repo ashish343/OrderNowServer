@@ -157,7 +157,7 @@ public class CustomerOrderServlet extends HttpServlet {
 			/**
 			 * generating sub order Id as last subOrderId+1
 			 */
-			int count = DataConnection.getSubOrderCount(orderId);
+			int count = DataConnection.getSubOrderCount(orderId, outputStream);
 			customerOrder.setSubOrderId(count);
 		}
 
