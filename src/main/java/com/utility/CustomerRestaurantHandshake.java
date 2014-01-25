@@ -22,6 +22,7 @@ public class CustomerRestaurantHandshake {
 		restaurantOrder.setOrderId(customerOrder.getOrderId());
 		restaurantOrder.setRestaurantId(customerOrder.getRestaurantId());
 		restaurantOrder.setTableId(customerOrder.getTableId());
+		restaurantOrder.setSubOrderId(customerOrder.getSubOrderId());
 
 		List<Category> categories = menu.getCategories();
 		getAllDishes(categories, allDishes);

@@ -15,7 +15,7 @@ public class CustomerOrder {
 	 * Client can happen.
 	 */
 	private String orderId;
-	private String subOrderId;
+	private int subOrderId;
 	/*
 	 * Customer ID same as parse object id.
 	 */
@@ -61,11 +61,11 @@ public class CustomerOrder {
 		this.tableId = tableId;
 	}
 
-	public String getSubOrderId() {
+	public int getSubOrderId() {
 		return subOrderId;
 	}
 
-	public void setSubOrderId(String subOrderId) {
+	public void setSubOrderId(int subOrderId) {
 		this.subOrderId = subOrderId;
 	}
 }

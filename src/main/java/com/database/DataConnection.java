@@ -56,7 +56,7 @@ public class DataConnection {
 		order = mongoDb.getCollection(ORDER_DATA);
 	}
 
-	public boolean checkOrderExists(String orderId) {
+	public static boolean checkOrderExists(String orderId) {
 		int count = getSubOrderCount(orderId);
 		if (count == 0)
 			return false;
@@ -66,7 +66,9 @@ public class DataConnection {
 	public static int getSubOrderCount(String orderId) {
 		DBCollection collection = mongoDb.getCollection(ORDER_DATA);
 		BasicDBObject obj = new BasicDBObject();
-		return -1;
+		obj.append("_id", orderId);
+		DBCursor cursor = collection.find(obj);
+		return cursor.length();
 	}
 
 	public static DBCollection getCollection(String collection)
@@ -215,6 +217,8 @@ public class DataConnection {
 				restaurantOrder.getCustomerId());
 		doc.append(UrlParameter.ORDER_ID.toString(),
 				restaurantOrder.getOrderId());
+		doc.append(UrlParameter.SUBORDER_ID.toString(),
+				restaurantOrder.getSubOrderId());
 		doc.append(UrlParameter.TIMESTAMP.toString(),
 				System.currentTimeMillis());
 		doc.append(UrlParameter.RESTAURNAT_ID.toString(),
