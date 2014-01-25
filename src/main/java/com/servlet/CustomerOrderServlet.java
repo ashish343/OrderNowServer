@@ -151,7 +151,7 @@ public class CustomerOrderServlet extends HttpServlet {
 			/**
 			 * subOrderId = 0
 			 */
-			orderId = OrderIdGenerator.generateUniqueOrderId();
+			customerOrder.setOrderId(OrderIdGenerator.generateUniqueOrderId());
 			customerOrder.setSubOrderId(0);
 		} else {
 			/**
