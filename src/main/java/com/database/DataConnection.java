@@ -37,7 +37,7 @@ public class DataConnection {
 		db = "app21434483";
 		TABLE_DATA = "table_rest";
 		RESTUARANT_DATA = "rest";
-		ORDER_DATA = "order_data";
+		ORDER_DATA = "order";
 
 		if (mongoURI == null || db == null) {
 			System.err
@@ -212,7 +212,7 @@ public class DataConnection {
 		DBCollection collection = mongoDb.getCollection(ORDER_DATA);
 		List<OrderedDish> list = restaurantOrder.getDishes();
 		for (OrderedDish od : list) {
-			doc.append(Constants.dishName, od.getQuatity());
+			doc.append(UrlParameter.DISH_IDS.toString(), od.getQuatity());
 			collection.insert(doc);
 		}
 		return true;

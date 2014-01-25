@@ -32,8 +32,8 @@ import com.utility.RequestContext;
 public class CustomerOrderServlet extends HttpServlet {
 	/*
 	 * Sample JSON:
-	 * {"dishes":{"D2":1.0,"D3":0.5,"D1":1.0},"restaurantId":"R1","customerId"
-	 * :"NXwUdXIorg"}
+	 * {"dishes":{"d2":1.0,"d3":0.5,"d1":1.0},"restaurantId":"r1","customerId"
+	 * :"NXwUdXIorg", "tableId":"t1"}
 	 */
 	@Override
 	protected void doGet(HttpServletRequest request,
@@ -53,8 +53,8 @@ public class CustomerOrderServlet extends HttpServlet {
 		 * TODO: Remove the below hack.
 		 */
 		String restuarantId = customerOrder.getRestaurantId();
-		// Menu menu = getMenu(restuarantId, outputStream, isDebug);
-		Menu menu = getMenu();
+		Menu menu = getMenu(restuarantId, outputStream, isDebug);
+		// Menu menu = getMenu();
 
 		/*
 		 * Populate the Restaurant Order from Customer Order.
@@ -68,7 +68,7 @@ public class CustomerOrderServlet extends HttpServlet {
 		String customerId = customerOrder.getCustomerId();
 		CustomerRestaurantHandshake customerRest = new CustomerRestaurantHandshake();
 		RestaurantOrder restaurantOrder = customerRest.getRestaurantOrder(menu,
-				customerOrder, orderId, customerId);
+				customerOrder, orderId, customerId, restuarantId);
 
 		/*
 		 * TODO: Update DB with the order.
