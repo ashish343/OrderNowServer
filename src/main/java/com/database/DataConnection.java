@@ -152,12 +152,13 @@ public class DataConnection {
 		Gson gson = new Gson();
 		try {
 			menu = gson.fromJson(restaurantMenu, Menu.class);
+			if (menu.getCategories() == null)
+				throw new Exception("categories are null");
+
 			if (debugger != null)
 				debugger.write(("\nGson successfully converted the response.")
 						.getBytes());
-
 			String json = gson.toJson(menu);
-
 			if (debugger != null)
 				debugger.write(("\n" + json).getBytes());
 		} catch (Exception e) {
