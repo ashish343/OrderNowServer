@@ -40,12 +40,12 @@ public class CustomerOrderServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		ServletOutputStream outputStream = response.getOutputStream();
 		boolean isDebug = RequestContext.isDebugEnabled();
+
 		/*
 		 * Get the Customer Order.
 		 */
 		CustomerOrder customerOrder = getCustomerOrder(request, outputStream,
 				isDebug);
-
 		/*
 		 * Fetch the Menu From DB to create Restaurant Order.
 		 */
@@ -64,11 +64,10 @@ public class CustomerOrderServlet extends HttpServlet {
 		 * TODO: Check if the order already exist, if yes then get the order id
 		 * else create a new one.
 		 */
-		String orderId = OrderIdGenerator.generateUniqueOrderId();
-		String customerId = customerOrder.getCustomerId();
+
 		CustomerRestaurantHandshake customerRest = new CustomerRestaurantHandshake();
 		RestaurantOrder restaurantOrder = customerRest.getRestaurantOrder(menu,
-				customerOrder, orderId, customerId, restuarantId);
+				customerOrder);
 
 		/*
 		 * TODO: Update DB with the order.
@@ -78,8 +77,8 @@ public class CustomerOrderServlet extends HttpServlet {
 		/*
 		 * Subscribe Customer to The Channel.
 		 */
-		ParseNotificationHelper.registerChannel(customerId, orderId,
-				outputStream);
+		ParseNotificationHelper.registerChannel(customerOrder.getCustomerId(),
+				customerOrder.getOrderId(), outputStream);
 
 		/*
 		 * Send Notification to Restaurant about the order.
@@ -147,6 +146,9 @@ public class CustomerOrderServlet extends HttpServlet {
 		Gson gson = new Gson();
 		CustomerOrder customerOrder = gson.fromJson(customerOrderJson,
 				CustomerOrder.class);
+		String orderId = customerOrder.getOrderId();
+		if (orderId == null)
+			orderId = OrderIdGenerator.generateUniqueOrderId();
 
 		if (isDebug) {
 			outputStream.write(("\nCustomer Json Order :: ").getBytes());

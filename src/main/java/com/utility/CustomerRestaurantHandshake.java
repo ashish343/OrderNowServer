@@ -14,14 +14,14 @@ import com.data.restaurant.RestaurantOrder;
 public class CustomerRestaurantHandshake {
 
 	public RestaurantOrder getRestaurantOrder(Menu menu,
-			CustomerOrder customerOrder, String orderId, String customerId,
-			String restuarantId) {
+			CustomerOrder customerOrder) {
 		RestaurantOrder restaurantOrder = new RestaurantOrder();
 		List<Dish> allDishes = new ArrayList<Dish>();
 
-		restaurantOrder.setCustomerId(customerId);
-		restaurantOrder.setOrderId(orderId);
-		restaurantOrder.setRestaurantId(restuarantId);
+		restaurantOrder.setCustomerId(customerOrder.getCustomerId());
+		restaurantOrder.setOrderId(customerOrder.getOrderId());
+		restaurantOrder.setRestaurantId(customerOrder.getRestaurantId());
+		restaurantOrder.setTableId(customerOrder.getTableId());
 
 		List<Category> categories = menu.getCategories();
 		getAllDishes(categories, allDishes);
