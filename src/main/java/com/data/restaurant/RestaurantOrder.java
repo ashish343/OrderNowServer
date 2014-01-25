@@ -8,6 +8,7 @@ public class RestaurantOrder {
 	private String customerId;
 	private String restaurantId;
 	private String tableId;
+	private String subOrderId;
 
 	public String getCustomerId() {
 		return customerId;
@@ -47,5 +48,13 @@ public class RestaurantOrder {
 
 	public void setTableId(String tableId) {
 		this.tableId = tableId;
+	}
+
+	public String getSubOrderId() {
+		return subOrderId;
+	}
+
+	public void setSubOrderId(String subOrderId) {
+		this.subOrderId = subOrderId;
 	}
 }

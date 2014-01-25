@@ -11,6 +11,7 @@ import com.data.restaurant.OrderedDish;
 import com.data.restaurant.RestaurantOrder;
 import com.enums.UrlParameter;
 import com.google.gson.Gson;
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -53,6 +54,19 @@ public class DataConnection {
 		table = mongoDb.getCollection(TABLE_DATA);
 		restaurant = mongoDb.getCollection(RESTUARANT_DATA);
 		order = mongoDb.getCollection(ORDER_DATA);
+	}
+
+	public boolean checkOrderExists(String orderId) {
+		int count = getSubOrderCount(orderId);
+		if (count == 0)
+			return false;
+		return true;
+	}
+
+	public static int getSubOrderCount(String orderId) {
+		DBCollection collection = mongoDb.getCollection(ORDER_DATA);
+		BasicDBObject obj = new BasicDBObject();
+		return -1;
 	}
 
 	public static DBCollection getCollection(String collection)
@@ -209,12 +223,17 @@ public class DataConnection {
 		doc.append(UrlParameter.TABLE_ID.toString(),
 				restaurantOrder.getTableId());
 
+		BasicDBList dbList = new BasicDBList();
+		doc.append(UrlParameter.CUSTOMER_ORDER.toString(), dbList);
+
 		DBCollection collection = mongoDb.getCollection(ORDER_DATA);
 		List<OrderedDish> list = restaurantOrder.getDishes();
 		for (OrderedDish od : list) {
-			doc.append(UrlParameter.DISH_IDS.toString(), od.getQuatity());
-			collection.insert(doc);
+			dbList.add(new BasicDBObject().append(
+					UrlParameter.DISH_IDS.toString(), od.getDishId()).append(
+					UrlParameter.DISH_QTY.toString(), od.getQuatity()));
 		}
+		collection.insert(doc);
 		return true;
 	}
 }
