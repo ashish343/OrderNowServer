@@ -7,6 +7,11 @@ Customer ID Div
                 Buttons
  -->
 
+<style type="text/css">
+.table {
+    margin-bottom:10px;
+}
+</style>
 <div id="R1"class="panel panel-default">
   <!-- Default panel contents -->
   <div class="panel-heading">R1</div>
@@ -46,30 +51,37 @@ var d;
             jQuery(".orderItemRow").click(function() {
             });
             
-            jQuery("#acceptBtn").click(function() {
+            jQuery(".acceptBtn").click(function() {
             	var unorderList = jQuery(this).parents('ul');
+            	var orderList = jQuery(this).parents('li');
             	var orderId = jQuery(unorderList).attr('id');
+            	var subOrderId = jQuery(orderList).attr('id');
             	
             	if(orderId !== null && orderId.length > 0) {
             	    var request = $.ajax({
-            	        url: "/restOrder?action=orderAccepted&orderId=" + orderId,
+            	        url: "/restOrder?action=orderAccepted&orderId=" + orderId + "&subOrderId=" + subOrderId,
                         type: "GET",
                     });
                     var identifier = 'alert-success';
                     
-            	    jQuery(unorderList).find('.'+identifier).show();
-                    setTimeout(function(){hideAlert(unorderList,identifier)}, 3000);
-                    jQuery(unorderList).find('li').find(".order-handler-btn-group").hide();
+            	    jQuery(orderList).find('.'+identifier).show();
+                    setTimeout(function(){hideAlert(orderList,identifier)}, 3000);
+                    jQuery(unorderList).find('#'+subOrderId).find(".order-handler-btn-group").hide();
                 }
             });
             
-            jQuery("#modifyBtn").click(function() {
+            jQuery(".modifyBtn").click(function() {
                 var orderList = jQuery(this).parents('li');
+                var subOrderId = jQuery(orderList).attr('id');
                 var orderTable;
                 if(orderList !== null && typeof orderList !== undefined) {
                     orderTable = jQuery(orderList).children('.table');
 
                     clonedOrderTable = jQuery(orderTable).clone();
+
+                    if(subOrderId != '0') {
+                    	jQuery(clonedOrderTable).prepend('<tr><th>Item</th><th>Quantity</th><th>Price</th></tr>');
+                    }
                     
                     jQuery(clonedOrderTable).find('tr').each(function(index, value){
                         if(index > 0) {
@@ -82,6 +94,8 @@ var d;
                     var unorderList = jQuery(this).parents('ul');
                     
                     model.attr("data-a-orderId", jQuery(unorderList).attr('id'));
+                    model.attr("data-a-subOrderId", jQuery(orderList).attr('id'));
+                    
                     model.html(clonedOrderTable);
                     jQuery('#modifyOrderModal').modal();
                 }
@@ -101,19 +115,20 @@ var d;
                     })
                 }
                 var orderId = jQuery(body).attr('data-a-orderId');
+                var subOrderId = jQuery(body).attr('data-a-subOrderId');
                 if(dishIds.length > 0) {
-                    rmvDishFrmOrdr(orderId, dishIds);
+                    rmvDishFrmOrdr(orderId, subOrderId, dishIds);
                     var request = $.ajax({
-                        url: "/restOrder?action=modifyOrder&orderId=" + orderId + "&dishIds=" + dishIds,
+                        url: "/restOrder?action=modifyOrder&orderId=" + orderId + "&subOrderId=" + subOrderId + "&dishIds=" + dishIds,
                         type: "GET",
                     });
                 }
             	$('#modifyOrderModal').modal('hide');
 
             	var identifier = 'alert-warning';
-            	jQuery('#'+orderId).find('.'+identifier).show();
-                setTimeout(function(){hideAlert(jQuery('#'+orderId), identifier)}, 3000);
-                var orderList = jQuery('#'+orderId).find('li');
+            	jQuery('#'+orderId).find('#'+subOrderId).find('.'+identifier).show();
+                setTimeout(function(){hideAlert(jQuery('#'+orderId).find('#'+subOrderId), identifier)}, 3000);
+                var orderList = jQuery('#'+orderId).find('#'+subOrderId);
                 jQuery(orderList).find(".order-handler-btn-group").hide();
             });
         }
@@ -122,9 +137,8 @@ var d;
             jQuery(unorderList).find('.'+identifier).hide();
         }
         
-        var rmvDishFrmOrdr = function(orderId, dishIds) {
-            console.log("Order Id::" + orderId);
-            var orderList = jQuery('#' + orderId);
+        var rmvDishFrmOrdr = function(orderId, subOrderId, dishIds) {
+            var orderList = jQuery('#' + orderId).find('#'+subOrderId);
             var i = 0;
             orderTables = jQuery(orderList).find('.table');
             jQuery(orderTables).each(function(index, value){
@@ -170,7 +184,7 @@ var d;
         var html = '';
         if(data !== null && typeof data !== undefined) {
             var customer = jQuery('#'+data.customerId);
-            if(customer === null || customer.length ===0) {
+            if(customer === null || customer.length == '0') {
                 // New Customer on the table.
                 html += '<div id="'+ data.customerId +'">';
                 html += '<ul id="' + data.orderId + '" class="list-group">';
@@ -213,8 +227,8 @@ var d;
     var getNewOrderOptions = function() {
         var html = '<div class="row"><div class="col-xs-12 col-md-12 col-lg-12">' 
         html += '<div class="order-handler-btn-group btn-group btn-group-lg">'+
-                    '<div id="acceptBtn" class="col col-lg-6 col-xs-6 col-md-6"><button type="button" class="btn btn-lg">Accept</button></div>'+
-        	        '<div id="modifyBtn" class="col col-lg-6 col-xs-6 col-md-6"><button type="button" class="btn btn-lg">Modify</button></div>'+
+                    '<div class="acceptBtn col col-lg-6 col-xs-6 col-md-6"><button type="button" class="btn btn-lg">Accept</button></div>'+
+        	        '<div class="modifyBtn col col-lg-6 col-xs-6 col-md-6"><button type="button" class="btn btn-lg">Modify</button></div>'+
         	    '</div>';
         html += '</div></div>';
         return html;
