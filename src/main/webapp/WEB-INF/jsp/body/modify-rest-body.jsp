@@ -55,8 +55,7 @@ var d;
                     attachEvent();
                     var request = $.ajax({
                         url: "/restOrder?action=orderReceived&orderId=" + data.orderId,
-                        type: "POST",
-                        data: { json : tmp }
+                        type: "GET",
                       });
                     alert(data);
                 });
@@ -68,15 +67,24 @@ var d;
                   });
     } 
     var createOrderPage = function(data) {
-        var orderHtml =  '<tr><th>S.No:</th><th>Item</th><th>Quantity</th><th>Price</th><th>Availability</th></tr>';
         if(data !== null && typeof data !== undefined){
-            jQuery(data.dishes).each(function(index, value) {
-            	orderHtml +='<tr id='+ value.dishId +' class="orderItemRow"><td>' + (index+1) + '</td><td>' + value.name 
-            	+ '</td><td>' + value.quatity + '</td><td>' + value.price 
-            	+ '</td><td><button type="button" class="btn btn-default">Not Available</button></td></tr>'; 
-            	
-                jQuery("#sample").html(orderHtml);
-            });
+        	var oldOrder = jQuery('#'+data.orderId);
+            var orderHtml = '';
+            
+            if(oldOrder === null || typeof oldOrder === undefined || oldOrder.length === 0) {
+                orderHtml =  '<table id="' + data.orderId + '" class="table" border="1"><tr><th>S.No:</th><th>Item</th><th>Quantity</th><th>Price</th></tr>';
+                jQuery(data.dishes).each(function(index, value) {
+                    orderHtml +='<tr id='+ value.dishId +'><td>' + (index+1) + '</td><td>' + value.name 
+                    + '</td><td>' + value.quatity + '</td><td>' + value.price + '</td></tr>'; 
+                });
+                jQuery(".panel").html(orderHtml);
+            } else {
+            	jQuery(data.dishes).each(function(index, value) {
+                    orderHtml +='<tr id='+ value.dishId +'><td>' + (index+1) + '</td><td>' + value.name 
+                    + '</td><td>' + value.quatity + '</td><td>' + value.price + '</td></tr>'; 
+                });
+            	oldOrder.append(orderHtml);
+            }
         }
     }
 </script>

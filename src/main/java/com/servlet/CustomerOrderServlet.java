@@ -59,6 +59,38 @@ public class CustomerOrderServlet extends HttpServlet {
 		/*
 		 * Populate the Restaurant Order from Customer Order.
 		 */
+<<<<<<< HEAD
+    	/*
+    	 * TODO: Check if the order already exist, if yes then get the order id else create a new one.
+    	 */
+    	String orderId = customerOrder.getOrderId();
+    	if(orderId == null || orderId.isEmpty()) {
+    		orderId = OrderIdGenerator.generateUniqueOrderId();
+    	}
+    	String customerId = customerOrder.getCustomerId();
+    	CustomerRestaurantHandshake customerRest = new CustomerRestaurantHandshake();
+    	RestaurantOrder restaurantOrder = customerRest.getRestaurantOrder(menu, customerOrder, orderId, customerId);
+    	
+    	/*
+    	 * TODO: Update DB with the order.
+    	 */
+    	DataConnection.setOrderDetailsToDB();
+		
+    	/*
+    	 * Subscribe Customer to The Channel.
+    	 */
+    	ParseNotificationHelper.registerChannel(customerId, orderId, outputStream);
+    	
+    	/*
+    	 * Send Notification to Restaurant about the order.
+    	 */
+    	Gson gson = new Gson();
+    	String restaurantOrderJson = gson.toJson(restaurantOrder);
+    	System.out.println(restaurantOrderJson);
+    	System.out.println(restaurantOrderJson.replace("\\\"", "\"").replace("\"", "\\\""));
+    	String json = "{\"data\":\""+restaurantOrderJson.replace("\\\"", "\"").replace("\"", "\\\"")+"\",\"name\":\"" + RestaurantClientSideEvents.NOTIFY_NEW_ORDER.toString() + "\",\"channel\":\""+restuarantId+"\"}";
+    	PusherTest.triggerPush(restuarantId,  RestaurantClientSideEvents.NOTIFY_NEW_ORDER.toString(), json, "");
+=======
 		/*
 		 * TODO: Check if the order already exist, if yes then get the order id
 		 * else create a new one.
@@ -96,6 +128,7 @@ public class CustomerOrderServlet extends HttpServlet {
 		PusherTest.triggerPush(restuarantId,
 				RestaurantClientSideEvents.NOTIFY_NEW_ORDER.toString(), json,
 				"");
+>>>>>>> b9701faa8e032e1eb028f546ab47cc12145f50ee
 		/*
 		 * Return a success message to the User.
 		 */
