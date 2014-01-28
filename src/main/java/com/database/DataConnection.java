@@ -1,23 +1,23 @@
 package com.database;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.ArrayList;
 
 import javax.servlet.ServletOutputStream;
 
 import com.data.menu.Menu;
 import com.data.menu.Restaurant;
-import com.data.restaurant.OrderedDish;
 import com.data.restaurant.RestaurantOrder;
 import com.enums.UrlParameter;
 import com.google.gson.Gson;
-import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import com.mongodb.util.JSON;
 import com.utility.RequestContext;
 
 public class DataConnection {
@@ -33,6 +33,7 @@ public class DataConnection {
 	private static DBCollection table;
 	private static DBCollection restaurant;
 	private static DBCollection order;
+	private static Gson gs;
 
 	public static void loader(ServletOutputStream debugger) throws IOException {
 		boolean isDebug = RequestContext.isDebugEnabled();
@@ -67,6 +68,7 @@ public class DataConnection {
 		table = mongoDb.getCollection(TABLE_DATA);
 		restaurant = mongoDb.getCollection(RESTUARANT_DATA);
 		order = mongoDb.getCollection(ORDER_DATA);
+		gs = new Gson();
 	}
 
 	public static boolean checkOrderExists(String orderId,
@@ -99,7 +101,8 @@ public class DataConnection {
 		return mongoDb.getCollection(collection);
 	}
 
-	public static String getRestaurantId(String tableId, ServletOutputStream debugger) throws IOException {
+	public static String getRestaurantId(String tableId,
+			ServletOutputStream debugger) throws IOException {
 		String restaurantId = null;
 		boolean isDebug = RequestContext.isDebugEnabled();
 		if (mongoDb == null) {
@@ -127,10 +130,11 @@ public class DataConnection {
 		return restaurantId;
 	}
 
-	public static Restaurant getRestaurantData(String restuarantId, ServletOutputStream debugger) throws IOException {
+	public static Restaurant getRestaurantData(String restuarantId,
+			ServletOutputStream debugger) throws IOException {
 		Restaurant restaurantData = null;
 		boolean isDebug = RequestContext.isDebugEnabled();
-		
+
 		if (mongoDb == null) {
 			new DataConnection();
 			if (isDebug)
@@ -184,7 +188,8 @@ public class DataConnection {
 		return restaurant;
 	}
 
-	private static Menu getMenu(String restaurantMenu, ServletOutputStream debugger) throws IOException {
+	private static Menu getMenu(String restaurantMenu,
+			ServletOutputStream debugger) throws IOException {
 		Menu menu = null;
 		boolean isDebug = RequestContext.isDebugEnabled();
 		Gson gson = new Gson();
@@ -233,32 +238,36 @@ public class DataConnection {
 	}
 
 	public static boolean setOrderDetailsToDB(RestaurantOrder restaurantOrder) {
-		BasicDBObject doc = new BasicDBObject();
-		doc.append(UrlParameter.CUSTOMER_ID.toString(),
-				restaurantOrder.getCustomerId());
-		doc.append(UrlParameter.ORDER_ID.toString(),
-				restaurantOrder.getOrderId());
-		doc.append(UrlParameter.SUBORDER_ID.toString(),
-				restaurantOrder.getSubOrderId());
-		doc.append(UrlParameter.TIMESTAMP.toString(),
-				System.currentTimeMillis());
-		doc.append(UrlParameter.RESTAURNAT_ID.toString(),
-				restaurantOrder.getRestaurantId());
-		doc.append(UrlParameter.ORDERSTATE.toString(), "INTERMEDIATE");
-		doc.append(UrlParameter.TABLE_ID.toString(),
-				restaurantOrder.getTableId());
-
-		BasicDBList dbList = new BasicDBList();
-		doc.append(UrlParameter.CUSTOMER_ORDER.toString(), dbList);
-
-		DBCollection collection = mongoDb.getCollection(ORDER_DATA);
-		List<OrderedDish> list = restaurantOrder.getDishes();
-		for (OrderedDish od : list) {
-			dbList.add(new BasicDBObject().append(
-					UrlParameter.DISH_IDS.toString(), od.getDishId()).append(
-					UrlParameter.DISH_QTY.toString(), od.getQuatity()));
+		try {
+			loader(null);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		collection.insert(doc);
+		BasicDBObject doc = (BasicDBObject) JSON.parse(gs
+				.toJson(restaurantOrder));
+		order.insert(doc);
 		return true;
+	}
+
+	public static ArrayList<RestaurantOrder> getOrders(String restaurantId,
+			String state, ServletOutputStream debugger) throws IOException {
+		// loader(debugger);
+		ArrayList<RestaurantOrder> result = new ArrayList<RestaurantOrder>();
+		BasicDBObject bdo = new BasicDBObject();
+		bdo.put(UrlParameter.RESTAURNAT_ID.toString(), restaurantId);
+		bdo.put(UrlParameter.ORDERSTATE.toString(), state);
+
+		DBCursor cursor = order.find(bdo);
+		while (cursor.hasNext()) {
+			DBObject temp = cursor.next();
+			result.add(gs.fromJson(temp.toString(), RestaurantOrder.class));
+		}
+		return result;
+	}
+
+	public static void main(String[] args) throws IOException {
+		new DataConnection();
+		System.out.println(gs.toJson(getOrders("R1",
+				UrlParameter.INTERMEDIATE.toString(), null)));
 	}
 }

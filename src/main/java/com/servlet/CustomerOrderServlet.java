@@ -68,17 +68,10 @@ public class CustomerOrderServlet extends HttpServlet {
 		 */
 		String restuarantId = customerOrder.getRestaurantId();
 		Menu menu = getMenu(restuarantId, outputStream, isDebug);
-		// Menu menu = getMenu();
 
 		/*
 		 * Populate the Restaurant Order from Customer Order.
 		 */
-
-		/*
-		 * TODO: Check if the order already exist, if yes then get the order id
-		 * else create a new one.
-		 */
-
 		CustomerRestaurantHandshake customerRest = new CustomerRestaurantHandshake();
 		RestaurantOrder restaurantOrder = customerRest.getRestaurantOrder(menu,
 				customerOrder);
