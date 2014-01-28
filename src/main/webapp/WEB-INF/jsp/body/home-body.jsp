@@ -28,7 +28,7 @@
         <div class="item">
             <div class="container">
                 <div class="carousel-caption">
-                    <h1>Sign In Page</h1>
+                    <h1>About Us Page</h1>
                 </div>
             </div>
         </div>

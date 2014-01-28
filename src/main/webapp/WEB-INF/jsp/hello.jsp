@@ -16,13 +16,11 @@
 </style>
   </head>
   <body>
-    <div class="navbar-wrapper">
-      <div class="container">
-        <c:set var="options">Home,App,Blog</c:set>
-        <c:set var="showOption" value="true"/>
-        <%@ include file="/WEB-INF/jsp/common/navbar.jsp" %>
-      </div>
-    </div>
+    <c:set var="options">Home,App,Blog</c:set>
+    <c:set var="showOption" value="true"/>
+    <c:set var="showOptionData" value="About Us"/>
+    <%@ include file="/WEB-INF/jsp/common/new-navbar.jsp" %>
+
     <div class="container page-layout">
        <%@ include file="/WEB-INF/jsp/body/home-body.jsp" %>
     </div>
@@ -31,30 +29,63 @@
             myFunc(this.$);
         });
 
+        var showActiveList = function($, element) {
+        	var listElement = $(element).parent();
+            var unorderedList = $(element).parents().find('ul');
+
+            var rightUnorderedList = $('.navbar-right');
+            
+            jQuery(rightUnorderedList).find('li').each(function(index, value){
+                jQuery(value).attr('class', '');
+            });
+            
+            jQuery(unorderedList).find('li').each(function(index, value){
+                jQuery(value).attr('class', '');
+            });
+            jQuery(listElement).attr('class', 'active');
+        }
+        
         var myFunc = function($) {
             $("#action-Home").click(function(e) {
-            $('.carousel').carousel(0);
-            $('.carousel').carousel('pause');
-            e.preventDefault();
-        });
+                $('.carousel').carousel(0);
+                $('.carousel').carousel('pause');
+                showActiveList($, this);
+                e.preventDefault();
+            });
 
-        $("#action-App").click(function(e) {
-            $('.carousel').carousel(1);
-            $('.carousel').carousel('pause');
-            e.preventDefault();
-        });
+            $("#action-App").click(function(e) {
+                $('.carousel').carousel(1);
+                $('.carousel').carousel('pause');
+                showActiveList($, this);
+                e.preventDefault();
+            });
 
-        $("#action-Blog").click(function(e) {
-            $('.carousel').carousel(2);
-            $('.carousel').carousel('pause');
-            e.preventDefault();
-        });
+            $("#action-Blog").click(function(e) {
+                $('.carousel').carousel(2);
+                $('.carousel').carousel('pause');
+                showActiveList($, this);
+                e.preventDefault();
+            });
 
-        $("#action-sign-in").click(function(e) {
-            $('.carousel').carousel(3);
-            $('.carousel').carousel('pause');
-            e.preventDefault();
-        });
+            $("#action-About").click(function(e) {
+                $('.carousel').carousel(3);
+                $('.carousel').carousel('pause');
+                var unorderedList = $('.navbar-left');
+                
+                jQuery(unorderedList).find('li').each(function(index, value){
+                    jQuery(value).attr('class', '');
+                });
+                var listElement = $(this).parent();
+                jQuery(listElement).attr('class', 'active');
+                
+                e.preventDefault();
+            });
+            $('.navbar-brand.nav-element-title').click(function(e){
+            	 $('.carousel').carousel(0);
+                 $('.carousel').carousel('pause');
+                 showActiveList($, $("#action-Home"));
+            	e.preventDefault();
+            });
         }
     </script>
   </body>
