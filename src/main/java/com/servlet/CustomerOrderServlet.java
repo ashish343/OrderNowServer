@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.data.menu.CustomerOrder;
 import com.data.menu.Menu;
 import com.data.menu.Restaurant;
@@ -46,6 +49,17 @@ public class CustomerOrderServlet extends HttpServlet {
 		 */
 		CustomerOrder customerOrder = getCustomerOrder(request, outputStream,
 				isDebug);
+		JSONObject bdo = new JSONObject();
+		try {
+			bdo.put(UrlParameter.ORDER_ID.toString(),
+					customerOrder.getOrderId());
+			bdo.put(UrlParameter.SUBORDER_ID.toString(),
+					customerOrder.getSubOrderId());
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		outputStream.write(bdo.toString().getBytes());
+
 		/*
 		 * Fetch the Menu From DB to create Restaurant Order.
 		 */
