@@ -3,12 +3,14 @@ package com.data.restaurant;
 import java.util.List;
 
 public class RestaurantOrder {
+
 	private List<OrderedDish> dishes;
 	private String orderId;
 	private String customerId;
 	private String restaurantId;
 	private String tableId;
 	private int subOrderId;
+	private String orderState;
 
 	public String getCustomerId() {
 		return customerId;
@@ -56,5 +58,13 @@ public class RestaurantOrder {
 
 	public void setSubOrderId(int subOrderId) {
 		this.subOrderId = subOrderId;
+	}
+
+	public String getOrderState() {
+		return orderState;
+	}
+
+	public void setOrderState(String orderState) {
+		this.orderState = orderState;
 	}
 }

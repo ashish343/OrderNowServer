@@ -10,6 +10,7 @@ import com.data.menu.Dish;
 import com.data.menu.Menu;
 import com.data.restaurant.OrderedDish;
 import com.data.restaurant.RestaurantOrder;
+import com.enums.UrlParameter;
 
 public class CustomerRestaurantHandshake {
 
@@ -23,6 +24,7 @@ public class CustomerRestaurantHandshake {
 		restaurantOrder.setRestaurantId(customerOrder.getRestaurantId());
 		restaurantOrder.setTableId(customerOrder.getTableId());
 		restaurantOrder.setSubOrderId(customerOrder.getSubOrderId());
+		restaurantOrder.setOrderState(UrlParameter.INTERMEDIATE.toString());
 
 		List<Category> categories = menu.getCategories();
 		getAllDishes(categories, allDishes);
