@@ -84,14 +84,7 @@ body {
     .carousel .item {
       height: 100%;
     }
-    .carousel img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      min-width: 100%;
-      min-height: 500px;
-    }
-
+    
     .carousel-caption {
       background-color: transparent;
       position: static;

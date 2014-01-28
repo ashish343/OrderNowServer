@@ -28,7 +28,29 @@
         <div class="item">
             <div class="container">
                 <div class="carousel-caption">
-                    <h1>About Us Page</h1>
+                <div class="row contact-details">
+                    <div class="col">
+                        <img src="/resources/img/conatct-us.png" alt="Contact Us"/>
+                    </div>
+                    <div class="row">
+                        <div class="col col-lg-6 col-xs-6 col-md-6">
+                            <div class="card">
+                                <h2>Ashish Singhal</h2>
+                                <h3>9663-892-522</h3>
+                                <h3>ashish_nsit@yahoo.com</h3>
+                                <h3><a href="http://www.linkedin.com/pub/ashish-singhal/24/5aa/a16">Linked In</a></h3>
+                            </div>
+                        </div>
+                        <div class="col col-lg-6 col-xs-6 col-md-6">
+                            <div class="card">
+                                <h2>Siddhanth Jain<h2>
+                                <h3>9686-373-313</h3>
+                                <h3>siddhanth.iitb@gmail.com</h3>
+                                <h3><a href="http://www.linkedin.com/pub/siddhanth-jain/18/376/290">Linked In</a></h3>
+                            </h3>
+                        </div>
+                    </div>
+                    </div>
                 </div>
             </div>
         </div>

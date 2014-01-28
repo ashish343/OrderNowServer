@@ -13,12 +13,22 @@
     border-width: 1px; 
     border-color: dimgrey;  
 }
+.card {
+    heitgh:300px;
+    background-color:lightgray;
+    margin:10px;
+}
+.contact-details {
+    margin:0px auto 0px;
+    max-width:996px;
+    color:black;
+}
 </style>
   </head>
   <body>
     <c:set var="options">Home,App,Blog</c:set>
     <c:set var="showOption" value="true"/>
-    <c:set var="showOptionData" value="About Us"/>
+    <c:set var="showOptionData" value="Contact Us"/>
     <%@ include file="/WEB-INF/jsp/common/new-navbar.jsp" %>
 
     <div class="container page-layout">
@@ -67,7 +77,7 @@
                 e.preventDefault();
             });
 
-            $("#action-About").click(function(e) {
+            $("#action-Contact").click(function(e) {
                 $('.carousel').carousel(3);
                 $('.carousel').carousel('pause');
                 var unorderedList = $('.navbar-left');
