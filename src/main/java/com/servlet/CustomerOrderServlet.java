@@ -21,6 +21,7 @@ import com.enums.EventState;
 import com.enums.UrlParameter;
 import com.google.gson.Gson;
 import com.handlers.table.TableHandler;
+import com.mongodb.BasicDBObject;
 import com.parse.ParseNotificationHelper;
 import com.test.PusherTest;
 import com.utility.CustomerRestaurantHandshake;
@@ -46,6 +47,12 @@ public class CustomerOrderServlet extends HttpServlet {
 		 */
 		CustomerOrder customerOrder = getCustomerOrder(request, outputStream,
 				isDebug);
+		BasicDBObject bdo = new BasicDBObject();
+		bdo.put(UrlParameter.ORDER_ID.toString(), customerOrder.getOrderId());
+		bdo.put(UrlParameter.SUBORDER_ID.toString(),
+				customerOrder.getSubOrderId());
+		outputStream.write(bdo.toString().getBytes());
+
 		/*
 		 * Fetch the Menu From DB to create Restaurant Order.
 		 */
