@@ -18,6 +18,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import com.utility.RequestContext;
 
 public class DataConnection {
 
@@ -34,13 +35,13 @@ public class DataConnection {
 	private static DBCollection order;
 
 	public static void loader(ServletOutputStream debugger) throws IOException {
-
+		boolean isDebug = RequestContext.isDebugEnabled();
 		if (mongoDb == null) {
 			new DataConnection();
-			if (debugger != null)
+			if (isDebug)
 				debugger.write(("\nNew DB connection Formed.").getBytes());
 		} else {
-			if (debugger != null)
+			if (isDebug)
 				debugger.write(("\nUsing old DB connection.").getBytes());
 		}
 	}
@@ -98,15 +99,15 @@ public class DataConnection {
 		return mongoDb.getCollection(collection);
 	}
 
-	public static String getRestaurantId(String tableId,
-			ServletOutputStream debugger) throws IOException {
+	public static String getRestaurantId(String tableId, ServletOutputStream debugger) throws IOException {
 		String restaurantId = null;
+		boolean isDebug = RequestContext.isDebugEnabled();
 		if (mongoDb == null) {
 			new DataConnection();
-			if (debugger != null)
+			if (isDebug)
 				debugger.write(("\nNew DB connection Formed.").getBytes());
 		} else {
-			if (debugger != null)
+			if (isDebug)
 				debugger.write(("\nUsing old DB connection.").getBytes());
 		}
 		// BasicDBObject doc = new BasicDBObject("_id",
@@ -126,15 +127,16 @@ public class DataConnection {
 		return restaurantId;
 	}
 
-	public static Restaurant getRestaurantData(String restuarantId,
-			ServletOutputStream debugger) throws IOException {
+	public static Restaurant getRestaurantData(String restuarantId, ServletOutputStream debugger) throws IOException {
 		Restaurant restaurantData = null;
+		boolean isDebug = RequestContext.isDebugEnabled();
+		
 		if (mongoDb == null) {
 			new DataConnection();
-			if (debugger != null)
+			if (isDebug)
 				debugger.write(("\nNew DB connection Formed.").getBytes());
 		} else {
-			if (debugger != null)
+			if (isDebug)
 				debugger.write(("\nUsing old DB connection.").getBytes());
 		}
 		BasicDBObject query = new BasicDBObject("_id", restuarantId);
@@ -144,11 +146,11 @@ public class DataConnection {
 			if (cursor.hasNext()) {
 				BasicDBObject obj = (BasicDBObject) cursor.next();
 				restaurantData = getRestaurantData(obj, debugger);
-				if (debugger != null)
+				if (isDebug)
 					debugger.write(("\nValid result returned from DB.")
 							.getBytes());
 			} else {
-				if (debugger != null)
+				if (isDebug)
 					debugger.write(("\nNo  valid result returned for Rest_Id:::" + restuarantId)
 							.getBytes());
 			}
@@ -182,23 +184,23 @@ public class DataConnection {
 		return restaurant;
 	}
 
-	private static Menu getMenu(String restaurantMenu,
-			ServletOutputStream debugger) throws IOException {
+	private static Menu getMenu(String restaurantMenu, ServletOutputStream debugger) throws IOException {
 		Menu menu = null;
+		boolean isDebug = RequestContext.isDebugEnabled();
 		Gson gson = new Gson();
 		try {
 			menu = gson.fromJson(restaurantMenu, Menu.class);
 			if (menu.getCategories() == null)
 				throw new Exception("categories are null");
 
-			if (debugger != null)
+			if (isDebug)
 				debugger.write(("\nGson successfully converted the response.")
 						.getBytes());
 			String json = gson.toJson(menu);
-			if (debugger != null)
+			if (isDebug)
 				debugger.write(("\n" + json).getBytes());
 		} catch (Exception e) {
-			if (debugger != null) {
+			if (isDebug) {
 				debugger.write(("\nGson failed to convert the response, or menu was null" + e
 						.toString()).getBytes());
 				debugger.write(("\nMenu::" + restaurantMenu).getBytes());
