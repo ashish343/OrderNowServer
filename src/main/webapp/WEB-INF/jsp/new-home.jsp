@@ -4,8 +4,8 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
         <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-        <title>Blueprint: On Scroll Effect Layout</title>
-        <link rel="shortcut icon" href="../favicon.ico">
+        <title>Order Now</title>
+        <link rel="icon" type="image/png" href="${path}/resources/img/icon.png" />
         <link rel="stylesheet" type="text/css" href="/resources/css/demo.css" />
         <link rel="stylesheet" type="text/css" href="/resources/css/component.css" />
         <link rel="stylesheet" type="text/css" href="/resources/css/normalize.css" />
