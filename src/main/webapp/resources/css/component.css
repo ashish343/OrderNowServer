@@ -1,0 +1,404 @@
+.cbp-so-scroller {
+	margin-top: 3em;
+	overflow: hidden;
+}
+
+.cbp-so-section {
+	margin-bottom: 15em;
+}
+
+/* Clear floats of children */
+.cbp-so-section:before,
+.cbp-so-section:after {
+	content: " ";
+	display: table;
+}
+
+.cbp-so-section:after {
+	clear: both;
+}
+
+/* Text styling */
+.cbp-so-section h2 {
+	font-size: 5em;
+	font-weight: 300;
+	line-height: 1;
+}
+
+.cbp-so-section p {
+	font-size: 2em;
+	font-weight: 300;
+}
+
+/* Sides */
+.cbp-so-side {
+	width: 50%;
+	float: left;
+	margin: 0;
+	padding: 3em 4%;
+	overflow: hidden;
+	min-height: 12em;
+	-webkit-transition: -webkit-transform 0.5s, opacity 0.5s;
+	-moz-transition: -moz-transform 0.5s, opacity 0.5s;
+	transition: transform 0.5s, opacity 0.5s;
+}
+
+/* Clear floats of children */
+.cbp-so-side:before,
+.cbp-so-side:after {
+	content: " ";
+	display: table;
+}
+
+.cbp-so-side:after {
+	clear: both;
+}
+
+.cbp-so-side-right {
+	text-align: left;
+}
+
+.cbp-so-side-left {
+	text-align: right;
+}
+
+.cbp-so-side-right img {
+	float: left;
+}
+
+.cbp-so-side-left img {
+	float: right;
+}
+
+/* Initial state (hidden or anything else) */
+.cbp-so-init .cbp-so-side {
+	opacity: 0;
+}
+
+.cbp-so-init .cbp-so-side-left {
+	-webkit-transform: translateX(-80px);
+	-moz-transform: translateX(-80px);
+	transform: translateX(-80px);
+}
+
+.cbp-so-init .cbp-so-side-right {
+	-webkit-transform: translateX(80px);
+	-moz-transform: translateX(80px);
+	transform: translateX(80px);
+}
+
+/* Animated state */
+/* add you final states (transition) or your effects (animations) for each side */
+.cbp-so-section.cbp-so-animate .cbp-so-side-left,
+.cbp-so-section.cbp-so-animate .cbp-so-side-right {
+	-webkit-transform: translateX(0px);
+	-moz-transform: translateX(0px);
+	transform: translateX(0px);
+	opacity: 1;
+}
+
+/* For example, add a delay for the right side:
+.cbp-so-section.cbp-so-animate .cbp-so-side-right {
+	-webkit-transition-delay: 0.2s;
+	-moz-transition-delay: 0.2s;
+	transition-delay: 0.2s;
+}
+*/
+
+/* Example media queries */
+
+@media screen and (max-width: 73.5em) {
+	.cbp-so-scroller {
+		font-size: 65%;
+	}
+
+	.cbp-so-section h2 {
+		margin: 0;
+	}
+
+	.cbp-so-side img {
+		max-width: 120%;
+	}
+}
+
+@media screen and (max-width: 41.125em) {
+	.cbp-so-side {
+		float: none;
+		width: 100%;
+	}
+
+	.cbp-so-side img {
+		max-width: 100%;
+	}
+}
+
+/* Common style */
+.grid {
+    margin: 40px auto 120px;
+    max-width: 600px;
+    width: 90%;
+}
+
+.grid a {
+    float: left;
+    max-width: 350px;
+    width: 40%
+    color: #333;
+}
+.contact-us-nav {
+	padding-top:30px;
+}
+
+.grid a:nth-child(odd) {
+    margin: 30px 0 -30px 0;
+}
+
+.grid figure {
+    position: relative;
+    overflow: hidden;
+    margin: 5px;
+    background: #333;
+}
+
+.grid figure img {
+    position: relative;
+    display: block;
+    width: 100%;
+    opacity: 0.7;
+    -webkit-transition: opacity 0.3s;
+    transition: opacity 0.3s;
+}
+
+.grid figcaption {
+    position: absolute;
+    top: 0;
+    z-index: 11;
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+.grid figcaption h2 {
+    margin: 0 0 20px 0;
+    color: #3498db;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 300;
+    font-size: 130%;
+    -webkit-transition: -webkit-transform 0.3s;
+    transition: transform 0.3s;
+}
+
+.grid figcaption p {
+    padding: 0 20px;
+    color: #aaa;
+    font-weight: 300;
+    -webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.grid figcaption h2,
+.grid figcaption p {
+    -webkit-transform: translateY(50px);
+    transform: translateY(50px);
+}
+
+.grid figure button {
+    position: absolute;
+    padding: 4px 20px;
+    border: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: bold;
+    -webkit-transition: opacity 0.3s, -webkit-transform 0.3s;
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.grid figcaption,
+.grid figcaption h2,
+.grid figcaption p,
+.grid figure button {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+/* Style for SVG */
+.grid svg {
+    position: absolute;
+    top: -1px; /* fixes rendering issue in FF */
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+}
+
+.grid svg path {
+    fill: #fff;
+}
+
+/* Hover effects */
+.grid a:hover figure img {
+    opacity: 1;
+}
+
+.grid a:hover figcaption h2,
+.grid a:hover figcaption p {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+}
+
+.grid a:hover figcaption p {
+    opacity: 0;
+}
+
+/* Individual styles */
+.demo-1 body {
+    background: #3498db;
+}
+
+#like, #email-us {
+	background-color:#47a3da;
+}
+.grid figure button,
+.grid figure input {
+    top: 50%;
+    left: 50%;
+    border: 3px solid #fff;
+    background: transparent;
+    color: #fff;
+    opacity: 0;
+    -webkit-transform: translateY(-50%) translateX(-50%) scale(0.25);
+    transform: translateY(-50%) translateX(-50%) scale(0.25);
+}
+
+.grid a:hover figure button,
+.grid a:hover figure input {
+    opacity: 1;
+    -webkit-transform: translateY(-50%) translateX(-50%) scale(1);
+    transform: translateY(-50%) translateX(-50%) scale(1);
+}
+
+.demo-2 body {
+    background: #e74c3c;
+}
+
+.demo-2 .grid figcaption h2 {
+    color: #e74c3c;
+}
+
+.demo-2 .grid figcaption p {
+    -webkit-transition-delay: 0.05s;
+    transition-delay: 0.05s;
+}
+
+.demo-2 .grid figure button,
+.demo-2 .grid figure input {
+    bottom: 0;
+    left: 0;
+    padding: 15px;
+    width: 100%;
+    background: #fff;
+    color: #333;
+    font-weight: 300;
+    -webkit-transform: translateY(100%);
+    transform: translateY(100%);
+}
+
+.demo-2 .grid a:hover figure button,
+.demo-2 .grid a:hover figure input {
+    -webkit-transition-timing-function: ease-out;
+    transition-timing-function: ease-out;
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+}
+
+.demo-2 .grid figcaption h2, 
+.demo-2 .grid figcaption p,
+.demo-3 .grid figcaption h2,
+.demo-3 .grid figcaption p {
+    -webkit-transition-timing-function: cubic-bezier(0.250, 0.250, 0.115, 1); /* older webkit */
+    -webkit-transition-timing-function: cubic-bezier(0.250, 0.250, 0.115, 1.445);
+    timing-function: cubic-bezier(0.250, 0.250, 0.115, 1.445);
+}
+
+.demo-2 .grid a:hover figcaption p,
+.demo-3 .grid a:hover figcaption p {
+    -webkit-transition-delay: 0s;
+    transition-delay: 0s;
+    -webkit-transition-duration: 0.1s;
+    transition-duration: 0.1s;
+}
+
+.demo-3 body {
+    background: #52be7f;
+}
+
+.demo-3 .grid figcaption h2 {
+    color: #52be7f;
+}
+
+.demo-3 .grid a:hover figcaption h2 {
+    -webkit-transform: translateY(5px);
+    transform: translateY(5px);
+}
+
+/* Media Queries */
+/* Let's redefine the width of each anchor and the margins */
+
+@media screen and (max-width: 58em) {
+    .grid a {
+        width: 33.333%;
+    }
+
+    .grid a:nth-child(odd) {
+        margin: 0;
+    }
+
+    .grid a:nth-child(3n-1) {
+        margin: 30px 0 -30px 0;
+    }
+}
+
+@media screen and (max-width: 45em) {
+    .grid {
+        max-width: 500px;
+    }
+
+    .grid a {
+        width: 50%;
+    }
+
+    .grid a:nth-child(3n-1) {
+        margin: 0;
+    }
+
+    .grid a:nth-child(even) {
+        margin: 30px 0 -30px 0;
+    }
+
+
+    .grid figcaption h2 {
+        margin-bottom: 0px;
+        -webkit-transform: translateY(30px);
+        transform: translateY(30px);
+    }
+
+    .grid figcaption p {
+        margin: 0;
+        padding: 0 10px;
+    }
+}
+
+@media screen and (max-width: 27em) {
+    .grid {
+        max-width: 250px;
+    }
+
+    .grid a {
+        width: 100%;
+    }
+
+    .grid a:nth-child(even) {
+        margin: 0;
+    }
+}
