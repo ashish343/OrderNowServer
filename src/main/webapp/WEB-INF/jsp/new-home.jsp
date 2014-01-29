@@ -41,12 +41,12 @@
                         <p>Fruitcake toffee jujubes. Topping biscuit sesame snaps jelly caramels jujubes tiramisu fruitcake. Marzipan tart lemon drops chocolate sesame snaps jelly beans.</p>
                     </article>
                     <figure class="cbp-so-side cbp-so-side-right">
-                        <img src="/resources/img/story_start.png" alt="img01">
+                        <img src="/resources/img/story_start1.png" alt="img01">
                     </figure>
                 </section>
                 <section class="cbp-so-section">
                     <figure class="cbp-so-side cbp-so-side-left">
-                        <img src="/resources/img/2.png" alt="img01">
+                        <img src="/resources/img/story_start2.png" alt="img01">
                     </figure>
                     <article class="cbp-so-side cbp-so-side-right">
                         <h2>Plum caramels</h2>
@@ -69,24 +69,6 @@
                     <article class="cbp-so-side cbp-so-side-right">
                         <h2>Carrot cake</h2>
                         <p>Sesame snaps sweet wafer danish. Chupa chups carrot cake icing donut halvah bonbon. Chocolate cake candy marshmallow pudding dessert marzipan jujubes sugar plum.</p>
-                    </article>
-                </section>
-                <section class="cbp-so-section">
-                    <article class="cbp-so-side cbp-so-side-left">
-                        <h2>Pudding lollipop</h2>
-                        <p>Chupa chups pudding lollipop gummi bears gummies cupcake pie. Cookie cotton candy caramels. Oat cake dessert applicake. Sweet roll tiramisu sweet roll sweet roll.</p>
-                    </article>
-                    <figure class="cbp-so-side cbp-so-side-right">
-                        <img src="/resources/img/5.png" alt="img01">
-                    </figure>
-                </section>
-                <section class="cbp-so-section">
-                    <figure class="cbp-so-side cbp-so-side-left">
-                        <img src="/resources/img/6.png" alt="img01">
-                    </figure>
-                    <article class="cbp-so-side cbp-so-side-right">
-                        <h2>Soufflé bonbon</h2>
-                        <p>Cake cotton candy lollipop. Cake croissant cheesecake candy sugar plum icing apple pie wafer. Pie sugar plum tiramisu tiramisu pie fruitcake candy icing. Candy icing gummies gummies cheesecake brownie lemon drops chocolate gingerbread.</p>
                     </article>
                 </section>
             </div>
