@@ -43,16 +43,24 @@
     width: 100%;
 }
 /* Slide 1 */
-#slide-1 .bcg {background-image:url('/resources/new-layout/img/bg-1.jpg')}
+#slide-1 .bcg {background-image:url('/resources/new-layout/img/bus.jpg')}
 /* CSS - Slide 2 */
 #slide-2 .bcg {
-    background: none;
-    background-color: #270d15;
-    height: 210px;
+    height: 350px;
     text-align: center
 }
+#slide-2 .bcg {background-image:url('/resources/new-layout/img/bg3.jpg')}
 /*Slide 3*/
-#slide-3 .bcg {background-image:url('/resources/img/bcg_slide-1.jpg')}
+#slide-3 .bcg {
+    height: 500px;
+}
+#slide-3 .bcg {
+    background-image:url('/resources/new-layout/img/contact.png');
+    background-repeat:repeat;
+}
+.text {
+    margin:120px 200px;
+}
 </style>
     </head>
     <body class="loading">
@@ -71,24 +79,26 @@
              <section id="slide-1" class="homeSlide">
                  <div class="bcg" data-center="background-position: 50% 0px;" data-top-bottom="background-position: 50% -150px;" data-anchor-target="#slide-1">
                      <div class="hsContainer">
-                         <div class="hsContent" data-center="opacity: 1" data--5p-top="opacity: 0.1" data-anchor-target="#slide-1 .slider-container">
+                         <div class="hsContent" data-center="opacity: 1" data--20p-top="opacity: 0.1" data-anchor-target="#slide-1 .slider-container">
                              <%@ include file="/WEB-INF/jsp/common/image-slider-parallax.jsp" %>
                          </div>
                      </div> 
                  </div>
              </section>
             <section id="slide-2">
-                <div class="bcg" data-0="background-color:#1a090c;" data-top="background-color:#270d15;"  data-anchor-target="#slide-2">
+                <div class="bcg" data-10p-bottom="background-position: 80% 0px;" data-top-bottom="background-position: 80% 0px;" data-anchor-target="#slide-2">
                     <div class="hsContainer">
                         <div class="hsContent">
-                            <h2 data-10p-top="opacity:1" data-40p-top="opacity:0" data-anchor-target="#slide-2 h2" style="font-size:180px">
-                                Contact Us!
-                            </h2>
+                            <div class="text">
+                                <h2 data-40p-top="opacity:1" data-100p-top="opacity:0" data-anchor-target="#slide-2 h2">
+                                    IN ORDER TO SUCCEED, YOUR DESIRE FOR SUCCESS SHOULD BE GREATER THAN YOUR FEAR OF FAILURE.
+                                </h2>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
-            <section id="slide-3" class="homeSlide">
+            <section id="slide-3">
                 <div class="bcg" data-center="background-position: 0px 50%;" data-bottom-top="background-position: 0px 40%;"
                 data-top-bottom="background-position: -40px 50%;"
                 data-anchor-target="#slide-3">
@@ -96,7 +106,7 @@
                         <div class="hsContent">
                             <div class="plaxEl" data-106-top="opacity: 0" data-bottom="opacity: 1; position: fixed; top: 206px; width: 100%; left: 0;" 
                                 data--30p-top="opacity: 1;" data--60p-top="opacity: 0;" data-anchor-target="#slide-3" >
-                                <h2>Fixed element fading in and out</h2>
+                               <!--  <h2>Fixed element fading in and out</h2> -->
                             </div>
                         </div>
                     </div>   
