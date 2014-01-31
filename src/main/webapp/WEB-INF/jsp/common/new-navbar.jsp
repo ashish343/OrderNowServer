@@ -21,7 +21,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a href="../" class="navbar-brand nav-element-title">Order Now</a>
+      <a href="/" class="navbar-brand nav-element-title">Order Now</a>
     </div>
     <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
         <ul class="nav navbar-nav navbar-left">
