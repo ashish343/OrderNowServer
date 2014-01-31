@@ -38,7 +38,7 @@ public class DefaultController extends HttpServlet {
          
         request.setAttribute("path", host);
         request.setAttribute("now", now);
-        request.getRequestDispatcher("/WEB-INF/jsp/parallex.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/jsp/home-parallax.jsp").forward(request, response);
     }
     
     @Override

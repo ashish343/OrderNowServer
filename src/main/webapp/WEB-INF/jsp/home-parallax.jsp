@@ -6,7 +6,6 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
         <title>Order Now</title>
-        <meta name="description" content="Parallax Content Slider with CSS3 and jQuery" />
         <meta name="author" content="Ashish" />
         <link rel="icon" type="image/png" href="${path}/resources/img/icon.png" />
         <link rel="stylesheet" type="text/css" href="/resources/new-layout/css/demo.css" />
@@ -52,7 +51,7 @@
 #slide-2 .bcg {background-image:url('/resources/new-layout/img/bg3.jpg')}
 /*Slide 3*/
 #slide-3 .bcg {
-    height: 500px;
+    height: 400px;
 }
 #slide-3 .bcg {
     background-image:url('/resources/new-layout/img/contact.png');
@@ -60,6 +59,17 @@
 }
 .text {
     margin:120px 200px;
+}
+.contact-us-row {
+    margin-left:20%;
+    margin-right: 20%;
+    margin-bottom:40px;
+    margin-top:40px;
+    font-size:40px;
+}
+.contact-info {
+    text-align:center;
+    font-size:30px;
 }
 </style>
     </head>
@@ -86,7 +96,7 @@
                  </div>
              </section>
             <section id="slide-2">
-                <div class="bcg" data-10p-bottom="background-position: 80% 0px;" data-top-bottom="background-position: 80% 0px;" data-anchor-target="#slide-2">
+                <div class="bcg" data-10p-bottom="background-position: 50% 0px;" data-top-bottom="background-position: 50% -150px;" data-anchor-target="#slide-2">
                     <div class="hsContainer">
                         <div class="hsContent">
                             <div class="text">
@@ -104,9 +114,8 @@
                 data-anchor-target="#slide-3">
                     <div class="hsContainer">
                         <div class="hsContent">
-                            <div class="plaxEl" data-106-top="opacity: 0" data-bottom="opacity: 1; position: fixed; top: 206px; width: 100%; left: 0;" 
-                                data--30p-top="opacity: 1;" data--60p-top="opacity: 0;" data-anchor-target="#slide-3" >
-                               <!--  <h2>Fixed element fading in and out</h2> -->
+                            <div>
+                               <%@ include file="/WEB-INF/jsp/common/contact-us.jsp" %>
                             </div>
                         </div>
                     </div>   
@@ -142,6 +151,37 @@
                     }
                 });
             } )( jQuery );
+            ( function( $ ) {
+            	$("#action-Contact").click(function(e) {
+                    $('html, body').animate({
+                        scrollTop: $("#slide-3").offset().top
+                    }, 700);
+                    e.preventDefault();
+                });
+            	$('.navbar-brand.nav-element-title').click(function(e){
+                    showActiveList($, $("#action-Home"));
+                   e.preventDefault();
+               });
+            	$("#action-Home").click(function(e) {
+                    showActiveList($, this);
+                    e.preventDefault();
+                });
+            } )( jQuery );
+            var showActiveList = function($, element) {
+                var listElement = $(element).parent();
+                var unorderedList = $(element).parents().find('ul');
+
+                var rightUnorderedList = $('.navbar-right');
+                
+                jQuery(rightUnorderedList).find('li').each(function(index, value){
+                    jQuery(value).attr('class', '');
+                });
+                
+                jQuery(unorderedList).find('li').each(function(index, value){
+                    jQuery(value).attr('class', '');
+                });
+                jQuery(listElement).attr('class', 'active');
+            }
         </script>   
     </body>
 </html>
