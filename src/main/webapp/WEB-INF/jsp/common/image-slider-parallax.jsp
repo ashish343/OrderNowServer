@@ -1,26 +1,26 @@
 <div class="slider-container">
     <div id="da-slider" class="da-slider">
         <div class="da-slide">
-            <h2>Easy management</h2>
-            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+            <h2>Cold Welcome</h2>
+            <p>What could have been a really warm welcome in your very own restaurant always turns out to be a <b>Cold Welcome</b>. Attendants are always hitting a shot in the dark, thinking that may hit the Jackpot this time. Want to improve your experience next time you visit your very own restaurant ?.  </p>
             <a href="#" class="da-link">Read more</a>
             <div class="da-img"><img src="/resources/new-layout/img/final-1.png" alt="image01" /></div>
         </div>
         <div class="da-slide">
-            <h2>Revolution</h2>
-            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
+            <h2>Revolution - They Know it All!</h2>
+            <p>Abra Ka Dabra and they Know it All!!. We want that if you (Yes you!!) walk into a restaurant then they  should know everything about you and your taste even before you say a single word. Now instead of just making some blind guesses they would analyze and then suggest something which you would surely like.  </p>
             <a href="#" class="da-link">Read more</a>
             <div class="da-img"><img src="/resources/new-layout/img/final-2.png" alt="image01" /></div>
         </div>
         <div class="da-slide">
-            <h2>Warm welcome</h2>
-            <p>When she reached the first hills of the Italic Mountains, she had a last view back on the skyline of her hometown Bookmarksgrove, the headline of Alphabet Village and the subline of her own road, the Line Lane.</p>
+            <h2>Check Please!!</h2>
+            <p>You  had an amazing meal and were all set to extra tip the attendant BUT  'Its not over till it's over'. This happens every time we want to payoff the bill and after a certain point of time this wait seems endless. Aren't we all tired of this ?? </p>
             <a href="#" class="da-link">Read more</a>
             <div class="da-img"><img src="/resources/new-layout/img/final-3.png" alt="image01" /></div>
         </div>
         <div class="da-slide">
-            <h2>Quality Control</h2>
-            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.</p>
+            <h2>Lets Go!!</h2>
+            <p>How about this, if you could just walk out of the restaurant when you are done eating and you didn't had to wait for the attendant to get you the check!! Doesn't this sounds great. From now on you would never have to wait in any restaurant to pay off your bills. So next time when you are done eating all you will say is <b>Lets Go!</b></p>
             <a href="#" class="da-link">Read more</a>
             <div class="da-img"><img src="/resources/new-layout/img/final-4.png" alt="image01" /></div>
         </div>
