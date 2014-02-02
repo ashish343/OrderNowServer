@@ -1,7 +1,7 @@
 <%@ include file="/WEB-INF/jsp/include.jsp" %>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:fb="http://ogp.me/ns/fb#">
     <head>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
@@ -79,15 +79,6 @@
 </style>
     </head>
     <body class="loading">
-    <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-    	  var js, fjs = d.getElementsByTagName(s)[0];
-    	  if (d.getElementById(id)) return;
-    	  js = d.createElement(s); js.id = id;
-    	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=728085460544650";
-    	  fjs.parentNode.insertBefore(js, fjs);
-    	  }(document, 'script', 'facebook-jssdk'));</script>
-        <div>
             <c:set var="options">Home</c:set>
             <c:set var="showOption" value="true"/>
             <c:set var="showOptionData" value="Contact Us"/>
