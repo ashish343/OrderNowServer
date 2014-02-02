@@ -141,8 +141,8 @@
             $(function() {
             
                 $('#da-slider').cslider({
-                    autoplay    : false,
-                    bgincrement : 450
+                    autoplay    : true,
+                    bgincrement : 1000
                 });
             
             });
