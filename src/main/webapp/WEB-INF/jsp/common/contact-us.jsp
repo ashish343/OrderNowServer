@@ -6,6 +6,10 @@
 <div class="row">
     <div class="col">
         <div class="contact-info">
+            <div id="fb-like-button">
+                <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+            </div>
+            </div>
             <p class="white"><img src="/resources/new-layout/img/icn-phone.png" alt=""> +91 9689 373 313</p>
             <p class="white"><img src="/resources/new-layout/img/icn-email.png" alt=""> <a href="mailto:ordernowinfo@gmail.com">ordernowinfo@gmail.com</a></p>
             <p class="white"><img src="/resources/new-layout/img/icn-address.png" alt=""> M.G. Road, Bangalore Karnataka.</p>

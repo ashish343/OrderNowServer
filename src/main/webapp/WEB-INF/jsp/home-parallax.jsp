@@ -58,7 +58,7 @@
     background-repeat:repeat;
 }
 .text {
-    margin:120px 200px;
+    margin:10% auto;
 }
 .contact-us-row {
     margin-left:20%;
@@ -71,9 +71,25 @@
     text-align:center;
     font-size:30px;
 }
+.description {
+    color:black !important;
+    font-size:x-large !important;
+    margin-top:30px !important;
+}
+#fb-like-button iframe {
+    left:40%;
+}
 </style>
     </head>
     <body class="loading">
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+    	  var js, fjs = d.getElementsByTagName(s)[0];
+    	  if (d.getElementById(id)) return;
+    	  js = d.createElement(s); js.id = id;
+    	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=728085460544650";
+    	  fjs.parentNode.insertBefore(js, fjs);
+    	  }(document, 'script', 'facebook-jssdk'));</script>
         <div>
             <c:set var="options">Home</c:set>
             <c:set var="showOption" value="true"/>
@@ -89,7 +105,7 @@
              <section id="slide-1" class="homeSlide">
                  <div class="bcg" data-center="background-position: 50% 0px;" data-top-bottom="background-position: 50% -150px;" data-anchor-target="#slide-1">
                      <div class="hsContainer">
-                         <div class="hsContent" data-center="opacity: 1" data--20p-top="opacity: 0.1" data-anchor-target="#slide-1 .slider-container">
+                         <div class="hsContent" data-center="opacity: 1" data--40p-top="opacity: 0.1" data-anchor-target="#slide-1 .slider-container">
                              <%@ include file="/WEB-INF/jsp/common/image-slider-parallax.jsp" %>
                          </div>
                      </div> 
