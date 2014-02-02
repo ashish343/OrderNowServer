@@ -11,8 +11,9 @@
             </div>
             </div>
             <p class="white"><img src="/resources/new-layout/img/icn-phone.png" alt=""> +91 9689 373 313</p>
+            <p class="white"><img src="/resources/new-layout/img/icn-phone.png" alt=""> +91 8886 977 710</p>
             <p class="white"><img src="/resources/new-layout/img/icn-email.png" alt=""> <a href="mailto:ordernowinfo@gmail.com">ordernowinfo@gmail.com</a></p>
-            <p class="white"><img src="/resources/new-layout/img/icn-address.png" alt=""> M.G. Road, Bangalore Karnataka.</p>
+            <p class="white"><img src="/resources/new-layout/img/icn-address.png" alt=""> Bangalore, Karnataka.</p>
         </div>
     </div>
 </div>
