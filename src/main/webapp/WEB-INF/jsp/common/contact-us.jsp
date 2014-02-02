@@ -7,7 +7,7 @@
     <div class="col">
         <div class="contact-info">
             <div id="fb-like-button">
-                <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+                <div class="fb-like" data-href="https://www.facebook.com/GoOrderNow" data-colorscheme="dark" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
             </div>
             </div>
             <p class="white"><img src="/resources/new-layout/img/icn-phone.png" alt=""> +91 9689 373 313</p>

@@ -76,9 +76,6 @@
     font-size:x-large !important;
     margin-top:30px !important;
 }
-#fb-like-button iframe {
-    left:40%;
-}
 </style>
     </head>
     <body class="loading">
