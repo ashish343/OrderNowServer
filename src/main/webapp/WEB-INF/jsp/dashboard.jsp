@@ -100,9 +100,18 @@
         <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="/resources/js/pusher.min.js"></script>
         <script type="text/javascript" src="/resources/order-page/js/jquery.pfold.js"></script>
+        <script type="text/javascript" src="/resources/js/favicon.js"></script>
         <script type="text/javascript">
+        var favicon;
+        var faviconCount = 0;
         $(function() {
-
+        	favicon=new Favico({
+                bgColor : '#ff0000',
+                textColor : '#ff0',
+                type: 'rectangle',
+                animation:'fade'
+            });
+                	
             // say we want to have only one item opened at one moment
             var opened = false;
             attachEvent($);
@@ -256,6 +265,10 @@
                         type: "GET",
                       });
                    // alert(data);
+                    faviconCount +=1;
+                    if(faviconCount > 0) {
+                        favicon.badge(faviconCount);
+                    }
                 });
                 channel.bind('update_order', function(data) {
                     alert(data.message);
