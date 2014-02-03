@@ -19,6 +19,24 @@
             .title-header {
                 margin-top:0px !important;margin-bottom:0px !important;
             }
+            .icon-image {
+                margin:auto;
+                margin-top:10px;
+            }
+            .notification {
+                display: block;
+                background: #E43C03;
+                font-size: 16px;
+                font-weight: bold;
+                -moz-border-radius: 6px;
+                -webkit-border-radius: 6px;
+                width: 16px;
+                margin-left: 120px;
+                /* margin-top: auto; */
+                position: absolute;
+                text-align: center;
+                border-radius:6px;
+            }
         </style>
     </head>
     <body>
@@ -30,6 +48,10 @@
                     <div class="uc-container">
                         <div class="uc-initial-content">
                             <h1 style="margin-top:0px !important;margin-bottom:0px !important; margin-left:40px"> Table 1 </h1>
+                            <div>
+                                <span class="notification" style="display:none">0</span>
+                                <img src="/resources/img/order_icon.png" class="icon-image"/>
+                            </div>
                             <span class="icon-eye"></span>
                         </div>
                         <div class="uc-final-content">
@@ -44,6 +66,10 @@
                     <div class="uc-container">
                         <div class="uc-initial-content">
                             <h1 style="margin-top:0px !important;margin-bottom:0px !important; margin-left:40px"> Table 2 </h1>
+                            <div>
+                                <span class="notification" style="display:none">0</span>
+                                <img src="/resources/img/order_icon.png" class="icon-image"/>
+                            </div>
                             <span class="icon-eye"></span>
                         </div>
                         <div class="uc-final-content">
@@ -55,6 +81,10 @@
                     <div class="uc-container">
                         <div class="uc-initial-content">
                             <h1 style="margin-top:0px !important;margin-bottom:0px !important; margin-left:40px"> Table 3 </h1>
+                            <div>
+                                <span class="notification" style="display:none">0</span>
+                                <img src="/resources/img/order_icon.png" class="icon-image"/>
+                            </div>
                             <span class="icon-eye"></span>
                         </div>
                         <div class="uc-final-content">
@@ -66,6 +96,10 @@
                     <div class="uc-container">
                         <div class="uc-initial-content">
                             <h1 style="margin-top:0px !important;margin-bottom:0px !important; margin-left:40px"> Table 4 </h1>
+                            <div>
+                                <span class="notification" style="display:none">0</span>
+                                <img src="/resources/img/order_icon.png" class="icon-image"/>
+                            </div>
                             <span class="icon-eye"></span>
                         </div>
                         <div class="uc-final-content">
@@ -144,12 +178,11 @@
             jQuery(".orderItemRow").click(function() {
             });
             
-            jQuery(".acceptBtn").click(function() {
+            jQuery(".acceptBtn.notbound").click(function() {
                 var unorderList = jQuery(this).parents('ul');
                 var orderList = jQuery(this).parents('li');
                 var orderId = jQuery(unorderList).attr('id');
                 var subOrderId = jQuery(orderList).attr('id');
-                
                 if(orderId !== null && orderId.length > 0) {
                     var request = $.ajax({
                         url: "/restOrder?action=orderAccepted&orderId=" + orderId + "&subOrderId=" + subOrderId,
@@ -161,9 +194,19 @@
                     setTimeout(function(){hideAlert(orderList,identifier)}, 3000);
                     jQuery(unorderList).find('#'+subOrderId).find(".order-handler-btn-group").hide();
                 }
+                faviconCount -=1;
+                if(faviconCount > 0) {
+                    favicon.badge(faviconCount);
+                } else {
+                	faviconCount = 0;
+                    favicon.reset();
+                }
+                showNotification(orderId, -1);
             });
+
+            jQuery('.acceptBtn ').removeClass('notbound');
             
-            jQuery(".modifyBtn").click(function() {
+            jQuery(".modifyBtn.notbound").click(function() {
                 var orderList = jQuery(this).parents('li');
                 var subOrderId = jQuery(orderList).attr('id');
                 var orderTable;
@@ -194,6 +237,7 @@
                 }
                 
             });
+            jQuery('.modifyBtn').removeClass('notbound');
             jQuery("#modalSaveChanges").click(function(e){
                 e.preventDefault();
                 var dishIds=[];
@@ -223,6 +267,14 @@
                 setTimeout(function(){hideAlert(jQuery('#'+orderId).find('#'+subOrderId), identifier)}, 3000);
                 var orderList = jQuery('#'+orderId).find('#'+subOrderId);
                 jQuery(orderList).find(".order-handler-btn-group").hide();
+                faviconCount -=1;
+                if(faviconCount > 0) {
+                    favicon.badge(faviconCount);
+                } else {
+                    favicon.reset();
+                    faviconCount = 0;
+                }
+                showNotification(orderId, -1);
             });
         }
 
@@ -260,6 +312,7 @@
                     d = data;
                     createOrderPage(data);
                     attachEvent();
+                    showNotification(data.orderId, 1);
                     var request = $.ajax({
                         url: "/restOrder?action=orderReceived&orderId=" + data.orderId,
                         type: "GET",
@@ -277,6 +330,20 @@
                     alert(data.message);
                   });
     } 
+    var showNotification = function(orderId, modifier) {
+        var orderList = jQuery('#'+orderId);
+        var container = jQuery(orderList).parents('.uc-container');
+        var outerDisplay = jQuery(container).children(".uc-initial").find(".notification");
+        var count = parseInt(jQuery(outerDisplay).html(),10);
+        count += modifier;
+        if(count > 0) {
+        	jQuery(outerDisplay).html(count);
+        	jQuery(outerDisplay).show()
+        } else {
+        	jQuery(outerDisplay).html("0");
+        	jQuery(outerDisplay).hide()
+        }
+    };
     var createOrderPage = function(data) {
         var html = '';
         if(data !== null && typeof data !== undefined) {
@@ -324,8 +391,8 @@
     var getNewOrderOptions = function() {
         var html = '<div class="row"><div class="col-xs-12 col-md-12 col-lg-12">' 
         html += '<div class="order-handler-btn-group btn-group btn-group-lg">'+
-                    '<div class="acceptBtn col col-lg-6 col-xs-6 col-md-6"><button type="button" class="btn btn-lg">Accept</button></div>'+
-                    '<div class="modifyBtn col col-lg-6 col-xs-6 col-md-6"><button type="button" class="btn btn-lg">Modify</button></div>'+
+                    '<div class="acceptBtn notbound col col-lg-6 col-xs-6 col-md-6"><button type="button" class="btn btn-lg">Accept</button></div>'+
+                    '<div class="modifyBtn notbound col col-lg-6 col-xs-6 col-md-6"><button type="button" class="btn btn-lg">Modify</button></div>'+
                 '</div>';
         html += '</div></div>';
         return html;
@@ -342,7 +409,7 @@
         });
         orderHtml += '</table>'
         return orderHtml;
-    }
+    }   
     </script>
     </body>
 </html>
