@@ -12,6 +12,7 @@
         <link type="text/css" href="${path}/resources/css/bootstrap.min.css" rel="stylesheet"/>
         <link rel="stylesheet" type="text/css" href="/resources/new-layout/css/style2.css" />
         <script type="text/javascript" src="/resources/new-layout/js/modernizr.custom.28468.js"></script>
+        <link rel="stylesheet" type="text/css" href="/resources/image-slider/css/style.css" />
         <link href='http://fonts.googleapis.com/css?family=Economica:700,400italic' rel='stylesheet' type='text/css'>
         <noscript>
             <link rel="stylesheet" type="text/css" href="/resources/new-layout/css/nojs.css" />
@@ -55,6 +56,10 @@
 }
 #slide-3 .bcg {
     background-image:url('/resources/new-layout/img/contact.png');
+    background-repeat:repeat;
+}
+#slide-4 .bcg {
+    background-image:url('/resources/new-layout/img/slide-4.jpg');
     background-repeat:repeat;
 }
 .text {
@@ -136,8 +141,13 @@
         <script type="text/javascript" src="/resources/js/scroller.js"></script>
         <script type="text/javascript" src="/resources/js/imageloaded.js"></script>
         <script type="text/javascript" src="/resources/js/main.js"></script>
-        
+        <script type="text/javascript" src="/resources/image-slider/js/jquery.stackslider.js"></script>
+        <script type="text/javascript" src="/resources/image-slider/js/modernizr.custom.63321.js"></script>
         <script type="text/javascript">
+            $( function() {
+                $( '#st-stack' ).stackslider();
+            });
+            
             $(function() {
             
                 $('#da-slider').cslider({
