@@ -39,6 +39,7 @@
             }
             #wrapper{
 			  padding:30px;
+			  width:420px;
 			  margin:0 auto;
 			}
 			
@@ -48,19 +49,6 @@
 				margin:0; padding:0;
 				-webkit-box-shadow:0 1px 3px rgba(0,0,0, .4);
 			}
-			#vertical-ticker li{
-				padding:35px 20px;
-				display:block;
-				background:#efefef;
-				color:#333;
-				border-bottom:1px solid #ddd;
-				text-align:center;
-				font-size:25px;
-				font-weight:bold;
-				font-family: Helvetica Neue, times, serif;
-			}
-			
-            
         </style>
     </head>
     <body>
@@ -155,8 +143,7 @@
 </div><!-- /.modal -->
 
 	<div id="wrapper"><!-- verical ticker start  -->		
-		<ul id="vertical-ticker">
-			<li>empty</li>
+		<ul id="vertical-ticker" class="list-group">			
 		</ul>
 		<p><a href="#" id="ticker-previous">Previous</a> / <a href="#" id="ticker-next">Next</a> / <a id="stop" href="#">Stop</a> / <a id="start" href="#">Start</a></p>
 		<p>Roll over the ticker to stop scrolling</p>		
@@ -368,10 +355,9 @@
     } 
 	var insertIntoTicker= function(data){
 		var html=''
-		 html += '<div id="'+ data.customerId +'">';
-         html += '<ul id="' + data.orderId + '" class="list-group">';
+		 
          html += getSubOrderList(data, 1);
-         html += '</ul></div>';
+         
 		$('#wrapper ul').append(html);         
 	}
 	
@@ -458,7 +444,7 @@
 
     var startTicker= function(){
 		$('#vertical-ticker').totemticker({
-			row_height	:	'100px',
+			row_height	:	'auto',
 			next		:	'#ticker-next',
 			previous	:	'#ticker-previous',
 			stop		:	'#stop',
