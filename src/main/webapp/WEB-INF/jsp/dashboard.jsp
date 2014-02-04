@@ -37,6 +37,18 @@
                 text-align: center;
                 border-radius:6px;
             }
+            #wrapper{
+			  padding:30px;
+			  width:420px;
+			  margin:0 auto;
+			}
+			
+			#vertical-ticker{
+				height:400px;
+				overflow:hidden;
+				margin:0; padding:0;
+				-webkit-box-shadow:0 1px 3px rgba(0,0,0, .4);
+			}
         </style>
     </head>
     <body>
@@ -130,11 +142,19 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+	<div id="wrapper"><!-- verical ticker start  -->		
+		<ul id="vertical-ticker" class="list-group">			
+		</ul>
+		<p><a href="#" id="ticker-previous">Previous</a> / <a href="#" id="ticker-next">Next</a> / <a id="stop" href="#">Stop</a> / <a id="start" href="#">Start</a></p>
+		<p>Roll over the ticker to stop scrolling</p>		
+	</div><!-- vertical ticker end  -->
+
         <script type="text/javascript" src="/resources/new-layout/js/jquery-1.7.1.min.js"></script>
         <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="/resources/js/pusher.min.js"></script>
         <script type="text/javascript" src="/resources/order-page/js/jquery.pfold.js"></script>
         <script type="text/javascript" src="/resources/js/favicon.js"></script>
+       	<script type="text/javascript" src="/resources/js/jquery.totemticker.js"></script>
         <script type="text/javascript">
         var favicon;
         var faviconCount = 0;
@@ -150,6 +170,7 @@
             var opened = false;
             attachEvent($);
             myPusherFunc();
+            startTicker();
             $( '#grid > div.uc-container' ).each( function( i ) {
                 var $item = $( this ); 
                 var direction = ['left','top'];
@@ -314,13 +335,15 @@
                 channel.bind('notify_order', function(data) {
                     d = data;
                     createOrderPage(data);
+                    insertIntoTicker(data);
                     attachEvent();
                     var request = $.ajax({
                         url: "/restOrder?action=orderReceived&orderId=" + data.orderId,
                         type: "GET",
                       });
-                   // alert(data);
+                    /* alert(data); */
                     faviconCount +=1;
+                    
                     if(faviconCount > 0) {
                         favicon.badge(faviconCount);
                     }
@@ -333,6 +356,14 @@
                     alert(data.message);
                   });
     } 
+	var insertIntoTicker= function(data){
+		var html=''
+		 
+         html += getSubOrderList(data, 1);
+         
+		$('#wrapper ul').append(html);         
+	}
+	
     var showNotification = function(orderId, modifier) {
         var orderList = jQuery('#'+orderId);
         var container = jQuery(orderList).parents('.uc-container');
@@ -413,6 +444,17 @@
         orderHtml += '</table>'
         return orderHtml;
     }   
+
+    var startTicker= function(){
+		$('#vertical-ticker').totemticker({
+			row_height	:	'auto',
+			next		:	'#ticker-next',
+			previous	:	'#ticker-previous',
+			stop		:	'#stop',
+			start		:	'#start',
+			mousestop	:	true,
+		});
+	}
     </script>
     </body>
 </html>
