@@ -166,9 +166,12 @@
                     if( !opened ) {
                         opened = true;
                         pfold.unfold();
+                        jQuery('.notification').css({'z-index':'-1'});
                     }
                 } ).end().find( 'span.icon-cancel' ).on( 'click', function() {
                     pfold.fold();
+                    
+                    setTimeout(function(){jQuery('.notification').css({'z-index':'1'})}, 1000);
                 } );
             } );
         });
@@ -312,7 +315,6 @@
                     d = data;
                     createOrderPage(data);
                     attachEvent();
-                    showNotification(data.orderId, 1);
                     var request = $.ajax({
                         url: "/restOrder?action=orderReceived&orderId=" + data.orderId,
                         type: "GET",
@@ -322,6 +324,7 @@
                     if(faviconCount > 0) {
                         favicon.badge(faviconCount);
                     }
+                    showNotification(data.orderId, 1);
                 });
                 channel.bind('update_order', function(data) {
                     alert(data.message);
