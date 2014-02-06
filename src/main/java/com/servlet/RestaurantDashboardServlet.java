@@ -87,7 +87,7 @@ public class RestaurantDashboardServlet extends HttpServlet {
     	RestaurantOrder restOrder2= new RestaurantOrder();
     	restOrder2.setCustomerId("bdw");
     	restOrder2.setDishes(dishes);
-    	restOrder2.setOrderState(UrlParameter.INTERMEDIATE.toString());
+    	restOrder2.setOrderState("");
     	restOrder2.setRestaurantId("R1");
     	restOrder2.setSubOrderId(0);
     	restOrder2.setTableId("T2");
