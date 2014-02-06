@@ -1,5 +1,5 @@
 <div class="row contact-us-row">
-    <div class="col">
+    <div class="col" style="text-align:center;">
         <strong style="border-top:1px solid #aeaeae;border-bottom:1px solid #aeaeae">CONTACT INFO</strong>
     </div>
 </div>
