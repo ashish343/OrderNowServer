@@ -8,7 +8,6 @@
         <link rel="icon" type="image/png" href="${path}/resources/img/icon.png" />
         <link rel="stylesheet" type="text/css" href="/resources/css/demo.css" />
         <link rel="stylesheet" type="text/css" href="/resources/css/component.css" />
-        <link rel="stylesheet" type="text/css" href="/resources/css/normalize.css" />
         <style type="text/css">
         .text {
             margin:10% auto;
@@ -123,38 +122,8 @@
         </div>
         <script src="/resources/js/classie.js"></script>
         <script src="/resources/js/cbpScroller.js"></script>
-        <script src="/resources/js/snap.svg-min.js"></script>
         <script>
             new cbpScroller( document.getElementById( 'cbp-so-scroller' ) );
-            (function() {
-                
-                function init() {
-                    var speed = 250,
-                        easing = mina.easeinout;
-
-                    [].slice.call ( document.querySelectorAll( '#grid > a' ) ).forEach( function( el ) {
-                        var s = Snap( el.querySelector( 'svg' ) ), path = s.select( 'path' ),
-                            pathConfig = {
-                                from : path.attr( 'd' ),
-                                to : el.getAttribute( 'data-path-hover' )
-                            };
-
-                        el.addEventListener( 'mouseenter', function() {
-                            path.animate( { 'path' : pathConfig.to }, speed, easing );
-                        } );
-                        el.addEventListener( 'click', function(e) {
-                            e.preventDefault();
-                        } );
-
-                        el.addEventListener( 'mouseleave', function() {
-                            path.animate( { 'path' : pathConfig.from }, speed, easing );
-                        } );
-                    } );
-                }
-
-                init();
-
-            })();
             P.when('jQuery').execute(function($) {
                 attachEvents();
             });
@@ -165,14 +134,6 @@
                     }, 700);
                 	e.preventDefault();
                 });
-                jQuery('#like').click(function(e){
-                    jQuery(this).html('Thanks');
-                    jQuery(this).unbind('click');;
-                });
-                jQuery('#email-us').click(function(e){
-                    document.location.href='mailto:ordernowinfo@gmail.com';
-                });
-                
             };
         </script>
     </body>
