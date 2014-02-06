@@ -304,7 +304,9 @@
         if(data != null) {
             jQuery(data).each(function(index, value) {
                 handleDataList(value);
-                handleNotifications(value);
+                if(JSON.stringify(value.orderState) == JSON.stringify("interMediate")) {
+                    handleNotifications(value);
+                }
             });
         }
     }
@@ -377,15 +379,21 @@
         
         var html = '<li id="' + data.subOrderId + '" class="list-group-item">';
         //Success Alert
-        html += '<div class="alert alert-success alert-dismissable" style="display:none;">'+
-                '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+
-                '<strong>Order Placed.</strong></div>';
-        //Modified List Alert
-        html += '<div class="alert alert-warning alert-dismissable" style="display:none;">'+
-                '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+
-                '<strong>Customer Is Notified About the Modification</strong></div>';
+        if(JSON.stringify(data.orderState) == JSON.stringify("interMediate")) {
+            html += '<div class="alert alert-success alert-dismissable" style="display:none;">'+
+                    '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+
+                    '<strong>Order Placed.</strong></div>';
+                //Modified List Alert
+            html += '<div class="alert alert-warning alert-dismissable" style="display:none;">'+
+                    '<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+
+                    '<strong>Customer Is Notified About the Modification</strong></div>';
+        }
+
         html += getDishList(data, addTableTitle);
-        html += getNewOrderOptions();
+        if(JSON.stringify(data.orderState) == JSON.stringify("interMediate")) {
+            html += getNewOrderOptions();
+        }
+        
         html+='</li>';
         return html;
     }

@@ -75,38 +75,38 @@ public class RestaurantDashboardServlet extends HttpServlet {
 		restOrder1.setCustomerId("abc");
 
 		restOrder1.setDishes(dishes);
-		restOrder1.setOrderState(UrlParameter.INTERMEDIATE.toString());
-		restOrder1.setRestaurantId("R1");
-		restOrder1.setSubOrderId(0);
-		restOrder1.setTableId("T1");
-		restOrder1.setTableNo(1);
-		restOrder1.setOrderId("dfref");
-
-		RestaurantOrder restOrder2 = new RestaurantOrder();
-		restOrder2.setCustomerId("bdw");
-		restOrder2.setDishes(dishes);
-		restOrder2.setOrderState(UrlParameter.INTERMEDIATE.toString());
-		restOrder2.setRestaurantId("R1");
-		restOrder2.setSubOrderId(0);
-		restOrder2.setTableId("T2");
-		restOrder2.setTableNo(2);
-		restOrder2.setOrderId("ddffref");
-
-		restOrderList.add(restOrder1);
-		restOrderList.add(restOrder2);
-
-		return gson.toJson(restOrderList);
-	}
-
-	private Map<String, Integer> getTableInformation() {
-		Map<String, Integer> tableInformation = new HashMap<String, Integer>();
-		tableInformation.put("T1", 1);
-		tableInformation.put("T2", 2);
-		tableInformation.put("T3", 3);
-		tableInformation.put("T4", 4);
-		tableInformation.put("T5", 5);
-		tableInformation.put("T6", 6);
-
+    	restOrder1.setOrderState(UrlParameter.INTERMEDIATE.toString());
+    	restOrder1.setRestaurantId("R1");
+    	restOrder1.setSubOrderId(0);
+    	restOrder1.setTableId("T1");
+    	restOrder1.setTableNo(1);
+    	restOrder1.setOrderId("dfref");
+    	
+    	RestaurantOrder restOrder2= new RestaurantOrder();
+    	restOrder2.setCustomerId("bdw");
+    	restOrder2.setDishes(dishes);
+    	restOrder2.setOrderState("");
+    	restOrder2.setRestaurantId("R1");
+    	restOrder2.setSubOrderId(0);
+    	restOrder2.setTableId("T2");
+    	restOrder2.setTableNo(2);
+    	restOrder2.setOrderId("ddffref");
+    	
+    	restOrderList.add(restOrder1);
+    	restOrderList.add(restOrder2);
+    	
+    	return gson.toJson(restOrderList);
+    }
+    
+    private Map<String, String> getTableInformation() {
+    	Map<String, String> tableInformation = new HashMap<String, String>();
+		tableInformation.put("T1", "1");
+		tableInformation.put("T2", "2");
+		tableInformation.put("T3", "3");
+		tableInformation.put("T4", "4");
+		tableInformation.put("T5", "5");
+		tableInformation.put("T6", "6");
+		
 		return tableInformation;
 	}
 
