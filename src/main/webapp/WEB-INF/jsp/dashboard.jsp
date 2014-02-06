@@ -97,11 +97,11 @@
         
         
         <script type="text/javascript" src="/resources/new-layout/js/jquery-1.7.1.min.js"></script>
+        <script type="text/javascript" src="/resources/js/favicon.js"></script>
         <script type="text/javascript" src="/resources/order-page/js/modernizr.custom.79639.js"></script>
         <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="/resources/js/pusher.min.js"></script>
         <script type="text/javascript" src="/resources/order-page/js/jquery.pfold.js"></script>
-        <script type="text/javascript" src="/resources/js/favicon.js"></script>
        	<script type="text/javascript" src="/resources/js/jquery.totemticker.js"></script>
         <script type="text/javascript">
         var favicon;
@@ -143,6 +143,9 @@
                     setTimeout(function(){jQuery('.notification').css({'z-index':'1'})}, 1000);
                 } );
             } );
+            var olderOrderData = '${restaurantData.orders}';
+            var olderOrderDataJson = jQuery.parseJSON(olderOrderData); 
+            republishData(olderOrderDataJson);
         });
         var d;
        
@@ -281,22 +284,13 @@
                 var pusher = new Pusher('1f7298f8e64c81a0d7de');
                 var channel = pusher.subscribe('R1');
                 channel.bind('notify_order', function(data) {
-                    d = data;
-                    addTable(data.tableId);
-                    createOrderPage(data);
-                    insertIntoTicker(data);
-                    attachEvent();
+                    handleDataList(data);
                     var request = $.ajax({
                         url: "/restOrder?action=orderReceived&orderId=" + data.orderId,
                         type: "GET",
                       });
                     /* alert(data); */
-                    faviconCount +=1;
-                    
-                    if(faviconCount > 0) {
-                        favicon.badge(faviconCount);
-                    }
-                    showNotification(data.orderId, 1);
+                    handleNotifications(data);
                 });
                 channel.bind('update_order', function(data) {
                     alert(data.message);
@@ -304,7 +298,32 @@
                 channel.bind('get_bill', function(data) {
                     alert(data.message);
                   });
-    } 
+    }
+
+    var republishData = function(data) {
+        if(data != null) {
+            jQuery(data).each(function(index, value) {
+                handleDataList(value);
+                handleNotifications(value);
+            });
+        }
+    }
+    
+    var handleDataList = function(data) {
+        addTable(data.tableId);
+        createOrderPage(data);
+        insertIntoTicker(data);
+        attachEvent();
+    }
+
+    var handleNotifications = function(data) {
+    	faviconCount += 1;
+        
+        if(faviconCount > 0) {
+            favicon.badge(faviconCount);
+        }
+        showNotification(data.orderId, 1);
+    }
     
     var addTable = function(tableId) {
         jQuery('.unordered-tables > .' + tableId).hide();
