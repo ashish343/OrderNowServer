@@ -9,8 +9,17 @@ public class RestaurantOrder {
 	private String customerId;
 	private String restaurantId;
 	private String tableId;
+	private int tableNo;
 	private int subOrderId;
 	private String orderState;
+
+	public int getTableNo() {
+		return tableNo;
+	}
+
+	public void setTableNo(int tableNo) {
+		this.tableNo = tableNo;
+	}
 
 	public String getCustomerId() {
 		return customerId;

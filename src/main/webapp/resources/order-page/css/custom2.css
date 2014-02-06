@@ -44,6 +44,13 @@
     margin: 15px;
 }
 
+.unordered-tables .uc-container {
+    width: 120px;
+    height: 110px;
+    float: left;
+    margin: 15px;
+}
+
 .demo-2 .uc-single, 
 .demo-2 .uc-final,
 .demo-2 .uc-initial-content,
@@ -78,6 +85,9 @@
     transition: all 0.3s linear;
 }
 
+.unordered-tables .icon-eye {
+	display:none;
+}
 .no-touch .demo-2 .uc-initial-content:hover .icon-eye {
     color: rgba(255,255,255,0.8);
     background: rgba(41,166,170,0.7);
@@ -86,7 +96,19 @@
 .demo-2 .uc-initial-content img {
     display: block;
 }
-
+.unordered-tables .uc-initial-content {
+	background-color:darkgray;
+}
+.uc-initial-content h1 {
+	margin-left:40px;
+	margin-top: 0px !important; 
+	margin-bottom: 0px !important;
+}
+.unordered-tables .uc-initial-content h1 {
+    margin-left:0px;
+    margin-top: 0px !important; 
+    margin-bottom: 0px !important;
+}
 .demo-2 .title {
     position: absolute;
     background: rgba(255,255,255,0.9);

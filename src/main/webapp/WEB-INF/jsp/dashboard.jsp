@@ -1,3 +1,5 @@
+<%@ include file="/WEB-INF/jsp/include.jsp" %>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -10,7 +12,6 @@
         <link rel="stylesheet" type="text/css" href="/resources/order-page/css/demo.css" />
         <link rel="stylesheet" type="text/css" href="/resources/order-page/css/pfold.css" />
         <link rel="stylesheet" type="text/css" href="/resources/order-page/css/custom2.css" />
-        <script type="text/javascript" src="/resources/order-page/js/modernizr.custom.79639.js"></script>
         <!--[if lte IE 8]><style>.support-note .note-ie{display:block;}</style><![endif]-->
         <style>
             body { 
@@ -38,8 +39,6 @@
                 border-radius:6px;
             }
             #wrapper{
-			  padding:30px;
-			  width:420px;
 			  margin:0 auto;
 			}
 			
@@ -49,107 +48,56 @@
 				margin:0; padding:0;
 				-webkit-box-shadow:0 1px 3px rgba(0,0,0, .4);
 			}
+			.hidden {
+			    display:none;
+			}
         </style>
     </head>
     <body>
-        <div class="container page-layout">
+        <div class="container">
             <section class="main demo-2">
-                
-                <div id="grid" class="grid clearfix">
-                
-                    <div class="uc-container">
-                        <div class="uc-initial-content">
-                            <h1 style="margin-top:0px !important;margin-bottom:0px !important; margin-left:40px"> Table 1 </h1>
-                            <div>
-                                <span class="notification" style="display:none">0</span>
-                                <img src="/resources/img/order_icon.png" class="icon-image"/>
-                            </div>
-                            <span class="icon-eye"></span>
+                <!-- Table Information -->
+                <div class="row">
+                    <!-- Table Tickr -->
+                    <!-- <div class="col col-lg-2 hidden-xs hidden-md">
+                        <h3> Table Tickr </h3>
+                        <div id="wrapper">--><!-- verical ticker start  -->        
+                            <!-- <ul id="vertical-ticker" class="list-group"></ul>
+                            <p><a href="#" id="ticker-previous">Previous</a> / <a href="#" id="ticker-next">Next</a> / <a id="stop" href="#">Stop</a> / <a id="start" href="#">Start</a></p>
+                            <p>Roll over the ticker to stop scrolling</p>       
+                        </div> --><!-- vertical ticker end  -->
+                    <!-- </div>  -->
+                    <!-- Table With Orders -->
+                    <div class="col col-lg-8 col-md-8 col-xs-8">
+                        <h3> Table Orders </h3>
+                        <div id="grid" class="grid clearfix">
+                            <c:set var="shouldShow" value="false"/>
+                            <%@ include file="/WEB-INF/jsp/common/table.jsp" %>
+                        </div><!-- / grid -->
+                    </div>
+                    <!-- Table With Out Orders -->
+                    <div class="col col-lg-4 col-md-4 col-xs-4">
+                        <h3> Other Tables </h3>
+                        <div class="unordered-tables">
+                            <c:set var="shouldShow" value="true"/>
+                            <%@ include file="/WEB-INF/jsp/common/table.jsp" %>
                         </div>
-                        <div class="uc-final-content">
-                            <div id="R1"class="panel panel-default">
-                            <!-- Default panel contents -->
-                                <div class="panel-heading">Table 1</div>
-                            </div>
-                            <span class="icon-cancel"></span>
-                        </div>
-                    </div><!-- / uc-container -->
-
-                    <div class="uc-container">
-                        <div class="uc-initial-content">
-                            <h1 style="margin-top:0px !important;margin-bottom:0px !important; margin-left:40px"> Table 2 </h1>
-                            <div>
-                                <span class="notification" style="display:none">0</span>
-                                <img src="/resources/img/order_icon.png" class="icon-image"/>
-                            </div>
-                            <span class="icon-eye"></span>
-                        </div>
-                        <div class="uc-final-content">
-                            <img src="/resources/order-page/images/large/1.jpg" alt="image01-large" />
-                            <span class="icon-cancel"></span>
-                        </div>
-                    </div><!-- / uc-container -->
-
-                    <div class="uc-container">
-                        <div class="uc-initial-content">
-                            <h1 style="margin-top:0px !important;margin-bottom:0px !important; margin-left:40px"> Table 3 </h1>
-                            <div>
-                                <span class="notification" style="display:none">0</span>
-                                <img src="/resources/img/order_icon.png" class="icon-image"/>
-                            </div>
-                            <span class="icon-eye"></span>
-                        </div>
-                        <div class="uc-final-content">
-                            <img src="/resources/order-page/images/large/2.jpg" alt="image02-large" />
-                            <span class="icon-cancel"></span>
-                        </div>
-                    </div><!-- / uc-container -->
-
-                    <div class="uc-container">
-                        <div class="uc-initial-content">
-                            <h1 style="margin-top:0px !important;margin-bottom:0px !important; margin-left:40px"> Table 4 </h1>
-                            <div>
-                                <span class="notification" style="display:none">0</span>
-                                <img src="/resources/img/order_icon.png" class="icon-image"/>
-                            </div>
-                            <span class="icon-eye"></span>
-                        </div>
-                        <div class="uc-final-content">
-                            <img src="/resources/order-page/images/large/4.jpg" alt="image04-large" />
-                            <span class="icon-cancel"></span>
-                        </div>
-                    </div><!-- / uc-container -->
-
-                </div><!-- / grid -->
+                    </div>
+                </div>
                 <p class="info"><strong>Demo 3:</strong> Same as demo 2, item will be centered on its original position</p>
             </section>
         </div>
+        
+        
         <!-- Modal -->
-<div class="modal fade" id="modifyOrderModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">Modify Order</h4>
-      </div>
-      <div class="modal-body">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button id="modalSaveChanges" type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-	<div id="wrapper"><!-- verical ticker start  -->		
-		<ul id="vertical-ticker" class="list-group">			
-		</ul>
-		<p><a href="#" id="ticker-previous">Previous</a> / <a href="#" id="ticker-next">Next</a> / <a id="stop" href="#">Stop</a> / <a id="start" href="#">Start</a></p>
-		<p>Roll over the ticker to stop scrolling</p>		
-	</div><!-- vertical ticker end  -->
-
+        <%@ include file="/WEB-INF/jsp/common/modal.jsp" %>
+        
+        
+        
+        
+        
         <script type="text/javascript" src="/resources/new-layout/js/jquery-1.7.1.min.js"></script>
+        <script type="text/javascript" src="/resources/order-page/js/modernizr.custom.79639.js"></script>
         <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="/resources/js/pusher.min.js"></script>
         <script type="text/javascript" src="/resources/order-page/js/jquery.pfold.js"></script>
@@ -334,6 +282,7 @@
                 var channel = pusher.subscribe('R1');
                 channel.bind('notify_order', function(data) {
                     d = data;
+                    addTable(data.tableId);
                     createOrderPage(data);
                     insertIntoTicker(data);
                     attachEvent();
@@ -356,6 +305,13 @@
                     alert(data.message);
                   });
     } 
+    
+    var addTable = function(tableId) {
+        jQuery('.unordered-tables > .' + tableId).hide();
+        jQuery('#grid').find('.'+tableId).removeClass('hidden');
+        
+    }
+        
 	var insertIntoTicker= function(data){
 		var html=''
 		 
@@ -388,15 +344,8 @@
                 html += '<ul id="' + data.orderId + '" class="list-group">';
                 html += getSubOrderList(data, 1);
                 html += '</ul></div>';
-
                 var table = jQuery("#" + data.tableId);
-                if(table === null || table.length === 0) {
-                    var rest = jQuery("#" + data.restaurantId);
-                    var tableHtml = '<div id="' + data.tableId + '">'+ html +'</div>';
-                    rest.append(html);
-                } else {
-                    table.append(html);
-                }
+                table.append(html);
             } else {
                 var orderList = jQuery('#'+data.orderId);
                 html = getSubOrderList(data, 0);
