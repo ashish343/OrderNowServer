@@ -15,6 +15,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.utility.UAgentInfo;
+
 @SuppressWarnings("serial")
 @WebServlet(
         name = "ParallaxServlet", 
@@ -35,10 +37,16 @@ public class ParallaxController extends HttpServlet {
         //ServletOutputStream out = response.getOutputStream();
         //out.write(host.getBytes());
         //out.flush();
-         
+        String userAgent = request.getHeader("User-Agent");
+        UAgentInfo uAgent = new UAgentInfo(userAgent, null);
+        
         request.setAttribute("path", host);
         request.setAttribute("now", now);
-        request.getRequestDispatcher("/WEB-INF/jsp/home-parallax.jsp").forward(request, response);
+        if(uAgent.isMobilePhone || uAgent.isTierTablet) {
+        	request.getRequestDispatcher("/WEB-INF/jsp/new-home.jsp").forward(request, response);
+        } else {
+        	request.getRequestDispatcher("/WEB-INF/jsp/home-parallax.jsp").forward(request, response);	
+        }
     }
     
     @Override

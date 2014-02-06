@@ -9,6 +9,31 @@
         <link rel="stylesheet" type="text/css" href="/resources/css/demo.css" />
         <link rel="stylesheet" type="text/css" href="/resources/css/component.css" />
         <link rel="stylesheet" type="text/css" href="/resources/css/normalize.css" />
+        <style type="text/css">
+        .text {
+            margin:10% auto;
+        }
+        .contact-us-row {
+            margin-left:20%;
+            margin-right: 20%;
+            margin-bottom:40px;
+            margin-top:40px;
+            font-size:40px;
+        }
+        .contact-info {
+            text-align:center;
+            font-size:30px;
+        }
+        .description {
+            color:black !important;
+            font-size:x-large !important;
+            margin-top:30px !important;
+        }
+        .white {
+            text-align:center;
+            overflow:hidden;
+        }
+        </style>
         <script src="/resources/js/modernizr.custom.js"></script>
         <script>
         (function(){(function(){(window.P={}).error=function(h,g,m){throw Error("[aui] "+h+" @ "+(g||"N/A")+":"+(m||"N/A"));}})();(function(){function h(b){o.schedule(function(){var a=[];if(b.dependencies&&b.dependencies.length!==0)for(var c=0;c<b.dependencies.length;c++)a.push(p[b.dependencies[c]]);if(b.fn&&typeof b.fn==="function")try{p[b.name]=b.fn.apply(window,a),f[b.name]=!0,d.notify(b)}catch(i){e.error("["+b.name+"] had an error: "+i.message,"P","initComponent")}else f[b.name]=!0,d.notify(b)})}function g(b,
@@ -37,64 +62,44 @@
             <div id="cbp-so-scroller" class="cbp-so-scroller">
                 <section class="cbp-so-section">
                     <article class="cbp-so-side cbp-so-side-left">
-                        <h2>Lemon drops</h2>
-                        <p>Fruitcake toffee jujubes. Topping biscuit sesame snaps jelly caramels jujubes tiramisu fruitcake. Marzipan tart lemon drops chocolate sesame snaps jelly beans.</p>
+                        <h2>Cold Welcome</h2>
+                        <p>What could have been a really warm welcome in your very own restaurant always turns out to be a <b>Cold Welcome</b>. Attendants are always hitting a shot in the dark, thinking that may hit the Jackpot this time. Want to improve your experience next time you visit your very own restaurant ?.</p>
                     </article>
                     <figure class="cbp-so-side cbp-so-side-right">
-                        <img src="/resources/img/story_start1.png" alt="img01">
+                        <img src="/resources/img/mobile-final-1.png" alt="img01">
                     </figure>
                 </section>
                 <section class="cbp-so-section">
                     <figure class="cbp-so-side cbp-so-side-left">
-                        <img src="/resources/img/story_start2.png" alt="img01">
+                        <img src="/resources/img/mobile-final-2.png" alt="img01">
                     </figure>
                     <article class="cbp-so-side cbp-so-side-right">
-                        <h2>Plum caramels</h2>
-                        <p>Lollipop powder danish sugar plum caramels liquorice sweet cookie. Gummi bears caramels gummi bears candy canes cheesecake sweet roll icing dragée. Gummies jelly-o tart. Cheesecake unerdwear.com candy canes apple pie halvah chocolate tiramisu.</p>
+                        <h2>Revolution - They Know it All!</h2>
+                        <p>Abra Ka Dabra and they Know it All!!. We want that if you (Yes you!!) walk into a restaurant then they  should know everything about you and your taste even before you say a single word. Now instead of just making some blind guesses they would analyze and then suggest something which you would surely like.</p>
                     </article>
                 </section>
                 <section class="cbp-so-section">
                     <article class="cbp-so-side cbp-so-side-left">
-                        <h2>Marzipan gingerbread</h2>
-                        <p>Soufflé bonbon jelly cotton candy liquorice dessert jelly bear claw candy canes. Pudding halvah bonbon marzipan powder. Marzipan gingerbread sweet jelly.</p>
+                        <h2>Check Please!!</h2>
+                        <p>You  had an amazing meal and were all set to extra tip the attendant BUT  'Its not over till it's over'. This happens every time we want to payoff the bill and after a certain point of time this wait seems endless. Aren't we all tired of this ??</p>
                     </article>
                     <figure class="cbp-so-side cbp-so-side-right">
-                        <img src="/resources/img/3.png" alt="img01">
+                        <img src="/resources/img/mobile-final-3.png" alt="img01">
                     </figure>
                 </section>
                 <section class="cbp-so-section">
                     <figure class="cbp-so-side cbp-so-side-left">
-                        <img src="/resources/img/4.png" alt="img01">
+                        <img src="/resources/img/mobile-final-4.png" alt="img01">
                     </figure>
                     <article class="cbp-so-side cbp-so-side-right">
-                        <h2>Carrot cake</h2>
-                        <p>Sesame snaps sweet wafer danish. Chupa chups carrot cake icing donut halvah bonbon. Chocolate cake candy marshmallow pudding dessert marzipan jujubes sugar plum.</p>
+                        <h2>Lets Go!!</h2>
+                        <p>How about this, if you could just walk out of the restaurant when you are done eating and you didn't had to wait for the attendant to get you the check!! Doesn't this sounds great. From now on you would never have to wait in any restaurant to pay off your bills. So next time when you are done eating all you will say is <b>Lets Go!</p>
                     </article>
                 </section>
             </div>
             <div class="container contact-us">
             <section id="grid" class="grid clearfix">
-                <a href="#" data-path-hover="m 180,34.57627 -180,0 L 0,0 180,0 z">
-                    <figure>
-                        <img src="/resources/img/int_1.png" />
-                        <svg viewBox="0 0 180 320" preserveAspectRatio="none"><path d="M 180,160 0,218 0,0 180,0 z"/></svg>
-                        <figcaption>
-                            <h2>Like the idea!!</h2>
-                            <button id="like"> Like </button>
-                        </figcaption>
-                    </figure>
-                </a>
-                <a href="#" data-path-hover="m 180,34.57627 -180,0 L 0,0 180,0 z">
-                    <figure>
-                        <img src="/resources/img/int_3.png" />
-                        <svg viewBox="0 0 180 320" preserveAspectRatio="none"><path d="M 180,160 0,218 0,0 180,0 z"/></svg>
-                        <figcaption>
-                            <h2>Conatct Us.</h2>
-                            <button id="email-us">Email Us</button>
-                        </figcaption>
-                    </figure>
-                </a>
-                
+                <%@ include file="/WEB-INF/jsp/common/contact-us.jsp" %>
             </section>
             </div>
             <section>
