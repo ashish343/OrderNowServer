@@ -37,4 +37,5 @@
   <classpathentry kind="var" path="M2_REPO/org/apache/tomcat/tomcat-jasper-el/7.0.34/tomcat-jasper-el-7.0.34.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/tomcat/tomcat-api/7.0.34/tomcat-api-7.0.34.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/apache/tomcat/tomcat-util/7.0.34/tomcat-util-7.0.34.jar"/>
+  <classpathentry kind="var" path="M2_REPO/com/google/guava/guava/15.0/guava-15.0.jar"/>
 </classpath>
