@@ -2,15 +2,23 @@ package com.database;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 
 import javax.servlet.ServletOutputStream;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.data.menu.Menu;
 import com.data.menu.Restaurant;
+import com.data.restaurant.RestaurantDashboardData;
 import com.data.restaurant.RestaurantOrder;
 import com.enums.UrlParameter;
 import com.google.gson.Gson;
+import com.mongodb.AggregationOutput;
 import com.mongodb.BasicDBObject;
+import com.mongodb.BasicDBObjectBuilder;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
@@ -249,9 +257,18 @@ public class DataConnection {
 		return true;
 	}
 
+	/**
+	 * ensures a index on restaurantId
+	 * 
+	 * @param restaurantId
+	 * @param state
+	 * @param debugger
+	 * @return
+	 * @throws IOException
+	 */
 	public static ArrayList<RestaurantOrder> getOrders(String restaurantId,
 			String state, ServletOutputStream debugger) throws IOException {
-		// loader(debugger);
+		loader(debugger);
 		ArrayList<RestaurantOrder> result = new ArrayList<RestaurantOrder>();
 		BasicDBObject bdo = new BasicDBObject();
 		bdo.put(UrlParameter.RESTAURNAT_ID.toString(), restaurantId);
@@ -265,9 +282,107 @@ public class DataConnection {
 		return result;
 	}
 
-	public static void main(String[] args) throws IOException {
-		new DataConnection();
-		System.out.println(gs.toJson(getOrders("R1",
-				UrlParameter.INTERMEDIATE.toString(), null)));
+	public static RestaurantDashboardData getRestaurantDashboardData(
+			String restaurantId, ServletOutputStream debugger)
+			throws IOException, JSONException {
+		loader(debugger);
+		RestaurantDashboardData rdd = new RestaurantDashboardData();
+
+		/**
+		 * populate the table map
+		 */
+
+		DBObject match = new BasicDBObject("$match", BasicDBObjectBuilder
+				.start().append(UrlParameter.RESTAURNAT_ID.toString(),
+						restaurantId));
+		DBObject project = new BasicDBObject("$project", BasicDBObjectBuilder
+				.start().append(UrlParameter.TABLEINFORMATION.toString(), 1));
+
+		AggregationOutput out = restaurant.aggregate(match, project);
+		Iterator<DBObject> iter = out.results().iterator();
+		String ti = iter.next().get(UrlParameter.TABLEINFORMATION.toString())
+				.toString();
+		JSONObject temp = new JSONObject(ti);
+		Iterator<String> iter1 = temp.keys();
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		while (iter1.hasNext()) {
+			String key = iter1.next().toString();
+			map.put(key, temp.getInt(key));
+		}
+		rdd.setTableInformation(map);
+
+		/**
+		 * populate order String
+		 */
+
+		match = new BasicDBObject("$match", BasicDBObjectBuilder.start(
+				UrlParameter.RESTAURNAT_ID.toString(), restaurantId));
+		DBCursor cursor = order.find(match);
+		ArrayList<RestaurantOrder> orderList = new ArrayList<RestaurantOrder>();
+		while (cursor.hasNext()) {
+			orderList.add(gs.fromJson(cursor.next().toString(),
+					RestaurantOrder.class));
+		}
+		rdd.setOrders(gs.toJson(orderList));
+
+		return rdd;
+	}
+
+	/**
+	 * 
+	 * @param restaurantId
+	 * @param orderId
+	 */
+	public static void moveCurrentOrderToCompletedOrders(String restaurantId,
+			String orderId, ServletOutputStream debugger) {
+		// TODO check if there is some trigger kind of concept in mongo to auto
+		// pull the documents
+
+		// TODO check the number of collections possible in mongo. Should we
+		// have something like a relational DB structure or something like a
+		// proper NOSql style design where each rest, user has its own
+		// collections
+	}
+
+	/**
+	 * 
+	 * @param customerId
+	 * @param debugger
+	 * @param startDate
+	 * @param chronological
+	 *            true increasing chronological false decreasing chronological
+	 * @param count
+	 */
+	public static void getOrdersForCustomer(String customerId,
+			ServletOutputStream debugger, String startDate,
+			boolean chronological, int count) {
+		// TODO fetch all orders for customer
+	}
+
+	public static void main(String[] args) throws IOException, JSONException {
+		// new DataConnection();
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("siddhanth", 1);
+		map.put("jain", 2);
+		Gson gs = new Gson();
+		String ti = gs.toJson(map);
+		System.out.println(ti);
+		JSONObject obj = new JSONObject(ti);
+		Iterator<String> iter = obj.keys();
+		while (iter.hasNext()) {
+			System.out.println(iter.next().toString());
+		}
+
+		DBObject d = new BasicDBObject();
+		d.put("sid", "jain");
+		System.out.println(d.toString());
+		// HashMap<String, Integer> t = new HashMap<String, Integer>();
+		// HashMap<String, Integer> map1 = gs.fromJson(ti, t.getClass());
+		// for (String key : map1.keySet()) {
+		// System.out.println(key + "\t" + map1.get(key));
+		// }
+		// System.out.println(map1.toString());
+		// System.out.println(gs.toJson(getOrders("R1",
+		// UrlParameter.INTERMEDIATE.toString(), null)));
 	}
 }
