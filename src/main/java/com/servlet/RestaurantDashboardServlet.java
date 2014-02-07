@@ -16,8 +16,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.data.menu.FoodType;
-import com.data.restaurant.OrderedDish;
 import com.data.restaurant.RestaurantDashboardData;
 import com.data.restaurant.RestaurantOrder;
 import com.enums.UrlParameter;
@@ -26,6 +24,7 @@ import com.google.gson.Gson;
 @SuppressWarnings("serial")
 @WebServlet(name = "RestaurantDashboardServlet", urlPatterns = { "/dashboard" })
 public class RestaurantDashboardServlet extends HttpServlet {
+	Gson gs = new Gson();
 	protected final Log logger = LogFactory.getLog(getClass());
 
 	@Override
@@ -48,54 +47,62 @@ public class RestaurantDashboardServlet extends HttpServlet {
 	}
 
 	private String getOrders() {
-		Gson gson = new Gson();
-
+		String restaurantId = "R1";
 		List<RestaurantOrder> restOrderList = new ArrayList<RestaurantOrder>();
-		List<OrderedDish> dishes = new ArrayList<OrderedDish>();
+		try {
+			restOrderList = RestaurantOrder.getOrdersFronDB(restaurantId,
+					UrlParameter.INTERMEDIATE.toString(), null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-		OrderedDish orderedDish1 = new OrderedDish();
-		dishes.add(orderedDish1);
+		// Gson gson = new Gson();
+		//
+		// List<OrderedDish> dishes = new ArrayList<OrderedDish>();
+		//
+		// OrderedDish orderedDish1 = new OrderedDish();
+		// dishes.add(orderedDish1);
+		//
+		// orderedDish1.setDishId("d1");
+		// orderedDish1.setName("Test1");
+		// orderedDish1.setPrice(100);
+		// orderedDish1.setQuatity((float) 1);
+		// orderedDish1.setType(FoodType.Veg);
+		//
+		// OrderedDish orderedDish2 = new OrderedDish();
+		// dishes.add(orderedDish2);
+		//
+		// orderedDish2.setDishId("d2");
+		// orderedDish2.setName("Test2");
+		// orderedDish2.setPrice(100);
+		// orderedDish2.setQuatity((float) 1);
+		// orderedDish2.setType(FoodType.NonVeg);
+		//
+		// RestaurantOrder restOrder1 = new RestaurantOrder();
+		// restOrder1.setCustomerId("abc");
+		//
+		// restOrder1.setDishes(dishes);
+		// restOrder1.setOrderState(UrlParameter.INTERMEDIATE.toString());
+		// restOrder1.setRestaurantId("R1");
+		// restOrder1.setSubOrderId(0);
+		// restOrder1.setTableId("T1");
+		// restOrder1.setTableNo(1);
+		// restOrder1.setOrderId("dfref");
+		//
+		// RestaurantOrder restOrder2 = new RestaurantOrder();
+		// restOrder2.setCustomerId("bdw");
+		// restOrder2.setDishes(dishes);
+		// restOrder2.setOrderState("");
+		// restOrder2.setRestaurantId("R1");
+		// restOrder2.setSubOrderId(0);
+		// restOrder2.setTableId("T2");
+		// restOrder2.setTableNo(2);
+		// restOrder2.setOrderId("ddffref");
+		//
+		// restOrderList.add(restOrder1);
+		// restOrderList.add(restOrder2);
 
-		orderedDish1.setDishId("d1");
-		orderedDish1.setName("Test1");
-		orderedDish1.setPrice(100);
-		orderedDish1.setQuatity((float) 1);
-		orderedDish1.setType(FoodType.Veg);
-
-		OrderedDish orderedDish2 = new OrderedDish();
-		dishes.add(orderedDish2);
-
-		orderedDish2.setDishId("d2");
-		orderedDish2.setName("Test2");
-		orderedDish2.setPrice(100);
-		orderedDish2.setQuatity((float) 1);
-		orderedDish2.setType(FoodType.NonVeg);
-
-		RestaurantOrder restOrder1 = new RestaurantOrder();
-		restOrder1.setCustomerId("abc");
-
-		restOrder1.setDishes(dishes);
-		restOrder1.setOrderState(UrlParameter.INTERMEDIATE.toString());
-		restOrder1.setRestaurantId("R1");
-		restOrder1.setSubOrderId(0);
-		restOrder1.setTableId("T1");
-		restOrder1.setTableNo(1);
-		restOrder1.setOrderId("dfref");
-
-		RestaurantOrder restOrder2 = new RestaurantOrder();
-		restOrder2.setCustomerId("bdw");
-		restOrder2.setDishes(dishes);
-		restOrder2.setOrderState("");
-		restOrder2.setRestaurantId("R1");
-		restOrder2.setSubOrderId(0);
-		restOrder2.setTableId("T2");
-		restOrder2.setTableNo(2);
-		restOrder2.setOrderId("ddffref");
-
-		restOrderList.add(restOrder1);
-		restOrderList.add(restOrder2);
-
-		return gson.toJson(restOrderList);
+		return gs.toJson(restOrderList);
 	}
 
 	private Map<String, Integer> getTableInformation() {

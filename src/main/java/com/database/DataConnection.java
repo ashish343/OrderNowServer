@@ -200,16 +200,16 @@ public class DataConnection {
 			ServletOutputStream debugger) throws IOException {
 		Menu menu = null;
 		boolean isDebug = RequestContext.isDebugEnabled();
-		Gson gson = new Gson();
+
 		try {
-			menu = gson.fromJson(restaurantMenu, Menu.class);
+			menu = gs.fromJson(restaurantMenu, Menu.class);
 			if (menu.getCategories() == null)
 				throw new Exception("categories are null");
 
 			if (isDebug)
 				debugger.write(("\nGson successfully converted the response.")
 						.getBytes());
-			String json = gson.toJson(menu);
+			String json = gs.toJson(menu);
 			if (isDebug)
 				debugger.write(("\n" + json).getBytes());
 		} catch (Exception e) {
@@ -302,6 +302,7 @@ public class DataConnection {
 	 * @throws IOException
 	 * @throws JSONException
 	 */
+	@Deprecated
 	public static RestaurantDashboardData getRestaurantDashboardData(
 			String restaurantId, ServletOutputStream debugger)
 			throws IOException, JSONException {
@@ -397,13 +398,6 @@ public class DataConnection {
 		DBObject d = new BasicDBObject();
 		d.put("sid", "jain");
 		System.out.println(d.toString());
-		// HashMap<String, Integer> t = new HashMap<String, Integer>();
-		// HashMap<String, Integer> map1 = gs.fromJson(ti, t.getClass());
-		// for (String key : map1.keySet()) {
-		// System.out.println(key + "\t" + map1.get(key));
-		// }
-		// System.out.println(map1.toString());
-		// System.out.println(gs.toJson(getOrders("R1",
-		// UrlParameter.INTERMEDIATE.toString(), null)));
+
 	}
 }

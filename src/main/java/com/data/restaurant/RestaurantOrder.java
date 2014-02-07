@@ -83,8 +83,9 @@ public class RestaurantOrder {
 		this.orderState = orderState;
 	}
 
-	public static ArrayList<RestaurantOrder> loadFronDB(String restaurantId,
-			String state, ServletOutputStream debugger) throws IOException {
+	public static ArrayList<RestaurantOrder> getOrdersFronDB(
+			String restaurantId, String state, ServletOutputStream debugger)
+			throws IOException {
 		return DataConnection.getOrders(restaurantId, state, debugger);
 	}
 }
