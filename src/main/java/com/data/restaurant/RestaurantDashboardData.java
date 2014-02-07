@@ -49,7 +49,7 @@ public class RestaurantDashboardData {
 		Restaurant rest = Restaurant.loadFromDB(restaurantId, debugger);
 		rdd.setTableInformation(rest.getTableInformation());
 
-		ArrayList<RestaurantOrder> list = RestaurantOrder.loadFronDB(
+		ArrayList<RestaurantOrder> list = RestaurantOrder.getOrdersFronDB(
 				restaurantId, UrlParameter.CURRENTORDERS.toString(), debugger);
 		Gson gs = new Gson();
 		rdd.setOrders(gs.toJson(list));

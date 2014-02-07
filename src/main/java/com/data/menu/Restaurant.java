@@ -9,7 +9,7 @@ import javax.servlet.ServletOutputStream;
 import com.database.DataConnection;
 
 public class Restaurant {
-	private String rId;
+	private String _id;
 	private String name;
 	private String address;
 	private String contactInfo;
@@ -28,11 +28,11 @@ public class Restaurant {
 	}
 
 	public String getrId() {
-		return rId;
+		return _id;
 	}
 
 	public void setrId(String rId) {
-		this.rId = rId;
+		this._id = rId;
 	}
 
 	public String getName() {
@@ -82,8 +82,14 @@ public class Restaurant {
 		return DataConnection.getRestaurantData(restaurantId, debugger);
 	}
 
-	public void storeToDB() {
+	public void updateDB(ServletOutputStream debugger) throws IOException {
 		_cache.put(getrId(), this);
+		DataConnection.setRestaurantDataToDB(this, debugger);
+	}
+
+	public void storeToDB(ServletOutputStream debugger) throws IOException {
+		_cache.put(getrId(), this);
+		DataConnection.setRestaurantDataToDB(this, debugger);
 
 	}
 }
