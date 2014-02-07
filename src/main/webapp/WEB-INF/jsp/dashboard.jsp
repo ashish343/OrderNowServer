@@ -51,6 +51,9 @@
 			.hidden {
 			    display:none;
 			}
+			#modifyOrderModal {
+			    z-index:10000;
+			}
         </style>
     </head>
     <body>
