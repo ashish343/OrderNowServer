@@ -10,7 +10,6 @@ import javax.servlet.ServletOutputStream;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.data.menu.Menu;
 import com.data.menu.Restaurant;
 import com.data.restaurant.RestaurantDashboardData;
 import com.data.restaurant.RestaurantOrder;
@@ -165,79 +164,6 @@ public class DataConnection {
 			cursor.close();
 		}
 		return restaurantData;
-	}
-
-	private static Restaurant getRestaurantData(BasicDBObject obj,
-			ServletOutputStream debugger) throws IOException {
-		Restaurant restaurant = null;
-
-		String restaurantId = obj.getString("_id");
-		String restaurantName = obj.getString("name");
-		String restaurantAddress = obj.getString("address");
-		String restaurantContactInfo = obj.getString("contactInfo");
-		String restaurantImage = obj.getString("image");
-		String restaurantMenu = obj.getString("menu");
-
-		if (restaurantName != null && restaurantMenu != null) {
-			restaurant = new Restaurant();
-			restaurant.setAddress(restaurantAddress);
-			restaurant.setContactInfo(restaurantContactInfo);
-			restaurant.setImg(restaurantImage);
-			restaurant.setMenu(getMenu(restaurantMenu, debugger));
-			restaurant.setName(restaurantName);
-			restaurant.setrId(restaurantId);
-		}
-
-		return restaurant;
-	}
-
-	private static Menu getMenu(String restaurantMenu,
-			ServletOutputStream debugger) throws IOException {
-		Menu menu = null;
-		boolean isDebug = RequestContext.isDebugEnabled();
-
-		try {
-			menu = gs.fromJson(restaurantMenu, Menu.class);
-			if (menu.getCategories() == null)
-				throw new Exception("categories are null");
-
-			if (isDebug)
-				debugger.write(("\nGson successfully converted the response.")
-						.getBytes());
-			String json = gs.toJson(menu);
-			if (isDebug)
-				debugger.write(("\n" + json).getBytes());
-		} catch (Exception e) {
-			if (isDebug) {
-				debugger.write(("\nGson failed to convert the response, or menu was null" + e
-						.toString()).getBytes());
-				debugger.write(("\nMenu::" + restaurantMenu).getBytes());
-			}
-		}
-		return menu;
-	}
-
-	public static Menu getRestaurantMenu(String menuId) throws IOException {
-		Menu menuData = null;
-		if (mongoDb == null) {
-			new DataConnection();
-		}
-		BasicDBObject query = new BasicDBObject("_id", menuId);
-		DBCursor cursor = order.find(query);
-		try {
-			if (cursor.hasNext()) {
-				BasicDBObject obj = (BasicDBObject) cursor.next();
-				menuData = getMenuData(obj);
-			}
-		} finally {
-			cursor.close();
-		}
-		return menuData;
-	}
-
-	private static Menu getMenuData(BasicDBObject obj) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	public static boolean setOrderDetailsToDB(RestaurantOrder restaurantOrder) {
