@@ -10,14 +10,15 @@ import com.database.DataConnection;
 
 public class Restaurant {
 	private String _id;
+	private String img;
 	private String name;
 	private String address;
 	private String contactInfo;
-	private String img;
+
 	private Menu menu;
+	private Map<String, Integer> tableInformation;
 
 	public static HashMap<String, Restaurant> _cache = new HashMap<String, Restaurant>();
-	private Map<String, Integer> tableInformation;
 
 	public String getContactInfo() {
 		return contactInfo;
