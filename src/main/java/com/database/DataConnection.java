@@ -157,15 +157,10 @@ public class DataConnection {
 		try {
 			if (cursor.hasNext()) {
 				BasicDBObject obj = (BasicDBObject) cursor.next();
-				restaurantData = getRestaurantData(obj, debugger);
-				if (isDebug)
-					debugger.write(("\nValid result returned from DB.")
-							.getBytes());
-			} else {
-				if (isDebug)
-					debugger.write(("\nNo  valid result returned for Rest_Id:::" + restuarantId)
-							.getBytes());
+				restaurantData = gs.fromJson(obj.toString(), Restaurant.class);
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		} finally {
 			cursor.close();
 		}
