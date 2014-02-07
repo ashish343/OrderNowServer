@@ -87,9 +87,6 @@ public class RestaurantDashboardServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 		return null;
-		// String now = (new Date()).toString();
-		// logger.info("Returning hello view with " + now);
-		// return null;//new ModelAndView("/WEB_INF/jsp/hello.jsp", "now", now);
 	}
 
 }
