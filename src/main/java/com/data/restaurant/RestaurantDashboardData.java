@@ -45,13 +45,10 @@ public class RestaurantDashboardData {
 	public static RestaurantDashboardData loadFromDB(String restaurantId,
 			ServletOutputStream debugger) throws IOException, JSONException {
 		RestaurantDashboardData rdd = new RestaurantDashboardData();
-		if (Restaurant._cache.containsKey(restaurantId)) {
-			Restaurant rest = Restaurant._cache.get(restaurantId);
-			rdd.setTableInformation(rest.getTableInformation());
-		} else {
-			Restaurant rest = Restaurant.loadFromDB(restaurantId, debugger);
-			rdd.setTableInformation(rest.getTableInformation());
-		}
+
+		Restaurant rest = Restaurant.loadFromDB(restaurantId, debugger);
+		rdd.setTableInformation(rest.getTableInformation());
+
 		ArrayList<RestaurantOrder> list = RestaurantOrder.loadFronDB(
 				restaurantId, UrlParameter.CURRENTORDERS.toString(), debugger);
 		Gson gs = new Gson();

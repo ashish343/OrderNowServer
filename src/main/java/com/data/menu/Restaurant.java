@@ -77,6 +77,8 @@ public class Restaurant {
 
 	public static Restaurant loadFromDB(String restaurantId,
 			ServletOutputStream debugger) throws IOException {
+		if (_cache.containsKey(restaurantId))
+			return _cache.get(restaurantId);
 		return DataConnection.getRestaurantData(restaurantId, debugger);
 	}
 }
