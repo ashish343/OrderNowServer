@@ -1,13 +1,16 @@
 package com.data.restaurant;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.servlet.ServletOutputStream;
 
 import org.json.JSONException;
 
-import com.database.DataConnection;
+import com.data.menu.Restaurant;
+import com.enums.UrlParameter;
+import com.google.gson.Gson;
 
 /*
  * To be returned from the DB to get the restaurant data.
@@ -41,7 +44,15 @@ public class RestaurantDashboardData {
 
 	public static RestaurantDashboardData loadFromDB(String restaurantId,
 			ServletOutputStream debugger) throws IOException, JSONException {
-		return DataConnection
-				.getRestaurantDashboardData(restaurantId, debugger);
+		RestaurantDashboardData rdd = new RestaurantDashboardData();
+
+		Restaurant rest = Restaurant.loadFromDB(restaurantId, debugger);
+		rdd.setTableInformation(rest.getTableInformation());
+
+		ArrayList<RestaurantOrder> list = RestaurantOrder.loadFronDB(
+				restaurantId, UrlParameter.CURRENTORDERS.toString(), debugger);
+		Gson gs = new Gson();
+		rdd.setOrders(gs.toJson(list));
+		return rdd;
 	}
 }
