@@ -16,6 +16,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.data.menu.Restaurant;
 import com.data.restaurant.RestaurantDashboardData;
 import com.data.restaurant.RestaurantOrder;
 import com.enums.UrlParameter;
@@ -39,15 +40,21 @@ public class RestaurantDashboardServlet extends HttpServlet {
 
 	private RestaurantDashboardData getTestRestaurantData() {
 		RestaurantDashboardData restaurantData = new RestaurantDashboardData();
+		String restaurantId = "R1";
+		Restaurant r = new Restaurant();
+		try {
+			r = Restaurant.loadFromDB(restaurantId, null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
-		restaurantData.setTableInformation(getTableInformation());
-		restaurantData.setOrders(getOrders());
-
+		restaurantData.setTableInformation(r.getTableInformation());
+		restaurantData.setOrders(getOrders(restaurantId));
 		return restaurantData;
 	}
 
-	private String getOrders() {
-		String restaurantId = "R1";
+	private String getOrders(String restaurantId) {
+
 		List<RestaurantOrder> restOrderList = new ArrayList<RestaurantOrder>();
 		try {
 			restOrderList = RestaurantOrder.getOrdersFronDB(restaurantId,
@@ -67,7 +74,6 @@ public class RestaurantDashboardServlet extends HttpServlet {
 		tableInformation.put("T4", 4);
 		tableInformation.put("T5", 5);
 		tableInformation.put("T6", 6);
-
 		return tableInformation;
 	}
 
@@ -85,4 +91,5 @@ public class RestaurantDashboardServlet extends HttpServlet {
 		// logger.info("Returning hello view with " + now);
 		// return null;//new ModelAndView("/WEB_INF/jsp/hello.jsp", "now", now);
 	}
+
 }
