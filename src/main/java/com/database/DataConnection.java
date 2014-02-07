@@ -282,6 +282,14 @@ public class DataConnection {
 		return result;
 	}
 
+	/**
+	 * 
+	 * @param restaurantId
+	 * @param debugger
+	 * @return
+	 * @throws IOException
+	 * @throws JSONException
+	 */
 	public static RestaurantDashboardData getRestaurantDashboardData(
 			String restaurantId, ServletOutputStream debugger)
 			throws IOException, JSONException {
@@ -302,12 +310,13 @@ public class DataConnection {
 		Iterator<DBObject> iter = out.results().iterator();
 		String ti = iter.next().get(UrlParameter.TABLEINFORMATION.toString())
 				.toString();
-		JSONObject temp = new JSONObject(ti);
-		Iterator<String> iter1 = temp.keys();
+
+		@SuppressWarnings("unchecked")
+		Iterator<String> iter1 = new JSONObject(ti).keys();
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
 		while (iter1.hasNext()) {
 			String key = iter1.next().toString();
-			map.put(key, temp.getInt(key));
+			map.put(key, new JSONObject(ti).getInt(key));
 		}
 		rdd.setTableInformation(map);
 

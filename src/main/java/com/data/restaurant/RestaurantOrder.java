@@ -1,6 +1,12 @@
 package com.data.restaurant;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.ServletOutputStream;
+
+import com.database.DataConnection;
 
 public class RestaurantOrder {
 
@@ -75,5 +81,10 @@ public class RestaurantOrder {
 
 	public void setOrderState(String orderState) {
 		this.orderState = orderState;
+	}
+
+	public static ArrayList<RestaurantOrder> loadFronDB(String restaurantId,
+			String state, ServletOutputStream debugger) throws IOException {
+		return DataConnection.getOrders(restaurantId, state, debugger);
 	}
 }
