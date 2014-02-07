@@ -19,10 +19,10 @@ import org.springframework.security.core.authority.GrantedAuthorityImpl;
 public class CustomAuthenticationManager implements AuthenticationManager {
 
 	@Override
-	public Authentication authenticate(Authentication arg0)
+	public Authentication authenticate(Authentication auth)
 			throws AuthenticationException {
-		// TODO Auto-generated method stub
-		return new UsernamePasswordAuthenticationToken("ashish", "ashish", getAuthorities(1));
+		
+		return new UsernamePasswordAuthenticationToken(auth.getName(), auth.getCredentials(), getAuthorities(1));
 	}
 
 	/**
