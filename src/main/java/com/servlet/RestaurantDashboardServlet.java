@@ -31,14 +31,14 @@ public class RestaurantDashboardServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		RestaurantDashboardData restaurantData = getTestRestaurantData();
+		RestaurantDashboardData restaurantData = getRestaurantData();
 
 		request.setAttribute("restaurantData", restaurantData);
 		request.getRequestDispatcher("/WEB-INF/jsp/dashboard.jsp").forward(
 				request, response);
 	}
 
-	private RestaurantDashboardData getTestRestaurantData() {
+	private RestaurantDashboardData getRestaurantData() {
 		RestaurantDashboardData restaurantData = new RestaurantDashboardData();
 		String restaurantId = "R1";
 		Restaurant r = new Restaurant();
