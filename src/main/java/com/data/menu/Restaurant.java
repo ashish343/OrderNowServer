@@ -81,4 +81,9 @@ public class Restaurant {
 			return _cache.get(restaurantId);
 		return DataConnection.getRestaurantData(restaurantId, debugger);
 	}
+
+	public void storeToDB() {
+		_cache.put(getrId(), this);
+
+	}
 }

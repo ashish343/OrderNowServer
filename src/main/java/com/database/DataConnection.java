@@ -257,6 +257,18 @@ public class DataConnection {
 		return true;
 	}
 
+	public static boolean setRestaurantDataToDB(Restaurant rest,
+			ServletOutputStream debugger) throws IOException {
+		try {
+			loader(debugger);
+			BasicDBObject doc = (BasicDBObject) JSON.parse(gs.toJson(rest));
+			restaurant.insert(doc);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
 	/**
 	 * ensures a index on restaurantId
 	 * 
