@@ -2,6 +2,7 @@
     xmlns:beans="http://www.springframework.org/schema/beans" 
     xmlns:context="http://www.springframework.org/schema/context"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:p="http://www.springframework.org/schema/p"
     xsi:schemaLocation="http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
     http://www.springframework.org/schema/security
@@ -11,21 +12,30 @@
     
     <context:annotation-config />
     
-    <http auto-config="true">
+    <http auto-config="false" use-expressions="false" access-denied-page="/loginFailed" entry-point-ref="authenticationEntryPoint" >
         <intercept-url pattern="/login*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-        <intercept-url pattern="/dev*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <form-login login-page='/login' default-target-url="/dev" authentication-failure-url="/loginFailed"/>
+        <intercept-url pattern="/dashboard*" access="ROLE_USER" />
+        <custom-filter ref="authenticationFilter" position="FORM_LOGIN_FILTER"/>
     </http>
-
-    <authentication-manager>
-      <authentication-provider>
-        <user-service>
-        <user name="ashish" password="ashish" authorities="ROLE_USER" />
-        </user-service>
-      </authentication-provider>
-    </authentication-manager>
+    
+    <authentication-manager/>
     
     <beans:bean name="requestContext" class="com.utility.RequestContext" scope="request">
     </beans:bean>
+    
+    <beans:bean id="authenticationEntryPoint"  class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint" p:loginFormUrl="/login"/>
+    
+    <beans:bean id="authenticationFilter" class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter"
+    p:authenticationManager-ref="customAuthenticationManager"
+    p:authenticationFailureHandler-ref="customAuthenticationFailureHandler"
+    p:authenticationSuccessHandler-ref="customAuthenticationSuccessHandler" />
+    
+    <beans:bean id="customAuthenticationManager" class="com.authentication.CustomAuthenticationManager" />
+   
+    <beans:bean id="customAuthenticationFailureHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler"
+    p:defaultFailureUrl="/loginFailed" />
+    
+    <beans:bean id="customAuthenticationSuccessHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler"
+    p:defaultTargetUrl="/dashboard" />
     
 </beans:beans>
