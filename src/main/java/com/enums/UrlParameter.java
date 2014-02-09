@@ -7,7 +7,8 @@ public enum UrlParameter {
 			"restaurantId"), CUSTOMER_ORDER("order"), USER_ACTION("action"), DISH_IDS(
 			"dishIds"), TIMESTAMP("time"), ORDERSTATE("orderState"), DISH_QTY(
 			"dishQty"), SUBORDER_ID("subOrderId"), INTERMEDIATE("interMediate"), TABLEINFORMATION(
-			"tableInformation"), CURRENTORDERS("currentOrders");
+			"tableInformation"), CURRENTORDERS("currentOrders"), USER_NAME(
+			"user_name"), PASSWORD("password");
 
 	private String data;
 

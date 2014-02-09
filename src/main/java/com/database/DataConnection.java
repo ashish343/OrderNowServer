@@ -9,6 +9,7 @@ import javax.servlet.ServletOutputStream;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 
 import com.data.menu.Restaurant;
 import com.data.restaurant.RestaurantDashboardData;
@@ -32,6 +33,8 @@ public class DataConnection {
 	private final MongoClient mongoClient;
 	private String mongoURI;
 	private String db;
+	private static final String LOGIN = "login_credentials";
+	private static final String USER_INFO = "user_info";
 	private static DB mongoDb;
 	private static String TABLE_DATA;
 	private static String RESTUARANT_DATA;
@@ -40,6 +43,9 @@ public class DataConnection {
 	private static DBCollection table;
 	private static DBCollection restaurant;
 	private static DBCollection order;
+	private static DBCollection login;
+	private static DBCollection user;
+
 	private static Gson gs;
 
 	public static void loader(ServletOutputStream debugger) throws IOException {
@@ -75,6 +81,8 @@ public class DataConnection {
 		table = mongoDb.getCollection(TABLE_DATA);
 		restaurant = mongoDb.getCollection(RESTUARANT_DATA);
 		order = mongoDb.getCollection(ORDER_DATA);
+		login = mongoDb.getCollection(LOGIN);
+		user = mongoDb.getCollection(USER_INFO);
 		gs = new Gson();
 	}
 
@@ -302,23 +310,63 @@ public class DataConnection {
 		// TODO fetch all orders for customer
 	}
 
-	public static void main(String[] args) throws IOException, JSONException {
-		// new DataConnection();
-		HashMap<String, Integer> map = new HashMap<String, Integer>();
-		map.put("siddhanth", 1);
-		map.put("jain", 2);
-		Gson gs = new Gson();
-		String ti = gs.toJson(map);
-		System.out.println(ti);
-		JSONObject obj = new JSONObject(ti);
-		Iterator<String> iter = obj.keys();
+	public static boolean checkIfAuthenticUser(String username,
+			String password, ServletOutputStream debugger) throws IOException {
+		loader(debugger);
+		BasicDBObject obj = new BasicDBObject();
+		obj.append(UrlParameter.USER_NAME.toString(), username).append(
+				UrlParameter.PASSWORD.toString(), encodeString(password));
+		DBCursor res = login.find(obj);
+		int len = res.count();
+		if (len == 1) {
+			return true;
+		} else
+			return false;
+	}
+
+	public static String encodeString(String unencoded) {
+		return new Md5PasswordEncoder().encodePassword(unencoded, null);
+	}
+
+	public static ArrayList<String> getRestaurantsAssociatedWithUser(
+			String username) throws IOException {
+		loader(null);
+
+		DBObject match = new BasicDBObject("$match",
+				new BasicDBObject().append(UrlParameter.USER_NAME.toString(),
+						username));
+		DBObject project = new BasicDBObject("$project",
+				new BasicDBObject().append(
+						UrlParameter.RESTAURNAT_ID.toString(), 1));
+		ArrayList<String> restIds = new ArrayList<String>();
+		AggregationOutput out = user.aggregate(match, project);
+		Iterator<DBObject> iter = out.results().iterator();
 		while (iter.hasNext()) {
-			System.out.println(iter.next().toString());
+			DBObject temp = iter.next();
+			restIds.add((String) temp.get(UrlParameter.RESTAURNAT_ID.toString()));
 		}
 
-		DBObject d = new BasicDBObject();
-		d.put("sid", "jain");
-		System.out.println(d.toString());
+		return restIds;
+	}
+
+	public static void main(String[] args) throws IOException, JSONException {
+		// new DataConnection();
+		// HashMap<String, Integer> map = new HashMap<String, Integer>();
+		// map.put("siddhanth", 1);
+		// map.put("jain", 2);
+		// Gson gs = new Gson();
+		// String ti = gs.toJson(map);
+		// System.out.println(ti);
+		// JSONObject obj = new JSONObject(ti);
+		// Iterator<String> iter = obj.keys();
+		// while (iter.hasNext()) {
+		// System.out.println(iter.next().toString());
+		// }
+		//
+		// DBObject d = new BasicDBObject();
+		// d.put("sid", "jain");
+		// System.out.println(d.toString());
+		System.out.println(DataConnection.encodeString("test123"));
 
 	}
 }
