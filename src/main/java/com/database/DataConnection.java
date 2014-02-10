@@ -39,7 +39,7 @@ public class DataConnection {
 	private static final String RESTUARANT_DATA = "rest";
 	private static final String TABLE_DATA = "table_rest";
 	private static final String LOGIN = "login_credentials";
-	private static final String ORDER_DATA = "current_orders";;
+	private static final String ORDER_DATA = "order";;
 	private static final String COMPLETED_ORDERS = "completed_orders";
 
 	private static DBCollection table;
