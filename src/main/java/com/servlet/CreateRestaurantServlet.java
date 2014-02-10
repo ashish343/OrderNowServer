@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(name = "CreateRestaurantServlet", urlPatterns = { "/createRestaurant1" })
+@WebServlet(name = "CreateRestaurantServlet", urlPatterns = { "/createRestaurant" })
 public class CreateRestaurantServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request,
