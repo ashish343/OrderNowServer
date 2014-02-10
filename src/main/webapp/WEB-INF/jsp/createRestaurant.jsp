@@ -113,8 +113,10 @@
       }
     </style>
 </head>
+<%@ include file="/WEB-INF/jsp/common/new-navbar.jsp" %>
 	<body onload="initialize()">
-		<div style="max-width: 400px;margin: 0 auto; padding: 15px">
+	
+		<div style="max-width: 400px;margin: 100 auto; padding: 15px;position: relative">
 			
 			  <div class="form-group">    
 			      <input type="text" class="form-control" id="restaurant_name" placeholder="Restaurant Name">
@@ -158,7 +160,7 @@
 			      <input type="text" class="form-control" id="num_tables" placeholder="Number of Tables">
 			  </div>
 			<div class="form-group">
-			      <button name="commit" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+			      <button name="commit" class="btn btn-lg btn-primary btn-block" type="submit">Next</button>
 			  </div>
 		</div>
 	</body>
