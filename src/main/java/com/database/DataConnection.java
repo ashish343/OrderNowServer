@@ -9,6 +9,7 @@ import javax.servlet.ServletOutputStream;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 
 import com.data.menu.Restaurant;
 import com.data.restaurant.RestaurantDashboardData;
@@ -29,17 +30,34 @@ import com.utility.RequestContext;
 
 public class DataConnection {
 
-	private final MongoClient mongoClient;
-	private String mongoURI;
 	private String db;
+	private String mongoURI;
 	private static DB mongoDb;
-	private static String TABLE_DATA;
-	private static String RESTUARANT_DATA;
-	private static String ORDER_DATA;
+	private final MongoClient mongoClient;
+
+	private static final String USER_INFO = "user_info";
+	private static final String RESTUARANT_DATA = "rest";
+	private static final String TABLE_DATA = "table_rest";
+	private static final String LOGIN = "login_credentials";
+	private static final String ORDER_DATA = "order";;
+	private static final String COMPLETED_ORDERS = "completed_orders";
 
 	private static DBCollection table;
+	/**
+	 * contains restaurant details
+	 */
 	private static DBCollection restaurant;
-	private static DBCollection order;
+	/**
+	 * all the current orders and completed orders
+	 */
+	private static DBCollection current_orders;
+	private static DBCollection completed_orders;
+	/**
+	 * contains login and user information
+	 */
+	private static DBCollection login;
+	private static DBCollection user;
+
 	private static Gson gs;
 
 	public static void loader(ServletOutputStream debugger) throws IOException {
@@ -57,9 +75,6 @@ public class DataConnection {
 	private DataConnection() throws IOException {
 		mongoURI = "mongodb://orderNow:orderNow@troup.mongohq.com:10032/app21434483";
 		db = "app21434483";
-		TABLE_DATA = "table_rest";
-		RESTUARANT_DATA = "rest";
-		ORDER_DATA = "order";
 
 		if (mongoURI == null || db == null) {
 			System.err
@@ -70,12 +85,16 @@ public class DataConnection {
 		mongoClient = new MongoClient(new MongoClientURI(mongoURI)); // new
 																		// MongoClient(new
 																		// MongoClientURI(mongoURI));
+		gs = new Gson();
 		mongoDb = mongoClient.getDB(db);
 
+		login = mongoDb.getCollection(LOGIN);
+		user = mongoDb.getCollection(USER_INFO);
 		table = mongoDb.getCollection(TABLE_DATA);
+		current_orders = mongoDb.getCollection(ORDER_DATA);
 		restaurant = mongoDb.getCollection(RESTUARANT_DATA);
-		order = mongoDb.getCollection(ORDER_DATA);
-		gs = new Gson();
+		completed_orders = mongoDb.getCollection(COMPLETED_ORDERS);
+
 	}
 
 	public static boolean checkOrderExists(String orderId,
@@ -174,7 +193,21 @@ public class DataConnection {
 		}
 		BasicDBObject doc = (BasicDBObject) JSON.parse(gs
 				.toJson(restaurantOrder));
-		order.insert(doc);
+		current_orders.insert(doc);
+		return true;
+	}
+
+	public static boolean setCompletedOrderDetailsToDB(
+			RestaurantOrder restaurantOrder) {
+		try {
+			loader(null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		BasicDBObject doc = (BasicDBObject) JSON.parse(gs
+				.toJson(restaurantOrder));
+		completed_orders.insert(doc);
 		return true;
 	}
 
@@ -199,15 +232,16 @@ public class DataConnection {
 	 * @return
 	 * @throws IOException
 	 */
-	public static ArrayList<RestaurantOrder> getOrders(String restaurantId,
-			String state, ServletOutputStream debugger) throws IOException {
+	public static ArrayList<RestaurantOrder> getCurrentOrders(
+			String restaurantId, String state, ServletOutputStream debugger)
+			throws IOException {
 		loader(debugger);
 		ArrayList<RestaurantOrder> result = new ArrayList<RestaurantOrder>();
 		BasicDBObject bdo = new BasicDBObject();
 		bdo.put(UrlParameter.RESTAURNAT_ID.toString(), restaurantId);
 		bdo.put(UrlParameter.ORDERSTATE.toString(), state);
 
-		DBCursor cursor = order.find(bdo);
+		DBCursor cursor = current_orders.find(bdo);
 		while (cursor.hasNext()) {
 			DBObject temp = cursor.next();
 			result.add(gs.fromJson(temp.toString(), RestaurantOrder.class));
@@ -255,12 +289,12 @@ public class DataConnection {
 		rdd.setTableInformation(map);
 
 		/**
-		 * populate order String
+		 * populate current_orders String
 		 */
 
 		match = new BasicDBObject("$match", BasicDBObjectBuilder.start(
 				UrlParameter.RESTAURNAT_ID.toString(), restaurantId));
-		DBCursor cursor = order.find(match);
+		DBCursor cursor = current_orders.find(match);
 		ArrayList<RestaurantOrder> orderList = new ArrayList<RestaurantOrder>();
 		while (cursor.hasNext()) {
 			orderList.add(gs.fromJson(cursor.next().toString(),
@@ -302,23 +336,96 @@ public class DataConnection {
 		// TODO fetch all orders for customer
 	}
 
-	public static void main(String[] args) throws IOException, JSONException {
-		// new DataConnection();
-		HashMap<String, Integer> map = new HashMap<String, Integer>();
-		map.put("siddhanth", 1);
-		map.put("jain", 2);
-		Gson gs = new Gson();
-		String ti = gs.toJson(map);
-		System.out.println(ti);
-		JSONObject obj = new JSONObject(ti);
-		Iterator<String> iter = obj.keys();
+	public static boolean checkIfAuthenticUser(String username,
+			String password, ServletOutputStream debugger) throws IOException {
+		loader(debugger);
+		BasicDBObject obj = new BasicDBObject();
+		obj.append(UrlParameter.USER_NAME.toString(), username).append(
+				UrlParameter.PASSWORD.toString(), encodeString(password));
+		DBCursor res = login.find(obj);
+		int len = res.count();
+		if (len == 1) {
+			return true;
+		} else
+			return false;
+	}
+
+	public static String encodeString(String unencoded) {
+		return new Md5PasswordEncoder().encodePassword(unencoded, null);
+	}
+
+	public static ArrayList<String> getRestaurantsAssociatedWithUser(
+			String username) throws IOException {
+		loader(null);
+
+		DBObject match = new BasicDBObject("$match",
+				new BasicDBObject().append(UrlParameter.USER_NAME.toString(),
+						username));
+		DBObject project = new BasicDBObject("$project",
+				new BasicDBObject().append(
+						UrlParameter.RESTAURNAT_ID.toString(), 1));
+		ArrayList<String> restIds = new ArrayList<String>();
+		AggregationOutput out = user.aggregate(match, project);
+		Iterator<DBObject> iter = out.results().iterator();
 		while (iter.hasNext()) {
-			System.out.println(iter.next().toString());
+			DBObject temp = iter.next();
+			restIds.add((String) temp.get(UrlParameter.RESTAURNAT_ID.toString()));
 		}
 
-		DBObject d = new BasicDBObject();
-		d.put("sid", "jain");
-		System.out.println(d.toString());
+		return restIds;
+	}
+
+	public static RestaurantOrder getCurrentOrderForOrderId(String orderId) {
+		BasicDBObject bdo = new BasicDBObject();
+		bdo.append(UrlParameter.ORDER_ID.toString(), orderId);
+		DBCursor cursor = current_orders.find(bdo);
+		RestaurantOrder rs = null;
+		if (cursor.hasNext()) {
+			String temp = cursor.next().toString();
+			rs = gs.fromJson(temp, RestaurantOrder.class);
+		}
+		return rs;
+	}
+
+	/**
+	 * deletes and returns the deleted {@link RestaurantOrder} object
+	 * 
+	 * @param orderId
+	 * @return
+	 * @throws IOException
+	 */
+	public static RestaurantOrder removeCurrentOrder(String orderId)
+			throws IOException {
+		loader(null);
+		BasicDBObject bdo = new BasicDBObject();
+		bdo.append(UrlParameter.ORDER_ID.toString(), orderId);
+		DBCursor cursor = current_orders.find(bdo);
+		RestaurantOrder obj = null;
+		if (cursor.hasNext()) {
+			obj = gs.fromJson(cursor.next().toString(), RestaurantOrder.class);
+			current_orders.remove(bdo);
+
+		}
+		return obj;
+	}
+
+	public static boolean completeOrder(String orderId) {
+		RestaurantOrder obj = null;
+		try {
+			obj = removeCurrentOrder(orderId);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		if (obj != null) {
+			setCompletedOrderDetailsToDB(obj);
+			return true;
+		} else
+			return false;
+	}
+
+	public static void main(String[] args) throws IOException, JSONException {
+
+		System.out.println(DataConnection.encodeString("test123"));
 
 	}
 }

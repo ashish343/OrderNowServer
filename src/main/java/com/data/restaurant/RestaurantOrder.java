@@ -86,6 +86,11 @@ public class RestaurantOrder {
 	public static ArrayList<RestaurantOrder> getOrdersFronDB(
 			String restaurantId, String state, ServletOutputStream debugger)
 			throws IOException {
-		return DataConnection.getOrders(restaurantId, state, debugger);
+		return DataConnection.getCurrentOrders(restaurantId, state, debugger);
 	}
+
+	public static void completeOrder(String orderId) {
+		DataConnection.completeOrder(orderId);
+	}
+
 }

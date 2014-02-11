@@ -14,11 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.data.menu.Restaurant;
 import com.data.restaurant.RestaurantDashboardData;
 import com.data.restaurant.RestaurantOrder;
+import com.database.DataConnection;
 import com.enums.UrlParameter;
 import com.google.gson.Gson;
 
@@ -26,6 +28,7 @@ import com.google.gson.Gson;
 @WebServlet(name = "RestaurantDashboardServlet", urlPatterns = { "/dashboard" })
 public class RestaurantDashboardServlet extends HttpServlet {
 	Gson gs = new Gson();
+
 	protected final Log logger = LogFactory.getLog(getClass());
 
 	@Override
@@ -38,9 +41,16 @@ public class RestaurantDashboardServlet extends HttpServlet {
 				request, response);
 	}
 
-	private RestaurantDashboardData getRestaurantData() {
+	private RestaurantDashboardData getRestaurantData() throws IOException {
+		String userName = SecurityContextHolder.getContext()
+				.getAuthentication().getName();
+		ArrayList<String> resIds = DataConnection
+				.getRestaurantsAssociatedWithUser(userName);
+
+		assert resIds.size() != 0;
+
 		RestaurantDashboardData restaurantData = new RestaurantDashboardData();
-		String restaurantId = "R1";
+		String restaurantId = resIds.get(0);
 		Restaurant r = new Restaurant();
 		try {
 			r = Restaurant.loadFromDB(restaurantId, null);
@@ -87,9 +97,6 @@ public class RestaurantDashboardServlet extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 		return null;
-		// String now = (new Date()).toString();
-		// logger.info("Returning hello view with " + now);
-		// return null;//new ModelAndView("/WEB_INF/jsp/hello.jsp", "now", now);
 	}
 
 }
