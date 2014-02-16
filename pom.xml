@@ -9,9 +9,23 @@
   <properties>
     <tomcat.version>7.0.34</tomcat.version>
   </properties>
+  <repositories>
+    <!--other repositories if any-->
+    <repository>
+        <id>project.local</id>
+        <name>project</name>
+        <url>file:${project.basedir}/local_repos</url>
+    </repository>
+</repositories>
 
   <dependencies>
     <!-- Randon Id Generator -->
+    
+    <dependency>
+    	<groupId>com</groupId>
+  		<artifactId>OrderNowCommon</artifactId>  
+  		<version>1.0</version>
+    </dependency>
     <dependency>
         <groupId>commons-lang</groupId>
         <artifactId>commons-lang</artifactId>
