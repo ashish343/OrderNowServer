@@ -51,6 +51,7 @@ public class RestaurantDashboardServlet extends HttpServlet {
 
 		RestaurantDashboardData restaurantData = new RestaurantDashboardData();
 		String restaurantId = resIds.get(0);
+		restaurantData.setRestId(restaurantId);
 		Restaurant r = new Restaurant();
 		try {
 			r = Restaurant.loadFromDB(restaurantId, null);
