@@ -12,6 +12,10 @@
         <link rel="stylesheet" type="text/css" href="/resources/order-page/css/demo.css" />
         <link rel="stylesheet" type="text/css" href="/resources/order-page/css/pfold.css" />
         <link rel="stylesheet" type="text/css" href="/resources/order-page/css/custom2.css" />
+        <script type="text/javascript" src="/resources/new-layout/js/jquery-1.7.1.min.js"></script>
+        <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
+        
+        
         <!--[if lte IE 8]><style>.support-note .note-ie{display:block;}</style><![endif]-->
         <style>
             body { 
@@ -61,6 +65,15 @@
             <section class="main demo-2">
                 <!-- Table Information -->
                 <div class="row">
+                	<div class = "col col-lg-2 col-md-2 col-xs-2" >
+                		<h1>Ginger Tiger</h1>
+                		
+                		<ul class="nav nav-pills nav-stacked">
+							<li><a id='current_orders'>Current Orders</a></li>
+							<li><a id='previous_orders_link' >Previous Orders</a></li>
+						</ul>
+                	</div>
+                	<div id='currentOrdersBlock'>
                     <!-- Table Tickr -->
                     <!-- <div class="col col-lg-2 hidden-xs hidden-md">
                         <h3> Table Tickr </h3>
@@ -79,7 +92,7 @@
                         </div><!-- / grid -->
                     </div>
                     <!-- Table With Out Orders -->
-                    <div class="col col-lg-4 col-md-4 col-xs-4">
+                    <div class="col col-lg-2 col-md-2 col-xs-2">
                         <h3> Other Tables </h3>
                         <div class="unordered-tables">
                             <c:set var="shouldShow" value="true"/>
@@ -87,25 +100,27 @@
                         </div>
                     </div>
                 </div>
-                <p class="info"><strong>Demo 3:</strong> Same as demo 2, item will be centered on its original position</p>
+                <div id="previousOrdersBlock">
+                <div class="col col-lg-8 col-md-8 col-xs-8">
+                	<h3>Coming Soon</h3>
+                </div>
+                	
+                </div>
+                </div>                
             </section>
         </div>
         
         
         <!-- Modal -->
         <%@ include file="/WEB-INF/jsp/common/modal.jsp" %>
-        
-        
-        
-        
-        
-        <script type="text/javascript" src="/resources/new-layout/js/jquery-1.7.1.min.js"></script>
+                
         <script type="text/javascript" src="/resources/js/favicon.js"></script>
         <script type="text/javascript" src="/resources/order-page/js/modernizr.custom.79639.js"></script>
-        <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
+        
         <script type="text/javascript" src="/resources/js/pusher.min.js"></script>
         <script type="text/javascript" src="/resources/order-page/js/jquery.pfold.js"></script>
        	<script type="text/javascript" src="/resources/js/jquery.totemticker.js"></script>
+       	
         <script type="text/javascript">
         var favicon;
         var faviconCount = 0;
@@ -122,6 +137,17 @@
             attachEvent($);
             myPusherFunc();
             startTicker();
+            
+            $('#previousOrdersBlock').hide();
+            $('#current_orders').click(function(){                
+                $('#currentOrdersBlock').show();
+                $('#previousOrdersBlock').hide();
+                });
+            $('#previous_orders_link').click(function(){
+                $('#previousOrdersBlock').show();
+                $('#currentOrdersBlock').hide();
+                });
+            
             $( '#grid > div.uc-container' ).each( function( i ) {
                 var $item = $( this ); 
                 var direction = ['left','top'];
