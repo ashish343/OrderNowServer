@@ -311,7 +311,7 @@
                 };
 
                 var pusher = new Pusher('1f7298f8e64c81a0d7de');
-                var channel = pusher.subscribe('R1');
+                var channel = pusher.subscribe('${restaurantData.restId}');
                 channel.bind('notify_order', function(data) {
                     handleDataList(data);
                     var request = $.ajax({
