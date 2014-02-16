@@ -84,13 +84,13 @@
         width: 99%; */
       }
       .label {
-        text-align: right;
+        text-align: left;
         font-weight: bold;
         width: 100px;
         color: #303030;
       }
       #address {
-        border: 1px solid #000090;
+        /* border: 1px solid #000090; */
         /* background-color: #f0f0ff;
         width: 480px;
         padding-right: 2px; */
@@ -111,13 +111,15 @@
         height: 20px;
         margin-bottom: 2px;
       }
+      
     </style>
 </head>
 <%@ include file="/WEB-INF/jsp/common/new-navbar.jsp" %>
 	<body onload="initialize()">
 	
+	
 		<div style="max-width: 400px;margin: 100 auto; padding: 15px;position: relative">
-			
+				<div class='lead'> Step 1: Enter Restaurant Details</div>		
 			  <div class="form-group">    
 			      <input type="text" class="form-control" id="restaurant_name" placeholder="Restaurant Name">
 			  </div>
@@ -156,12 +158,19 @@
               id="country" disabled="true"></input></td>
       </tr>
     </table>
-		<div class="form-group">    
-			      <input type="text" class="form-control" id="num_tables" placeholder="Number of Tables">
-			  </div>
-			<div class="form-group">
-			      <button name="commit" class="btn btn-lg btn-primary btn-block" type="submit">Next</button>
-			  </div>
-		</div>
+	<div class="form-group">    
+      <input type="text" class="form-control" id="num_tables" placeholder="Number of Tables">
+	</div>
+	<div class="form-group container page-layout">          
+        <div id="add-rest" stye="display:none;">
+            <%@ include file="/WEB-INF/jsp/body/add-rest-body.jsp" %>
+        </div>   
+	</div>
+	
+	<div class="form-group">
+      <button name="commit" class="btn btn-lg btn-primary btn-block" type="submit">Next</button>
+	</div>
+	
+	</div>
 	</body>
 </html>
