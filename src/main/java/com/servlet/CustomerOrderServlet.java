@@ -154,9 +154,13 @@ public class CustomerOrderServlet extends HttpServlet {
 		CustomerOrder customerOrder = gson.fromJson(customerOrderJson,
 				CustomerOrder.class);
 		String orderId = customerOrder.getOrderId();
+		if (orderId == null)
+			orderId = RestaurantOrder.getOrderId(customerOrder.getTableId(),
+					customerOrder.getRestaurantId());
+
 		if (orderId == null) {
 			/**
-			 * subOrderId = 0
+			 * No record in database and hence subOrderId = 0
 			 */
 			customerOrder.setOrderId(OrderIdGenerator.generateUniqueOrderId());
 			customerOrder.setSubOrderId(0);
