@@ -105,7 +105,7 @@ public class DataConnection {
 		return true;
 	}
 
-	public static int getSubOrderCount(String orderId,
+	public static synchronized int getSubOrderCount(String orderId,
 			ServletOutputStream debugger) {
 		try {
 			loader(debugger);

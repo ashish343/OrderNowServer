@@ -9,6 +9,7 @@ import javax.servlet.ServletOutputStream;
 import com.database.DataConnection;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import com.utility.OrderIdGenerator;
 
 public class RestaurantOrder {
 
@@ -111,16 +112,22 @@ public class RestaurantOrder {
 		DataConnection.completeOrder(orderId);
 	}
 
-	public static String getOrderId(String tableId, String restaurantId) {
+	public static synchronized String getOrderId(String tableId,
+			String restaurantId) {
 		Pair key = new Pair(tableId, restaurantId);
 		if (tableRestOrderID_cache.containsKey(key)) {
 			return tableRestOrderID_cache.get(key);
 		}
 		String orderId = DataConnection.getOrderId(tableId, restaurantId);
-		if (orderId != null)
-			tableRestOrderID_cache.put(key, orderId);
+
+		if (orderId == null)
+			orderId = OrderIdGenerator.generateUniqueOrderId();
+
+		tableRestOrderID_cache.put(key, orderId);
+
 		return orderId;
 	}
+
 }
 
 class Pair {

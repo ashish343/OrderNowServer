@@ -21,7 +21,6 @@ public class Restaurant {
 	private Map<String, Integer> tableInformation;
 	private Map<MenuPropertyKey, List<MenuPropertyValue>> availableFilters;
 
-
 	public static HashMap<String, Restaurant> _cache = new HashMap<String, Restaurant>();
 
 	public String getContactInfo() {
@@ -111,4 +110,5 @@ public class Restaurant {
 	public String toString() {
 		return "Res = " + name + " " + menu.toString();
 	}
+
 }

@@ -27,7 +27,6 @@ import com.handlers.table.TableHandler;
 import com.parse.ParseNotificationHelper;
 import com.test.PusherTest;
 import com.utility.CustomerRestaurantHandshake;
-import com.utility.OrderIdGenerator;
 import com.utility.RequestContext;
 
 @SuppressWarnings("serial")
@@ -158,19 +157,11 @@ public class CustomerOrderServlet extends HttpServlet {
 			orderId = RestaurantOrder.getOrderId(customerOrder.getTableId(),
 					customerOrder.getRestaurantId());
 
-		if (orderId == null) {
-			/**
-			 * No record in database and hence subOrderId = 0
-			 */
-			customerOrder.setOrderId(OrderIdGenerator.generateUniqueOrderId());
-			customerOrder.setSubOrderId(0);
-		} else {
-			/**
-			 * generating sub order Id as last subOrderId+1
-			 */
-			int count = DataConnection.getSubOrderCount(orderId, outputStream);
-			customerOrder.setSubOrderId(count);
-		}
+		/**
+		 * generating sub order Id as last subOrderId+1
+		 */
+		int count = DataConnection.getSubOrderCount(orderId, outputStream);
+		customerOrder.setSubOrderId(count);
 
 		if (isDebug) {
 			outputStream.write(("\nCustomer Json Order :: ").getBytes());
