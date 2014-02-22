@@ -151,8 +151,8 @@ public class RestaurantOrder {
 		return orderId;
 	}
 
-	public static synchronized ArrayList<String> getCustomerList(
-			String tableId, String restaurantId) {
+	public static ArrayList<String> getCustomerList(String tableId,
+			String restaurantId) {
 		ArrayList<String> list;
 		if (orderCustomerIDList.containsKey(new Pair(tableId, restaurantId)))
 			return orderCustomerIDList.get(new Pair(tableId, restaurantId));
@@ -161,6 +161,12 @@ public class RestaurantOrder {
 			orderCustomerIDList.put(new Pair(tableId, restaurantId), list);
 			return list;
 		}
+	}
+
+	public static ArrayList<String> getCustomerList(String orderId) {
+		BiMap<String, Pair> reverseMap = tableRestOrderID_cache.inverse();
+		Pair pair = reverseMap.get(orderId);
+		return getCustomerList(pair.getTableId(), pair.getRestaurantId());
 	}
 
 	public static ArrayList<RestaurantOrder> getAllOrder(String tableId,

@@ -146,9 +146,11 @@ public class CustomerOrderServlet extends HttpServlet {
 			}
 			Gson gson = new Gson();
 			menu = gson.fromJson(menuJson, Menu.class);
+			br.close();
 		} catch (Exception e) {
 			System.out.println("Exception::" + e.toString());
 		}
+
 		return menu;
 	}
 
@@ -180,7 +182,8 @@ public class CustomerOrderServlet extends HttpServlet {
 		return customerOrder;
 	}
 
-	public void notifyAllParticipatingCustomers(String tableId, String restaurantId) {
+	public void notifyAllParticipatingCustomers(String tableId,
+			String restaurantId) {
 		ArrayList<RestaurantOrder> restaurantOrders = RestaurantOrder
 				.getAllOrder(tableId, restaurantId);
 		ArrayList<CustomerOrder> customerOrder = new ArrayList<CustomerOrder>();
