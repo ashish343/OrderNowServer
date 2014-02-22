@@ -131,7 +131,7 @@
                 type: 'rectangle',
                 animation:'fade'
             });
-                	
+
             // say we want to have only one item opened at one moment
             var opened = false;
             attachEvent($);
@@ -197,6 +197,7 @@
                     jQuery(orderList).find('.'+identifier).show();
                     setTimeout(function(){hideAlert(orderList,identifier)}, 3000);
                     jQuery(unorderList).find('#'+subOrderId).find(".order-handler-btn-group").hide();
+                    jQuery(orderList).removeClass('waiting');
                 }
                 faviconCount -=1;
                 if(faviconCount > 0) {
@@ -206,10 +207,14 @@
                     favicon.reset();
                 }
                 showNotification(orderId, -1);
+                showFinalButton(unorderList);
             });
 
             jQuery('.acceptBtn ').removeClass('notbound');
-            
+
+            jQuery(".finishBtn.notbound").click(function() {
+            	var unOrderList = jQuery(this).parents('ul');
+            });
             jQuery(".modifyBtn.notbound").click(function() {
                 var orderList = jQuery(this).parents('li');
                 var subOrderId = jQuery(orderList).attr('id');
@@ -267,7 +272,8 @@
                 $('#modifyOrderModal').modal('hide');
 
                 var identifier = 'alert-warning';
-                jQuery('#'+orderId).find('#'+subOrderId).find('.'+identifier).show();
+                var listItem = jQuery('#'+orderId).find('#'+subOrderId); 
+                jQuery(listItem).find('.'+identifier).show();
                 setTimeout(function(){hideAlert(jQuery('#'+orderId).find('#'+subOrderId), identifier)}, 3000);
                 var orderList = jQuery('#'+orderId).find('#'+subOrderId);
                 jQuery(orderList).find(".order-handler-btn-group").hide();
@@ -279,9 +285,30 @@
                     faviconCount = 0;
                 }
                 showNotification(orderId, -1);
+                jQuery(listItem).removeClass('waiting');
+                showFinalButton(jQuery('#'+orderId));
             });
         }
 
+        var showFinalButton = function(unOrderedList) {
+            var show = 1;
+        	jQuery(unOrderedList).find('li').each(function(index, value){
+                if(jQuery(this).hasClass("waiting")){
+                    show = 0;
+                }
+            });
+            if(show === 1) {
+                jQuery(unOrderedList).find(".finishBtn").removeClass('hidden');
+            }
+        }
+        
+        var getFinalButtonHtml = function() {
+            var html ='<div class="finishBtn notbound btn-group btn-group-lg hidden" style="width:100%;">'+
+                      '<div class="col col-lg-12 col-xs-12 col-md-12" style="text-align:center;"><button type="button" class="btn btn-lg">Finish</button></div>'+
+                      '</div>';
+            return html;
+        }
+        
         var hideAlert = function(unorderList, identifier) {
             jQuery(unorderList).find('.'+identifier).hide();
         }
@@ -387,26 +414,29 @@
     var createOrderPage = function(data) {
         var html = '';
         if(data !== null && typeof data !== undefined) {
-            var customer = jQuery('#'+data.customerId);
-            if(customer === null || customer.length == '0') {
+            var orderId = jQuery('#'+data.orderId);
+            if(orderId === null || orderId.length == '0') {
                 // New Customer on the table.
-                html += '<div id="'+ data.customerId +'">';
+                html += '<div>';
                 html += '<ul id="' + data.orderId + '" class="list-group">';
                 html += getSubOrderList(data, 1);
-                html += '</ul></div>';
+                html += getFinalButtonHtml();
+                html += '</ul>';
+                html += '</div>';
                 var table = jQuery("#" + data.tableId);
                 table.append(html);
             } else {
-                var orderList = jQuery('#'+data.orderId);
                 html = getSubOrderList(data, 0);
-                orderList.append(html);
+                jQuery(orderId).find(".finishBtn").remove();
+                html += getFinalButtonHtml();
+                orderId.append(html);
             }
         }
     }
 
     var getSubOrderList = function(data, addTableTitle) {
         
-        var html = '<li id="' + data.subOrderId + '" class="list-group-item">';
+        var html = '<li id="' + data.subOrderId + '" class="list-group-item waiting">';
         //Success Alert
         if(JSON.stringify(data.orderState) == JSON.stringify("interMediate")) {
             html += '<div class="alert alert-success alert-dismissable" style="display:none;">'+
