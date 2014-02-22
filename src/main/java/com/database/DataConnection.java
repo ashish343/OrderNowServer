@@ -409,6 +409,12 @@ public class DataConnection {
 		return obj;
 	}
 
+	/**
+	 * finishes the current Order and moves the order to completed orders
+	 * 
+	 * @param orderId
+	 * @return
+	 */
 	public static boolean completeOrder(String orderId) {
 		RestaurantOrder obj = null;
 		try {
