@@ -176,6 +176,11 @@ public class RestaurantOrder {
 		return DataConnection.getOrders(restaurantId, tableId);
 	}
 
+	public static void updateOrderState(String orderId, String subOrderId,
+			String state) {
+		DataConnection.updateOrderState(orderId, subOrderId, state);
+	}
+
 	public Timestamp getCreatedAt() {
 		return createdAt;
 	}

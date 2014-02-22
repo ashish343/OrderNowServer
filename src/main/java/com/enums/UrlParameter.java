@@ -8,7 +8,7 @@ public enum UrlParameter {
 			"dishIds"), TIMESTAMP("time"), ORDERSTATE("orderState"), DISH_QTY(
 			"dishQty"), SUBORDER_ID("subOrderId"), INTERMEDIATE("interMediate"), TABLEINFORMATION(
 			"tableInformation"), CURRENTORDERS("currentOrders"), USER_NAME(
-			"user_name"), PASSWORD("password");
+			"user_name"), PASSWORD("password"), ORDERACCEPTED("accepted");
 
 	private String data;
 

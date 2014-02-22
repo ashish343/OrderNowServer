@@ -223,6 +223,16 @@ public class DataConnection {
 		}
 	}
 
+	public static void updateOrderState(String orderId, String subOrderId,
+			String state) {
+		BasicDBObject query = new BasicDBObject();
+		query.append(UrlParameter.ORDER_ID.toString(), orderId).append(
+				UrlParameter.SUBORDER_ID.toString(), subOrderId);
+		BasicDBObject update = new BasicDBObject();
+		update.append(UrlParameter.ORDERSTATE.toString(), state);
+		current_orders.update(query, update);
+	}
+
 	/**
 	 * ensures a index on restaurantId
 	 * 

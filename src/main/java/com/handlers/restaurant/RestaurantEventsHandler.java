@@ -73,14 +73,16 @@ public class RestaurantEventsHandler {
 
 	public static void handleOrderAccepted(HttpServletResponse response,
 			HttpServletRequest request, ServletOutputStream outputStream) {
-		// TODO Auto-generated method stub
-		String channel = getOrderId(request);
 
-		String message = "{\"channels\":[\"" + channel
+		String orderId = getOrderId(request);
+		String subOrderId = getSubOrderId(request);
+		String message = "{\"channels\":[\"" + orderId
 				+ "\"],\"data\": {\"action\":\"com.example.UPDATE_STATUS\","
 				+ "\"message\": \""
 				+ RestauntantMessage.ORDER_ACCEPTED_MESSAGE.toString() + "\"}}";
-		ParseNotificationHelper.notifyChannel(channel, message, outputStream);
+		RestaurantOrder.updateOrderState(orderId, subOrderId,
+				UrlParameter.ORDERACCEPTED.toString());
+		ParseNotificationHelper.notifyChannel(orderId, message, outputStream);
 
 	}
 
@@ -147,5 +149,9 @@ public class RestaurantEventsHandler {
 
 	private static String getOrderId(HttpServletRequest request) {
 		return request.getParameter(UrlParameter.ORDER_ID.toString());
+	}
+
+	private static String getSubOrderId(HttpServletRequest request) {
+		return request.getParameter(UrlParameter.SUBORDER_ID.toString());
 	}
 }
