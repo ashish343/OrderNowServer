@@ -81,10 +81,6 @@ public class CustomerOrderServlet extends HttpServlet {
 
 		DataConnection.setOrderDetailsToDB(restaurantOrder);
 
-		// ****TODO add multiple people to the same channel....***
-		ArrayList<String> customerList = RestaurantOrder
-				.getCustomerList(restaurantOrder.getTableId(),
-						restaurantOrder.getRestaurantId());
 		/*
 		 * Subscribe Customer to The Channel.
 		 */
@@ -190,6 +186,8 @@ public class CustomerOrderServlet extends HttpServlet {
 			customerOrder.add(CustomerRestaurantHandshake.getCustomerOrder(ro));
 		}
 		String data = gs.toJson(customerOrder);
+		String message = "{\"data\": {\"action\":\"com.example.ORDER\","
+				+ "\"message\": \"" + data + "\"}}";
 		String orderId = RestaurantOrder.getOrderId(tableId, restaurantId);
 		ParseNotificationHelper.notifyChannel(orderId, data, null);
 	}
