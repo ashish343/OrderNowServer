@@ -17,5 +17,4 @@ public class CreateRestaurantServlet extends HttpServlet {
 		request.getRequestDispatcher("/WEB-INF/jsp/createRestaurant.jsp")
 				.forward(request, response);
 	}
-
 }
