@@ -55,7 +55,7 @@
 			.hidden {
 			    display:none;
 			}
-			#modifyOrderModal {
+			#modifyOrderModal, #finishOrderModal {
 			    z-index:10000;
 			}
         </style>
@@ -114,6 +114,10 @@
         <!-- Modal -->
         <%@ include file="/WEB-INF/jsp/common/modal.jsp" %>
                 
+        <!-- Finish Order Modal -->
+        <%@ include file="/WEB-INF/jsp/common/finish-order-modal.jsp" %>
+        
+    
         <script type="text/javascript" src="/resources/js/favicon.js"></script>
         <script type="text/javascript" src="/resources/order-page/js/modernizr.custom.79639.js"></script>
         
@@ -135,6 +139,7 @@
             // say we want to have only one item opened at one moment
             var opened = false;
             attachEvent($);
+            attachModel($);
             myPusherFunc();
             startTicker();
             
@@ -175,79 +180,31 @@
             var olderOrderData = '${restaurantData.orders}';
             var olderOrderDataJson = jQuery.parseJSON(olderOrderData); 
             republishData(olderOrderDataJson);
+            $(".alert").alert();
         });
         var d;
-       
-        var attachEvent = function() {
-            jQuery(".orderItemRow").click(function() {
-            });
-            
-            jQuery(".acceptBtn.notbound").click(function() {
-                var unorderList = jQuery(this).parents('ul');
-                var orderList = jQuery(this).parents('li');
-                var orderId = jQuery(unorderList).attr('id');
-                var subOrderId = jQuery(orderList).attr('id');
-                if(orderId !== null && orderId.length > 0) {
-                    var request = $.ajax({
-                        url: "/restOrder?action=orderAccepted&orderId=" + orderId + "&subOrderId=" + subOrderId,
-                        type: "GET",
-                    });
-                    var identifier = 'alert-success';
-                    
-                    jQuery(orderList).find('.'+identifier).show();
-                    setTimeout(function(){hideAlert(orderList,identifier)}, 3000);
-                    jQuery(unorderList).find('#'+subOrderId).find(".order-handler-btn-group").hide();
-                    jQuery(orderList).removeClass('waiting');
-                }
-                faviconCount -=1;
-                if(faviconCount > 0) {
-                    favicon.badge(faviconCount);
-                } else {
-                	faviconCount = 0;
-                    favicon.reset();
-                }
-                showNotification(orderId, -1);
-                showFinalButton(unorderList);
-            });
 
-            jQuery('.acceptBtn ').removeClass('notbound');
+        var hideTable = function(orderId, tableId) {
+            jQuery('#'+orderId).parents('.uc-container').addClass('hidden');
+            jQuery('#'+tableId).html('');
+            jQuery('.unordered-tables').find('.'+tableId).show();
+        };
+        
+        var attachModel = function($) {
+            jQuery('#finishAccept').click(function() {
+                var body = jQuery('#finishOrderModal .modal-body');
+                var orderId = jQuery(body).attr('data-a-orderId');
+                var tableId = jQuery(body).attr('data-a-tableId');
 
-            jQuery(".finishBtn.notbound").click(function() {
-            	var unOrderList = jQuery(this).parents('ul');
-            });
-            jQuery(".modifyBtn.notbound").click(function() {
-                var orderList = jQuery(this).parents('li');
-                var subOrderId = jQuery(orderList).attr('id');
-                var orderTable;
-                if(orderList !== null && typeof orderList !== undefined) {
-                    orderTable = jQuery(orderList).children('.table');
-
-                    clonedOrderTable = jQuery(orderTable).clone();
-
-                    if(subOrderId != '0') {
-                        jQuery(clonedOrderTable).prepend('<tr><th>Item</th><th>Quantity</th><th>Price</th></tr>');
-                    }
-                    
-                    jQuery(clonedOrderTable).find('tr').each(function(index, value){
-                        if(index > 0) {
-                            jQuery(this).append('<td>' + getCheckBoxRow(index) + '</td>');
-                        } else {
-                            jQuery(this).append('<th>Availability</th>');
-                        }
-                    })
-                    var model = jQuery('#modifyOrderModal .modal-body');
-                    var unorderList = jQuery(this).parents('ul');
-                    
-                    model.attr("data-a-orderId", jQuery(unorderList).attr('id'));
-                    model.attr("data-a-subOrderId", jQuery(orderList).attr('id'));
-                    
-                    model.html(clonedOrderTable);
-                    jQuery('#modifyOrderModal').modal();
-                }
+                $('#finishOrderModal').modal('hide');
+                $('#'+orderId).parents('.uc-container').find( 'span.icon-cancel' ).trigger("click");
                 
+                setTimeout(function(){
+                    hideTable(orderId, tableId);
+                }, 1200);
             });
-            jQuery('.modifyBtn').removeClass('notbound');
-            jQuery("#modalSaveChanges").click(function(e){
+
+        	jQuery("#modalSaveChanges").click(function(e){
                 e.preventDefault();
                 var dishIds=[];
                 var body = jQuery('#modifyOrderModal .modal-body');
@@ -289,10 +246,91 @@
                 showFinalButton(jQuery('#'+orderId));
             });
         }
+        
+        var attachEvent = function() {
+            jQuery(".orderItemRow").click(function() {
+            });
+            
+            jQuery(".acceptBtn.notbound").click(function() {
+                var unorderList = jQuery(this).parents('ul');
+                var orderList = jQuery(this).parents('li');
+                var orderId = jQuery(unorderList).attr('id');
+                var subOrderId = jQuery(orderList).attr('id');
+                if(orderId !== null && orderId.length > 0) {
+                    var request = $.ajax({
+                        url: "/restOrder?action=orderAccepted&orderId=" + orderId + "&subOrderId=" + subOrderId,
+                        type: "GET",
+                    });
+                    var identifier = 'alert-success';
+                    
+                    jQuery(orderList).find('.'+identifier).show();
+                    setTimeout(function(){hideAlert(orderList,identifier)}, 3000);
+                    jQuery(unorderList).find('#'+subOrderId).find(".order-handler-btn-group").hide();
+                    jQuery(orderList).removeClass('waiting');
+                }
+                faviconCount -=1;
+                if(faviconCount > 0) {
+                    favicon.badge(faviconCount);
+                } else {
+                	faviconCount = 0;
+                    favicon.reset();
+                }
+                showNotification(orderId, -1);
+                showFinalButton(unorderList);
+            });
+
+            jQuery('.acceptBtn').removeClass('notbound');
+
+            jQuery(".finishBtn.notbound").click(function() {
+                var unOrderList = jQuery(this).parents('ul');
+                var model = jQuery('#finishOrderModal .modal-body');
+                var tableId = jQuery(unOrderList).parents('.tableId').attr('id');
+                model.attr("data-a-orderId", jQuery(unOrderList).attr('id'));
+                model.attr("data-a-tableId", tableId);
+                jQuery('#finishOrderModal').modal();
+            });
+
+            jQuery('.finishBtn').removeClass('notbound');
+            
+            
+            jQuery(".modifyBtn.notbound").click(function() {
+                var orderList = jQuery(this).parents('li');
+                var subOrderId = jQuery(orderList).attr('id');
+                var orderTable;
+                if(orderList !== null && typeof orderList !== undefined) {
+                    orderTable = jQuery(orderList).children('.table');
+
+                    clonedOrderTable = jQuery(orderTable).clone();
+
+                    if(subOrderId != '0') {
+                        jQuery(clonedOrderTable).prepend('<tr><th>Item</th><th>Quantity</th><th>Price</th></tr>');
+                    }
+                    
+                    jQuery(clonedOrderTable).find('tr').each(function(index, value){
+                        if(index > 0) {
+                            jQuery(this).append('<td>' + getCheckBoxRow(index) + '</td>');
+                        } else {
+                            jQuery(this).append('<th>Availability</th>');
+                        }
+                    })
+                    var model = jQuery('#modifyOrderModal .modal-body');
+                    var unorderList = jQuery(this).parents('ul');
+                    
+                    model.attr("data-a-orderId", jQuery(unorderList).attr('id'));
+                    model.attr("data-a-subOrderId", jQuery(orderList).attr('id'));
+                    
+                    model.html(clonedOrderTable);
+                    jQuery('#modifyOrderModal').modal();
+                }
+                
+            });
+            jQuery('.modifyBtn').removeClass('notbound');
+            
+        }
 
         var showFinalButton = function(unOrderedList) {
             var show = 1;
-        	jQuery(unOrderedList).find('li').each(function(index, value){
+            jQuery(unOrderedList).find('li').each(function(index, value){
                 if(jQuery(this).hasClass("waiting")){
                     show = 0;
                 }

@@ -14,7 +14,7 @@
 		<div class="restaurant panel panel-default">
 			<!-- Default panel contents -->
 			<div class="panel-heading">Table ${table.value}</div>
-			<div id="${table.key}"></div>
+			<div class="tableId" id="${table.key}"></div>
 		</div>
 		<span class="icon-cancel"></span>
 	</div>
