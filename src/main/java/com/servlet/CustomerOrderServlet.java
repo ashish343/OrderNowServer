@@ -156,7 +156,8 @@ public class CustomerOrderServlet extends HttpServlet {
 				CustomerOrder.class);
 		String orderId = customerOrder.getOrderId();
 		if (orderId == null)
-			orderId = RestaurantOrder.getOrderId(customerOrder.getTableId(),
+			orderId = RestaurantOrder.registerOrderIdAndCustomer(
+					customerOrder.getTableId(),
 					customerOrder.getRestaurantId(),
 					customerOrder.getCustomerId());
 
@@ -173,13 +174,11 @@ public class CustomerOrderServlet extends HttpServlet {
 		return customerOrder;
 	}
 
-	public void notifyCustomersWithOrderID(String tableId, String restaurantId,
-			ArrayList<String> exceptCustomers) {
+	public void notifyCustomersWithOrderID(String tableId, String restaurantId) {
+		String orderId = RestaurantOrder.getOrderId(tableId, restaurantId);
+		String data = null;
 
-		ArrayList<String> list = RestaurantOrder.getCustomerList(tableId,
-				restaurantId);
-		list.removeAll(exceptCustomers);
-
+		ParseNotificationHelper.notifyChannel(orderId, data, null);
 	}
 
 	@Override

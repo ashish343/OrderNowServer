@@ -15,6 +15,11 @@ import com.enums.UrlParameter;
 
 public class CustomerRestaurantHandshake {
 
+	public static CustomerOrder getCustomerOrder(RestaurantOrder order) {
+
+		return null;
+	}
+
 	public RestaurantOrder getRestaurantOrder(Menu menu,
 			CustomerOrder customerOrder) {
 		RestaurantOrder restaurantOrder = new RestaurantOrder();

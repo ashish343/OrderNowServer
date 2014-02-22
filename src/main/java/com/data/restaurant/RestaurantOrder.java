@@ -116,7 +116,19 @@ public class RestaurantOrder {
 	}
 
 	public static synchronized String getOrderId(String tableId,
-			String restaurantId, String customerId) {
+			String restaurantId) {
+		String orderId = null;
+		Pair key = new Pair(tableId, restaurantId);
+		if (tableRestOrderID_cache.containsKey(key))
+			orderId = tableRestOrderID_cache.get(key);
+		else {
+			orderId = DataConnection.getOrderId(tableId, restaurantId);
+		}
+		return orderId;
+	}
+
+	public static synchronized String registerOrderIdAndCustomer(
+			String tableId, String restaurantId, String customerId) {
 		Pair key = new Pair(tableId, restaurantId);
 		String orderId = null;
 		if (tableRestOrderID_cache.containsKey(key))
@@ -149,6 +161,11 @@ public class RestaurantOrder {
 			orderCustomerIDList.put(new Pair(tableId, restaurantId), list);
 			return list;
 		}
+	}
+
+	public static String getFullOrder(String tableId, String restaurantId) {
+		return null;
+		// return DataConnection.getOrder(getOrderId(tableId, restaurantId));
 	}
 }
 
