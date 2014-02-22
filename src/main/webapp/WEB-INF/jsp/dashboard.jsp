@@ -188,6 +188,10 @@
             jQuery('#'+orderId).parents('.uc-container').addClass('hidden');
             jQuery('#'+tableId).html('');
             jQuery('.unordered-tables').find('.'+tableId).show();
+            var request = $.ajax({
+                url: "/restOrder?action=orderCompleted&orderId=" + orderId,
+                type: "GET",
+            });
         };
         
         var attachModel = function($) {
