@@ -162,16 +162,15 @@ public class CustomerOrderServlet extends HttpServlet {
 		Gson gson = new Gson();
 		CustomerOrder customerOrder = gson.fromJson(customerOrderJson,
 				CustomerOrder.class);
-		String orderId = customerOrder.getOrderId();
-		if (orderId == null)
-			orderId = RestaurantOrder.registerOrderIdAndCustomer(
-					customerOrder.getTableId(),
-					customerOrder.getRestaurantId(),
-					customerOrder.getCustomerId());
+
+		String orderId = RestaurantOrder.registerOrderIdAndCustomer(
+				customerOrder.getTableId(), customerOrder.getRestaurantId(),
+				customerOrder.getCustomerId());
 
 		/**
 		 * generating sub order Id as last subOrderId+1
 		 */
+		customerOrder.setOrderId(orderId);
 		int count = DataConnection.getSubOrderCount(orderId, outputStream);
 		customerOrder.setSubOrderId(count);
 

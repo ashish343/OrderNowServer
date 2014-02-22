@@ -59,6 +59,13 @@ public class DataConnection {
 	private static DBCollection user;
 
 	private static Gson gs;
+	static {
+		try {
+			loader(null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public static void loader(ServletOutputStream debugger) throws IOException {
 		boolean isDebug = RequestContext.isDebugEnabled();
@@ -440,6 +447,7 @@ public class DataConnection {
 	}
 
 	public static String getOrderId(String tableId, String restaurantId) {
+
 		String orderId = null;
 		BasicDBObject bdo = new BasicDBObject();
 		bdo.put(UrlParameter.RESTAURNAT_ID.toString(), restaurantId);

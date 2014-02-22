@@ -114,6 +114,7 @@ public class RestaurantOrder {
 		BiMap<String, Pair> inverted = tableRestOrderID_cache.inverse();
 		Pair table_rest = inverted.get(orderId);
 		tableRestOrderID_cache.remove(table_rest);
+		orderCustomerIDList.remove(table_rest);
 		DataConnection.completeOrder(orderId);
 	}
 
@@ -141,14 +142,17 @@ public class RestaurantOrder {
 				orderId = OrderIdGenerator.generateUniqueOrderId();
 			tableRestOrderID_cache.put(key, orderId);
 		}
-
+		/**
+		 * adding current customer to list of participating customers
+		 */
 		ArrayList<String> list = null;
 		if (orderCustomerIDList.containsKey(orderId))
 			list = orderCustomerIDList.get(orderId);
 		else {
 			list = DataConnection.getCustomersList(tableId, restaurantId);
 		}
-		list.add(customerId);
+		if (!list.contains(customerId))
+			list.add(customerId);
 		orderCustomerIDList.put(new Pair(tableId, restaurantId), list);
 		return orderId;
 	}
