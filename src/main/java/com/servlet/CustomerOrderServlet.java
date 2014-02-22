@@ -189,7 +189,7 @@ public class CustomerOrderServlet extends HttpServlet {
 		String message = "{\"data\": {\"action\":\"com.example.ORDER\","
 				+ "\"message\": \"" + data + "\"}}";
 		String orderId = RestaurantOrder.getOrderId(tableId, restaurantId);
-		ParseNotificationHelper.notifyChannel(orderId, data, null);
+		ParseNotificationHelper.notifyChannel(orderId, message, null);
 	}
 
 	@Override

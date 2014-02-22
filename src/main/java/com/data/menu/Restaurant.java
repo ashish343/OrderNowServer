@@ -20,6 +20,7 @@ public class Restaurant {
 	private Menu menu;
 	private Map<String, Integer> tableInformation;
 	private Map<MenuPropertyKey, List<MenuPropertyValue>> availableFilters;
+	private long lastUpdatedAt;
 
 	public static HashMap<String, Restaurant> _cache = new HashMap<String, Restaurant>();
 
@@ -109,6 +110,14 @@ public class Restaurant {
 	@Override
 	public String toString() {
 		return "Res = " + name + " " + menu.toString();
+	}
+
+	public long getLastUpdatedAt() {
+		return lastUpdatedAt;
+	}
+
+	public void setLastUpdatedAt(long lastUpdatedAt) {
+		this.lastUpdatedAt = lastUpdatedAt;
 	}
 
 }
