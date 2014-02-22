@@ -89,17 +89,17 @@ public class RestaurantEventsHandler {
 	public static void handleOrderCompleted(HttpServletResponse response,
 			HttpServletRequest request, ServletOutputStream outputStream)
 			throws IOException {
-		String channel = getOrderId(request);
+		String orderId = getOrderId(request);
 		ArrayList<String> customerList = RestaurantOrder
-				.getCustomerList(channel);
+				.getCustomerList(orderId);
 
-		String message = "{\"channels\":[\"" + channel
+		String message = "{\"channels\":[\"" + orderId
 				+ "\"],\"data\": {\"action\":\"com.example.UPDATE_STATUS\","
 				+ "\"message\": \""
 				+ RestauntantMessage.ORDER_COMPLETED_MESSAGE.toString()
 				+ "\"}}";
-		ParseNotificationHelper.notifyChannel(channel, message, outputStream);
-		RestaurantOrder.completeOrder(channel);
+		ParseNotificationHelper.notifyChannel(orderId, message, outputStream);
+		RestaurantOrder.completeOrder(orderId);
 		/*
 		 * De-register Customer from the Channel.
 		 */

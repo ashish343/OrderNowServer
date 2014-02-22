@@ -411,19 +411,20 @@ public class DataConnection {
 	 * @return
 	 * @throws IOException
 	 */
-	public static RestaurantOrder removeCurrentOrder(String orderId)
+	public static ArrayList<RestaurantOrder> removeCurrentOrder(String orderId)
 			throws IOException {
 		loader(null);
 		BasicDBObject bdo = new BasicDBObject();
 		bdo.append(UrlParameter.ORDER_ID.toString(), orderId);
 		DBCursor cursor = current_orders.find(bdo);
-		RestaurantOrder obj = null;
-		if (cursor.hasNext()) {
-			obj = gs.fromJson(cursor.next().toString(), RestaurantOrder.class);
-			current_orders.remove(bdo);
+		ArrayList<RestaurantOrder> list = new ArrayList<RestaurantOrder>();
+		while (cursor.hasNext()) {
+			list.add(gs.fromJson(cursor.next().toString(),
+					RestaurantOrder.class));
 
 		}
-		return obj;
+		current_orders.remove(bdo);
+		return list;
 	}
 
 	/**
@@ -432,18 +433,18 @@ public class DataConnection {
 	 * @param orderId
 	 * @return
 	 */
-	public static boolean completeOrder(String orderId) {
-		RestaurantOrder obj = null;
+	public static void completeOrder(String orderId) {
+
+		ArrayList<RestaurantOrder> list = new ArrayList<RestaurantOrder>();
 		try {
-			obj = removeCurrentOrder(orderId);
+			list = removeCurrentOrder(orderId);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		if (obj != null) {
+
+		for (RestaurantOrder obj : list)
 			setCompletedOrderDetailsToDB(obj);
-			return true;
-		} else
-			return false;
+
 	}
 
 	public static String getOrderId(String tableId, String restaurantId) {
