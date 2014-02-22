@@ -1,6 +1,7 @@
 package com.data.restaurant;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,6 +26,7 @@ public class RestaurantOrder {
 	private int tableNo;
 	private int subOrderId;
 	private String orderState;
+	private Timestamp createdAt;
 
 	static {
 		tableRestOrderID_cache = HashBiMap.create();
@@ -172,6 +174,14 @@ public class RestaurantOrder {
 	public static ArrayList<RestaurantOrder> getAllOrder(String tableId,
 			String restaurantId) {
 		return DataConnection.getOrders(restaurantId, tableId);
+	}
+
+	public Timestamp getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Timestamp createdAt) {
+		this.createdAt = createdAt;
 	}
 }
 

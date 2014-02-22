@@ -1,5 +1,6 @@
 package com.utility;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -44,6 +45,7 @@ public class CustomerRestaurantHandshake {
 		restaurantOrder.setSubOrderId(customerOrder.getSubOrderId());
 		restaurantOrder.setOrderState(UrlParameter.INTERMEDIATE.toString());
 		restaurantOrder.setTableId(customerOrder.getTableId());
+		restaurantOrder.setCreatedAt(new Timestamp(System.currentTimeMillis()));
 
 		List<Category> categories = menu.getCategories();
 		getAllDishes(categories, allDishes);
