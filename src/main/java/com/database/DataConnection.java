@@ -435,6 +435,23 @@ public class DataConnection {
 		return orderId;
 	}
 
+	public static ArrayList<RestaurantOrder> getOrders(String restaurantId,
+			String tableId) {
+		ArrayList<RestaurantOrder> list = new ArrayList<RestaurantOrder>();
+		BasicDBObject bdo = new BasicDBObject();
+		bdo.put(UrlParameter.ORDER_ID.toString(), restaurantId);
+		bdo.put(UrlParameter.TABLE_ID.toString(), tableId);
+		DBCursor cursor = current_orders.find(bdo);
+
+		while (cursor.hasNext()) {
+
+			list.add(gs.fromJson(cursor.next().toString(),
+					RestaurantOrder.class));
+		}
+		return list;
+
+	}
+
 	public static ArrayList<String> getCustomersList(String tableId,
 			String restaurantId) {
 		String customerId = null;

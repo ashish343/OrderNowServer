@@ -33,6 +33,9 @@ import com.utility.RequestContext;
 @SuppressWarnings("serial")
 @WebServlet(name = "CustomerOrderServlet", urlPatterns = { "/order" })
 public class CustomerOrderServlet extends HttpServlet {
+
+	public static Gson gs = new Gson();
+
 	/*
 	 * Sample JSON:
 	 * {"dishes":{"d2":1.0,"d3":0.5,"d1":1.0},"restaurantId":"r1","customerId"
@@ -104,6 +107,9 @@ public class CustomerOrderServlet extends HttpServlet {
 		PusherTest.triggerPush(restuarantId,
 				RestaurantClientSideEvents.NOTIFY_NEW_ORDER.toString(), json,
 				"");
+
+		notifyAllParticipatingCustomers(restaurantOrder.getTableId(),
+				restaurantOrder.getRestaurantId());
 		/*
 		 * Return a success message to the User.
 		 */
@@ -174,10 +180,15 @@ public class CustomerOrderServlet extends HttpServlet {
 		return customerOrder;
 	}
 
-	public void notifyCustomersWithOrderID(String tableId, String restaurantId) {
+	public void notifyAllParticipatingCustomers(String tableId, String restaurantId) {
+		ArrayList<RestaurantOrder> restaurantOrders = RestaurantOrder
+				.getAllOrder(tableId, restaurantId);
+		ArrayList<CustomerOrder> customerOrder = new ArrayList<CustomerOrder>();
+		for (RestaurantOrder ro : restaurantOrders) {
+			customerOrder.add(CustomerRestaurantHandshake.getCustomerOrder(ro));
+		}
+		String data = gs.toJson(customerOrder);
 		String orderId = RestaurantOrder.getOrderId(tableId, restaurantId);
-		String data = null;
-
 		ParseNotificationHelper.notifyChannel(orderId, data, null);
 	}
 

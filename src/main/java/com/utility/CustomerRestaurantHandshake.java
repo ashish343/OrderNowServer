@@ -1,6 +1,7 @@
 package com.utility;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,8 +17,19 @@ import com.enums.UrlParameter;
 public class CustomerRestaurantHandshake {
 
 	public static CustomerOrder getCustomerOrder(RestaurantOrder order) {
-
-		return null;
+		CustomerOrder tmp = new CustomerOrder();
+		tmp.setCustomerId(order.getCustomerId());
+		tmp.setOrderId(order.getOrderId());
+		tmp.setRestaurantId(order.getRestaurantId());
+		tmp.setSubOrderId(order.getSubOrderId());
+		tmp.setTableId(order.getTableId());
+		List<OrderedDish> list = order.getDishes();
+		Map<String, OrderDish> map = new HashMap<String, OrderDish>();
+		for (OrderedDish od : list) {
+			map.put(od.getDishId(), (OrderDish) od);
+		}
+		tmp.setDishes(map);
+		return tmp;
 	}
 
 	public RestaurantOrder getRestaurantOrder(Menu menu,

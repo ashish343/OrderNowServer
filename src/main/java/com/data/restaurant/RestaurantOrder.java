@@ -163,9 +163,9 @@ public class RestaurantOrder {
 		}
 	}
 
-	public static String getFullOrder(String tableId, String restaurantId) {
-		return null;
-		// return DataConnection.getOrder(getOrderId(tableId, restaurantId));
+	public static ArrayList<RestaurantOrder> getAllOrder(String tableId,
+			String restaurantId) {
+		return DataConnection.getOrders(restaurantId, tableId);
 	}
 }
 
