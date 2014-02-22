@@ -2,6 +2,7 @@ package com.data.restaurant;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.ServletOutputStream;
@@ -14,6 +15,7 @@ import com.utility.OrderIdGenerator;
 public class RestaurantOrder {
 
 	private static BiMap<Pair, String> tableRestOrderID_cache;
+	private static HashMap<Pair, ArrayList<String>> orderCustomerIDList;
 
 	private List<OrderedDish> dishes;
 	private String orderId;
@@ -26,6 +28,7 @@ public class RestaurantOrder {
 
 	static {
 		tableRestOrderID_cache = HashBiMap.create();
+		orderCustomerIDList = new HashMap<Pair, ArrayList<String>>();
 	}
 
 	public int getTableNo() {
@@ -113,21 +116,40 @@ public class RestaurantOrder {
 	}
 
 	public static synchronized String getOrderId(String tableId,
-			String restaurantId) {
+			String restaurantId, String customerId) {
 		Pair key = new Pair(tableId, restaurantId);
-		if (tableRestOrderID_cache.containsKey(key)) {
-			return tableRestOrderID_cache.get(key);
+		String orderId = null;
+		if (tableRestOrderID_cache.containsKey(key))
+			orderId = tableRestOrderID_cache.get(key);
+		else {
+			orderId = DataConnection.getOrderId(tableId, restaurantId);
+			if (orderId == null)
+				orderId = OrderIdGenerator.generateUniqueOrderId();
+			tableRestOrderID_cache.put(key, orderId);
 		}
-		String orderId = DataConnection.getOrderId(tableId, restaurantId);
 
-		if (orderId == null)
-			orderId = OrderIdGenerator.generateUniqueOrderId();
-
-		tableRestOrderID_cache.put(key, orderId);
-
+		ArrayList<String> list = null;
+		if (orderCustomerIDList.containsKey(orderId))
+			list = orderCustomerIDList.get(orderId);
+		else {
+			list = DataConnection.getCustomersList(tableId, restaurantId);
+		}
+		list.add(customerId);
+		orderCustomerIDList.put(new Pair(tableId, restaurantId), list);
 		return orderId;
 	}
 
+	public static synchronized ArrayList<String> getCustomerList(
+			String tableId, String restaurantId) {
+		ArrayList<String> list;
+		if (orderCustomerIDList.containsKey(new Pair(tableId, restaurantId)))
+			return orderCustomerIDList.get(new Pair(tableId, restaurantId));
+		else {
+			list = DataConnection.getCustomersList(tableId, restaurantId);
+			orderCustomerIDList.put(new Pair(tableId, restaurantId), list);
+			return list;
+		}
+	}
 }
 
 class Pair {

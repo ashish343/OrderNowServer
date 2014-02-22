@@ -435,6 +435,25 @@ public class DataConnection {
 		return orderId;
 	}
 
+	public static ArrayList<String> getCustomersList(String tableId,
+			String restaurantId) {
+		String customerId = null;
+		ArrayList<String> customerList = new ArrayList<String>();
+		BasicDBObject bdo = new BasicDBObject();
+		bdo.put(UrlParameter.RESTAURNAT_ID.toString(), restaurantId);
+		bdo.put(UrlParameter.TABLE_ID.toString(), tableId);
+		DBCursor cursor = current_orders.find(bdo);
+
+		DBObject obj;
+		while (cursor.hasNext()) {
+			obj = cursor.next();
+			customerId = (String) obj.get(UrlParameter.CUSTOMER_ID.toString());
+			customerList.add(customerId);
+		}
+
+		return customerList;
+	}
+
 	public static void main(String[] args) throws IOException, JSONException {
 
 		System.out.println(DataConnection.encodeString("test123"));

@@ -3,6 +3,7 @@ package com.servlet;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -75,11 +76,12 @@ public class CustomerOrderServlet extends HttpServlet {
 		RestaurantOrder restaurantOrder = customerRest.getRestaurantOrder(menu,
 				customerOrder);
 
-		/*
-		 * TODO: Update DB with the order.
-		 */
 		DataConnection.setOrderDetailsToDB(restaurantOrder);
 
+		// ****TODO add multiple people to the same channel....***
+		ArrayList<String> customerList = RestaurantOrder
+				.getCustomerList(restaurantOrder.getTableId(),
+						restaurantOrder.getRestaurantId());
 		/*
 		 * Subscribe Customer to The Channel.
 		 */
@@ -155,7 +157,8 @@ public class CustomerOrderServlet extends HttpServlet {
 		String orderId = customerOrder.getOrderId();
 		if (orderId == null)
 			orderId = RestaurantOrder.getOrderId(customerOrder.getTableId(),
-					customerOrder.getRestaurantId());
+					customerOrder.getRestaurantId(),
+					customerOrder.getCustomerId());
 
 		/**
 		 * generating sub order Id as last subOrderId+1
@@ -168,6 +171,15 @@ public class CustomerOrderServlet extends HttpServlet {
 			outputStream.write(("\n" + customerOrderJson).getBytes());
 		}
 		return customerOrder;
+	}
+
+	public void notifyCustomersWithOrderID(String tableId, String restaurantId,
+			ArrayList<String> exceptCustomers) {
+
+		ArrayList<String> list = RestaurantOrder.getCustomerList(tableId,
+				restaurantId);
+		list.removeAll(exceptCustomers);
+
 	}
 
 	@Override
