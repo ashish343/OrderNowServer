@@ -307,7 +307,7 @@
                     clonedOrderTable = jQuery(orderTable).clone();
 
                     if(subOrderId != '0') {
-                        jQuery(clonedOrderTable).prepend('<tr><th>Item</th><th>Quantity</th><th>Price</th></tr>');
+                        jQuery(clonedOrderTable).prepend(getOrderTableHTML());
                     }
                     
                     jQuery(clonedOrderTable).find('tr').each(function(index, value){
@@ -512,16 +512,30 @@
     var getDishList = function(data, addTableTitle) {
         var orderHtml = '<table class="table" border="1">';
         if(addTableTitle == '1') {
-            orderHtml += '<tr><th>Item</th><th>Quantity</th><th>Price</th></tr>';
+            orderHtml += getOrderTableHTML();
         } 
         jQuery(data.dishes).each(function(index, value) {
-            orderHtml +='<tr id='+ value.dishId +'><td>' + value.name 
-            + '</td><td>' + value.quatity + '</td><td>' + value.price + '</td></tr>'; 
+            orderHtml +='<tr id='+ value.dishId +'><td>' + getDishHTML(value)  + '</td><td width="30%">' + value.dishQty + '</td></tr>'; 
         });
         orderHtml += '</table>'
         return orderHtml;
     }   
 
+    var getDishHTML = function(value) {
+        var html = '';
+        html += '<div>' + value.name + '</div>';
+        if(value.spiceLevel) {
+            html += '<div><strong> Spice Level : </strong>' + value.spiceLevel + '</div>';
+        }
+        if(value.dishNote) {
+            html += '<div><strong> Note : </strong>' + value.dishNote + '</div>';
+        }
+        return html;
+    }
+    var getOrderTableHTML= function() {
+        var html = '<tr><th>Item</th><th width="30%">Quantity</th></tr>';
+        return html;
+    }
     var startTicker= function(){
 		$('#vertical-ticker').totemticker({
 			row_height	:	'auto',
