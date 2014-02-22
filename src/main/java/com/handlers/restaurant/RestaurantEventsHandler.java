@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.data.RestaurantData;
 import com.data.restaurant.RestaurantOrder;
-import com.database.DataConnection;
 import com.enums.EventState;
 import com.enums.UrlParameter;
 import com.parse.ParseNotificationHelper;
@@ -98,8 +97,7 @@ public class RestaurantEventsHandler {
 				+ RestauntantMessage.ORDER_COMPLETED_MESSAGE.toString()
 				+ "\"}}";
 		ParseNotificationHelper.notifyChannel(channel, message, outputStream);
-		DataConnection.completeOrder(channel);
-
+		RestaurantOrder.completeOrder(channel);
 		/*
 		 * De-register Customer from the Channel.
 		 */
