@@ -230,13 +230,15 @@ public class DataConnection {
 		}
 	}
 
-	public static void updateOrderState(String orderId, String subOrderId,
+	public static void updateOrderState(String orderId, int subOrderId,
 			String state) {
 		BasicDBObject query = new BasicDBObject();
 		query.append(UrlParameter.ORDER_ID.toString(), orderId).append(
 				UrlParameter.SUBORDER_ID.toString(), subOrderId);
 		BasicDBObject update = new BasicDBObject();
-		update.append(UrlParameter.ORDERSTATE.toString(), state);
+
+		update.append("$set",
+				new BasicDBObject(UrlParameter.ORDERSTATE.toString(), state));
 		current_orders.update(query, update);
 	}
 

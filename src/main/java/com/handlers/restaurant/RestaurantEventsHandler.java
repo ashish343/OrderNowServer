@@ -75,13 +75,13 @@ public class RestaurantEventsHandler {
 			HttpServletRequest request, ServletOutputStream outputStream) {
 
 		String orderId = getOrderId(request);
-		String subOrderId = getSubOrderId(request);
+		int subOrderId = getSubOrderId(request);
 		String message = "{\"channels\":[\"" + orderId
 				+ "\"],\"data\": {\"action\":\"com.example.UPDATE_STATUS\","
 				+ "\"message\": \""
 				+ RestauntantMessage.ORDER_ACCEPTED_MESSAGE.toString() + "\"}}";
 		RestaurantOrder.updateOrderState(orderId, subOrderId,
-				UrlParameter.ORDERACCEPTED.toString());
+				RestauntantMessage.ORDER_ACCEPTED_MESSAGE.toString());
 		ParseNotificationHelper.notifyChannel(orderId, message, outputStream);
 
 	}
@@ -151,7 +151,8 @@ public class RestaurantEventsHandler {
 		return request.getParameter(UrlParameter.ORDER_ID.toString());
 	}
 
-	private static String getSubOrderId(HttpServletRequest request) {
-		return request.getParameter(UrlParameter.SUBORDER_ID.toString());
+	private static int getSubOrderId(HttpServletRequest request) {
+		return Integer.parseInt(request.getParameter(UrlParameter.SUBORDER_ID
+				.toString()));
 	}
 }
