@@ -131,7 +131,7 @@
                 type: 'rectangle',
                 animation:'fade'
             });
-                	
+
             // say we want to have only one item opened at one moment
             var opened = false;
             attachEvent($);
@@ -214,7 +214,7 @@
 
             jQuery(".finishBtn.notbound").click(function() {
             	var unOrderList = jQuery(this).parents('ul');
-            }
+            });
             jQuery(".modifyBtn.notbound").click(function() {
                 var orderList = jQuery(this).parents('li');
                 var subOrderId = jQuery(orderList).attr('id');
@@ -292,7 +292,6 @@
 
         var showFinalButton = function(unOrderedList) {
             var show = 1;
-            debugger;
         	jQuery(unOrderedList).find('li').each(function(index, value){
                 if(jQuery(this).hasClass("waiting")){
                     show = 0;
