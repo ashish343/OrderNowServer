@@ -65,6 +65,9 @@ public class CustomerRestaurantHandshake {
 					OrderDish currentOrderedDish = customerDishes.get(key);
 					orderedDish.setQuatity(currentOrderedDish.getDishQty());
 					orderedDish.setType(dish.getType());
+					orderedDish.setSpiceLevel(currentOrderedDish
+							.getSpiceLevel());
+					orderedDish.setDishNote(currentOrderedDish.getDishNote());
 
 					restaurantDishes.add(orderedDish);
 				}
