@@ -1,5 +1,6 @@
 package com.data;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,11 @@ public class RestaurantData {
 	private int tables;
 	private List<String> tableIds;
 	private String menuId;
+	private Timestamp lastUpdatedAt;
+
+	public Timestamp getLastUpdatedAt() {
+		return lastUpdatedAt;
+	}
 
 	public String getRestaurantId() {
 		return restaurantId;
@@ -73,5 +79,10 @@ public class RestaurantData {
 	public ArrayList<RestaurantOrder> getAllOrders(String restaurantId) {
 
 		return null;
+	}
+
+	public static void main(String[] args) {
+		Timestamp t = new Timestamp(System.currentTimeMillis());
+		System.out.println(t);
 	}
 }
