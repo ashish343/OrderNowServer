@@ -1,16 +1,20 @@
 package com.data.restaurant;
 
 import java.io.IOException;
-import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
 
 import com.database.DataConnection;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import com.google.gson.Gson;
 import com.utility.OrderIdGenerator;
 
 public class RestaurantOrder {
@@ -26,7 +30,7 @@ public class RestaurantOrder {
 	private int tableNo;
 	private int subOrderId;
 	private String orderState;
-	private Timestamp createdAt;
+	private long createdAt;
 
 	static {
 		tableRestOrderID_cache = HashBiMap.create();
@@ -101,8 +105,8 @@ public class RestaurantOrder {
 			String restaurantId, String state, ServletOutputStream debugger)
 			throws IOException {
 		System.out.println("Called");
-		ArrayList<RestaurantOrder> restOrder = DataConnection.getCurrentOrders(
-				restaurantId, state, debugger);
+		ArrayList<RestaurantOrder> restOrder = DataConnection
+				.getCurrentOrdersInState(restaurantId, state, debugger);
 		for (RestaurantOrder order : restOrder) {
 			Pair key = new Pair(order.getTableId(), order.getRestaurantId());
 			tableRestOrderID_cache.put(key, order.getOrderId());
@@ -175,9 +179,52 @@ public class RestaurantOrder {
 		return getCustomerList(pair.getTableId(), pair.getRestaurantId());
 	}
 
-	public static ArrayList<RestaurantOrder> getAllOrder(String tableId,
+	public static ArrayList<RestaurantOrder> getAllCurrentOrder(String tableId,
 			String restaurantId) {
-		return DataConnection.getOrders(restaurantId, tableId);
+		return DataConnection.getCurrentOrders(restaurantId, tableId);
+	}
+
+	public static String getAllCompletedOrders(String restaurantId) {
+		ArrayList<RestaurantOrder> orders = DataConnection
+				.getAllCompletedOrders(restaurantId);
+		HashMap<String, ArrayList<RestaurantOrder>> allOrders = new HashMap<String, ArrayList<RestaurantOrder>>();
+		HashMap<String, RestaurantOrder> orderIdMap = new HashMap<String, RestaurantOrder>();
+		for (RestaurantOrder tmp : orders) {
+			if (!orderIdMap.containsKey(tmp.getOrderId())) {
+				orderIdMap.put(tmp.getOrderId(), tmp);
+			} else {
+				RestaurantOrder curOrder = orderIdMap.get(tmp.getOrderId());
+				if (tmp.getCreatedAt() < curOrder.getCreatedAt()) {
+					curOrder.setCreatedAt(tmp.getCreatedAt());
+				}
+				List<OrderedDish> lod = tmp.getDishes();
+				for (OrderedDish td : lod) {
+					List<OrderedDish> curDishes = curOrder.getDishes();
+					for (OrderedDish cd : curDishes) {
+						if (cd.getDishId().equals(td.getDishId())) {
+							cd.setDishQty(cd.getDishQty() + td.getDishQty());
+						}
+					}
+				}
+			}
+		}
+		DateFormat df = new SimpleDateFormat("dd:MM:yy");
+		Set<String> orderIds = orderIdMap.keySet();
+		for (String orderId : orderIds) {
+			RestaurantOrder y = orderIdMap.get(orderId);
+			Date x = new Date(y.getCreatedAt());
+			String key = df.format(x);
+			ArrayList<RestaurantOrder> tmp;
+			if (allOrders.containsKey(key))
+				allOrders.get(key).add(y);
+			else {
+				tmp = new ArrayList<RestaurantOrder>();
+				tmp.add(y);
+				allOrders.put(key, tmp);
+			}
+		}
+		Gson gs = new Gson();
+		return gs.toJson(allOrders);
 	}
 
 	public static void updateOrderState(String orderId, int subOrderId,
@@ -185,12 +232,16 @@ public class RestaurantOrder {
 		DataConnection.updateOrderState(orderId, subOrderId, state);
 	}
 
-	public Timestamp getCreatedAt() {
+	public long getCreatedAt() {
 		return createdAt;
 	}
 
-	public void setCreatedAt(Timestamp createdAt) {
+	public void setCreatedAt(long createdAt) {
 		this.createdAt = createdAt;
+	}
+
+	public static void main(String[] args) {
+		System.out.println(RestaurantOrder.getAllCompletedOrders("R1"));
 	}
 
 }

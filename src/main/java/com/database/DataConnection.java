@@ -68,7 +68,12 @@ public class DataConnection {
 	}
 
 	public static void loader(ServletOutputStream debugger) throws IOException {
-		boolean isDebug = RequestContext.isDebugEnabled();
+		boolean isDebug;
+		if (debugger != null)
+			isDebug = RequestContext.isDebugEnabled();
+		else
+			isDebug = false;
+
 		if (mongoDb == null) {
 			new DataConnection();
 			if (isDebug)
@@ -163,6 +168,20 @@ public class DataConnection {
 		return restaurantId;
 	}
 
+	public static ArrayList<RestaurantOrder> getAllCompletedOrders(
+			String restaurantId) {
+		BasicDBObject bd0 = new BasicDBObject();
+		bd0.append(UrlParameter.RESTAURNAT_ID.toString(), restaurantId);
+		DBCursor cursor = completed_orders.find(bd0);
+		ArrayList<RestaurantOrder> list = new ArrayList<RestaurantOrder>();
+		while (cursor.hasNext()) {
+			DBObject obj = cursor.next();
+			list.add(gs.fromJson(obj.toString(), RestaurantOrder.class));
+		}
+		cursor.close();
+		return list;
+	}
+
 	public static Restaurant getRestaurantData(String restuarantId,
 			ServletOutputStream debugger) throws IOException {
 		Restaurant restaurantData = null;
@@ -251,7 +270,7 @@ public class DataConnection {
 	 * @return
 	 * @throws IOException
 	 */
-	public static ArrayList<RestaurantOrder> getCurrentOrders(
+	public static ArrayList<RestaurantOrder> getCurrentOrdersInState(
 			String restaurantId, String state, ServletOutputStream debugger)
 			throws IOException {
 		loader(debugger);
@@ -462,8 +481,8 @@ public class DataConnection {
 		return orderId;
 	}
 
-	public static ArrayList<RestaurantOrder> getOrders(String restaurantId,
-			String tableId) {
+	public static ArrayList<RestaurantOrder> getCurrentOrders(
+			String restaurantId, String tableId) {
 		ArrayList<RestaurantOrder> list = new ArrayList<RestaurantOrder>();
 		BasicDBObject bdo = new BasicDBObject();
 		bdo.put(UrlParameter.ORDER_ID.toString(), restaurantId);
@@ -498,9 +517,9 @@ public class DataConnection {
 		return customerList;
 	}
 
-	public static void main(String[] args) throws IOException, JSONException {
+	public static void main(String[] args) {
 
-		System.out.println(DataConnection.encodeString("test123"));
+		System.out.println(System.currentTimeMillis());
 
 	}
 

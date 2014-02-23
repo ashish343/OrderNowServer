@@ -180,7 +180,7 @@ public class CustomerOrderServlet extends HttpServlet {
 	public void notifyAllParticipatingCustomers(String tableId,
 			String restaurantId) {
 		ArrayList<RestaurantOrder> restaurantOrders = RestaurantOrder
-				.getAllOrder(tableId, restaurantId);
+				.getAllCurrentOrder(tableId, restaurantId);
 		ArrayList<CustomerOrder> customerOrder = new ArrayList<CustomerOrder>();
 		for (RestaurantOrder ro : restaurantOrders) {
 			customerOrder.add(CustomerRestaurantHandshake.getCustomerOrder(ro));
