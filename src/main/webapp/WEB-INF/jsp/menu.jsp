@@ -4,6 +4,7 @@
 <html>
   <head>
     <title>Menu</title>
+    <link type="text/css" href="${path}/resources/css/pageCss.css" rel="stylesheet"/>
     <%@ include file="/WEB-INF/jsp/common/head-resources.jsp" %>
     <link type="text/css" href="${path}/resources/css/CSSreset.min.css" rel="stylesheet"/>
     

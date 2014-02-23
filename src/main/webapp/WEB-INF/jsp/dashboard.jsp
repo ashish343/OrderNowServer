@@ -525,10 +525,10 @@
         var html = '';
         html += '<div>' + value.name + '</div>';
         if(value.spiceLevel) {
-            html += '<div><strong> Spice Level : </strong><span class="badge">' + value.spiceLevel + '</span></div>';
+            html += '<div><strong> Spice Level : </strong>' + value.spiceLevel + '</div>';
         }
         if(value.dishNote) {
-            html += '<div><strong> Note : </strong><span class="badge">' + value.dishNote + '</span></div>';
+            html += '<div><strong> Note : </strong>' + value.dishNote + '</div>';
         }
         return html;
     }

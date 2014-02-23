@@ -38,11 +38,12 @@ public class CustomAuthenticationManager implements AuthenticationManager {
 			e.printStackTrace();
 		}
 
-		if (authentic)
+		if (authentic) {
 			return new UsernamePasswordAuthenticationToken(auth.getName(),
 					auth.getCredentials(), getAuthorities(1));
-		else
+		} else {
 			throw new BadCredentialsException("Username/password do not match");
+		}
 
 	}
 

@@ -21,7 +21,6 @@ public class RequestContext {
 	public static boolean isDebugEnabled() {
 		HttpServletRequest curRequest = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
 		isDebug = IS_VALID.equals(curRequest.getParameter(UrlParameter.DEBUG.toString()));
-		System.out.println("\n Debug::" + isDebug);
 		return isDebug;
 	}
 }

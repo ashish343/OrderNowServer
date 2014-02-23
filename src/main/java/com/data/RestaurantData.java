@@ -14,11 +14,11 @@ public class RestaurantData {
 	private int tables;
 	private List<String> tableIds;
 	private String menuId;
-	private Timestamp lastUpdatedAt;
+	//private Timestamp lastUpdatedAt;
 
-	public Timestamp getLastUpdatedAt() {
-		return lastUpdatedAt;
-	}
+//	public Timestamp getLastUpdatedAt() {
+//		return lastUpdatedAt;
+//	}
 
 	public String getRestaurantId() {
 		return restaurantId;

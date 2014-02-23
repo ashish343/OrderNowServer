@@ -2,5 +2,4 @@
 
 <link rel="icon" type="image/png" href="${path}/resources/img/icon.png" />
 <link type="text/css" href="${path}/resources/css/bootstrap.min.css" rel="stylesheet"/>
-<link type="text/css" href="${path}/resources/css/pageCss.css" rel="stylesheet"/>
 <%@ include file="/WEB-INF/jsp/common/pageJS.jsp" %>

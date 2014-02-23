@@ -2,7 +2,8 @@
 
 <html>
   <head>
-	<title>Order Now</title>	
+	<title>Order Now</title>
+	<link type="text/css" href="${path}/resources/css/pageCss.css" rel="stylesheet"/>	
 	<%@ include file="/WEB-INF/jsp/common/head-resources.jsp" %>
 <style type="text/css">
 .page-layout {

@@ -8,7 +8,8 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
     
-    <title>Order Now</title>    
+    <title>Order Now</title>   
+    <link type="text/css" href="${path}/resources/css/pageCss.css" rel="stylesheet"/> 
     <%@ include file="/WEB-INF/jsp/common/head-resources.jsp" %>
 <style type="text/css">
 .page-layout {
