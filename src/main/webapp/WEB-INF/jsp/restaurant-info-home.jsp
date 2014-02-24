@@ -40,7 +40,10 @@
             #contact-us {
                 font-size:large;
                 padding-top:20px;
-                background:darkcyan;
+                background:#95a5a6;
+            }
+            .active-option {
+                color:#1abc9c !important;
             }
         </style>
         
@@ -103,34 +106,60 @@ P.when('jQuery').execute(function($){
         P.when('jQuery').execute(function($) {
             attachEvents(this.$);
         });
+
+        var showSelected = function(option) {
+            $(option).parents('ul').find('li').each(function(index, value) {
+                var aTag = $(value).find('a');
+                $(aTag).removeClass('active-option');
+            })
+            $(option).addClass('active-option');
+        }
+        
         var attachEvents = function($) {
             $("#restInfo").click(function(e) {
+                showSelected(this);
                 $('#loading').trigger("click");
                 $('#bt-menu').removeClass('bt-menu-open').addClass('bt-menu-close');
                 ajaxAction('info');
                 e.preventDefault();
             });
+            $("#restInfo").hover(function(e) {
+                showSelected(this);
+            });
             $("#orderHistory").click(function(e) {
+                showSelected(this);
                 $('#loading').trigger("click");
                 $('#bt-menu').removeClass('bt-menu-open').addClass('bt-menu-close');
                 ajaxAction('history');
                 
                 e.preventDefault();
             });
+            $("#orderHistory").hover(function(e) {
+                showSelected(this);
+            });
             $("#analysis").click(function(e) {
+                showSelected(this);
                 $('#loading').trigger("click");
                 $('#bt-menu').removeClass('bt-menu-open').addClass('bt-menu-close');
                 ajaxAction('analysis');
                 e.preventDefault();
             });
+            $("#analysis").hover(function(e) {
+                showSelected(this);
+            });
             $("#contact").click(function(e) {
+                showSelected(this);
                 $('#bt-menu').removeClass('bt-menu-open').addClass('bt-menu-close');
                 $('html, body').animate({
                     scrollTop: $("#contact-us").offset().top
                 }, 700);
                 e.preventDefault();
             });
+            $("#contact").hover(function(e) {
+                showSelected(this);
+            });
         }
+       
         var inProgress = false;
         var ajaxAction = function(action) {
         	 var request = $.ajax({
