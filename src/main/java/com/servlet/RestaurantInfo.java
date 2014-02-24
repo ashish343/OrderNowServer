@@ -15,8 +15,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.data.restaurant.RestaurantDashboardData;
+import com.data.restaurant.RestaurantInfoEnum;
 import com.database.DataConnection;
+import com.enums.UrlParameter;
 import com.google.gson.Gson;
+import com.handlers.restaurant.RestaurantEvents;
+import com.handlers.restaurant.RestaurantEventsHandler;
 
 @SuppressWarnings("serial")
 @WebServlet(name = "RestaurantInfoServlet", urlPatterns = { "/info" })
@@ -24,15 +28,35 @@ public class RestaurantInfo extends HttpServlet {
 	Gson gs = new Gson();
 
 	protected final Log logger = LogFactory.getLog(getClass());
-
+	private static final String EMPTY_STRING = "";
+	
 	@Override
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		/*
+		 * Get the reataurant Id from the DB.
+		 */
 		String restaurantId = "R1";//getRestaurantData();
-
 		request.setAttribute("restaurantId", restaurantId);
-		request.getRequestDispatcher("/WEB-INF/jsp/restaurant-history.jsp").forward(
-				request, response);
+		
+		String action = request.getParameter(UrlParameter.USER_ACTION.toString());
+		
+		if(action != null && !EMPTY_STRING.equals(action)) {
+			if(RestaurantInfoEnum.HISTORY.toString().equals(action)) {
+				request.getRequestDispatcher("/WEB-INF/jsp/restaurant/history.jsp").forward(request, response);
+			}
+			if(RestaurantInfoEnum.ANALYSIS.toString().equals(action)) {
+				request.getRequestDispatcher("/WEB-INF/jsp/restaurant/analysis.jsp").forward(request, response);
+			}
+			if(RestaurantInfoEnum.INFO.toString().equals(action)) {
+				request.getRequestDispatcher("/WEB-INF/jsp/restaurant/info.jsp").forward(request, response);
+			}
+			if(RestaurantInfoEnum.CONTACT.toString().equals(action)) {
+				request.getRequestDispatcher("/WEB-INF/jsp/common/contact-us.jsp").forward(request, response);
+			}
+		} else {
+			request.getRequestDispatcher("/WEB-INF/jsp/restaurant-info-home.jsp").forward(request, response);
+		}
 	}
 
 	private String getRestaurantData() throws IOException {

@@ -4,7 +4,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col">
+    <div class="col contact-us-col">
         <div class="contact-info">
             <div id="fb-like-button">
                 <iframe src="//www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2FGoOrderNow&amp;width&amp;layout=button_count&amp;action=like&amp;show_faces=true&amp;share=true&amp;height=21&amp;appId=728085460544650" scrolling="no" frameborder="0" style="border:none; overflow:hidden; height:20px; width:175px; padding-left:25px;" allowTransparency="true"></iframe>
