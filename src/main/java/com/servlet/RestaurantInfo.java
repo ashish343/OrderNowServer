@@ -2,6 +2,7 @@ package com.servlet;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.data.restaurant.RestaurantDashboardData;
 import com.data.restaurant.RestaurantInfoEnum;
+import com.data.restaurant.RestaurantOrder;
 import com.database.DataConnection;
 import com.enums.UrlParameter;
 import com.google.gson.Gson;
@@ -43,6 +45,8 @@ public class RestaurantInfo extends HttpServlet {
 		
 		if(action != null && !EMPTY_STRING.equals(action)) {
 			if(RestaurantInfoEnum.HISTORY.toString().equals(action)) {
+				Map<String, ArrayList<RestaurantOrder>> history = RestaurantOrder.getAllCompletedOrders(restaurantId);
+				request.setAttribute("history", history);
 				request.getRequestDispatcher("/WEB-INF/jsp/restaurant/history.jsp").forward(request, response);
 			}
 			if(RestaurantInfoEnum.ANALYSIS.toString().equals(action)) {

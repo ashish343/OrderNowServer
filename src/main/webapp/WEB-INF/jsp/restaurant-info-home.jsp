@@ -71,15 +71,16 @@ P.when('jQuery').execute(function($){
         <div class="container">
             <div class="page-layout">
                 <div class="row">
-                <header class="codrops-header">
-                    <h1>Menus <span>Inspired by CreativeDash's <a href="http://creativeda.sh/sandbox/bounce_menu/">bounce menu</a></h1>
-                </header>
-                <div class="main">
-                    <div id="la-buttons" class="column">
-                        <button data-anim="la-anim-1" style="display:none" id="loading"></button>
+                    <header class="codrops-header">
+                        <h1>Menus <span>Inspired by CreativeDash's <a href="http://creativeda.sh/sandbox/bounce_menu/">bounce menu</a></h1>
+                    </header>
+                    <div class="main">
+                        <div id="la-buttons" class="column">
+                            <button data-anim="la-anim-1" style="display:none" id="loading"></button>
+                        </div>
                     </div>
                 </div>
-                </div>
+                <div id="rest-history"></div>
                 <div id="contact-us">
                     <%@ include file="/WEB-INF/jsp/common/contact-us.jsp" %>
                 </div>
@@ -113,6 +114,7 @@ P.when('jQuery').execute(function($){
                 $('#loading').trigger("click");
                 $('#bt-menu').removeClass('bt-menu-open').addClass('bt-menu-close');
                 ajaxAction('history');
+                
                 e.preventDefault();
             });
             $("#analysis").click(function(e) {
@@ -123,7 +125,7 @@ P.when('jQuery').execute(function($){
             });
             $("#contact").click(function(e) {
                 $('#bt-menu').removeClass('bt-menu-open').addClass('bt-menu-close');
-                jQuery('html, body').animate({
+                $('html, body').animate({
                     scrollTop: $("#contact-us").offset().top
                 }, 700);
                 e.preventDefault();
@@ -134,9 +136,9 @@ P.when('jQuery').execute(function($){
         	 var request = $.ajax({
                  url: "/info?action="+ action +"&restId=" +"${restaurantId}",
                  type: "GET",
-                 dataType: "html",                 
-                 success: function (data) { 
-                     console.log(data);
+                 dataType: "json",                 
+                 success: function (data) {
+                     $('rest-history').html(data); 
                  }//FIN SUCCES
              });
         }

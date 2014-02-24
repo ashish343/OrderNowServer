@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
@@ -184,7 +185,7 @@ public class RestaurantOrder {
 		return DataConnection.getCurrentOrders(restaurantId, tableId);
 	}
 
-	public static String getAllCompletedOrders(String restaurantId) {
+	public static Map<String, ArrayList<RestaurantOrder>> getAllCompletedOrders(String restaurantId) {
 		ArrayList<RestaurantOrder> orders = DataConnection
 				.getAllCompletedOrders(restaurantId);
 		HashMap<String, ArrayList<RestaurantOrder>> allOrders = new HashMap<String, ArrayList<RestaurantOrder>>();
@@ -223,8 +224,7 @@ public class RestaurantOrder {
 				allOrders.put(key, tmp);
 			}
 		}
-		Gson gs = new Gson();
-		return gs.toJson(allOrders);
+		return allOrders;
 	}
 
 	public static void updateOrderState(String orderId, int subOrderId,
